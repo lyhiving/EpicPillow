@@ -22,7 +22,9 @@
         static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
  
 		public WebBrowser pubbrowser; 
+		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
+		public Uri navURL; 
 		public Size newSize = new Size(1920, 1080); 
 		public Bitmap Render(string html, Size size)
 		{
@@ -33,7 +35,43 @@
 
 			return GetBitmapFromControl(pubbrowser, newSize);
 		}
-
+		public void startConverter()
+		{
+			pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
+			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
+			pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
+		}
+		public void docClicked(object sender, HtmlElementEventArgs e)
+		{
+			
+		}
+		private void doneLoading(object sender, WebBrowserDocumentCompletedEventArgs e)
+		{
+			//mainFrm.urlTextBox.Text = pubbrowser.Url.ToString(); 
+			HtmlElementCollection links = pubbrowser.Document.Links;
+			foreach (HtmlElement var in links)
+			{
+				var.AttachEventHandler("onclick", LinkClicked);
+			}
+		}
+		string url = ""; 
+		private void LinkClicked(object sender, EventArgs e)
+		{
+		
+		HtmlElement link = pubbrowser.Document.ActiveElement;
+		url = link.GetAttribute("href");
+		
+		}
+		private void cancelWindow(object sender, CancelEventArgs e)
+		{
+			//MessageBox.Show(pubbrowser.StatusText); 
+			
+			e.Cancel = true;
+			//delegateNav(new Uri(url)); 
+			//delegateNav(navURL);
+			//MessageBox.Show(e.ToString()); 
+			//delegateNav(new Uri(e.ToString()));
+		}
 		public Bitmap Render(Uri uri, Size size)
 		{
 			pubbrowser = CreateBrowser(size);
@@ -48,6 +86,7 @@
         }
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime)
 		{
+			navURL = uri; 
 			browser.Navigate(uri);
 			var count = 0;
 

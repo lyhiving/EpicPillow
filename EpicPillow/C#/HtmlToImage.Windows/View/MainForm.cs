@@ -20,7 +20,7 @@
 			InitializeComponent();
 
 			//SetHtml();
-            startup(); 
+            
 		}
 		public void setpictBoxSize(Size s)
 		{
@@ -41,6 +41,7 @@
         void startup()
         {
             pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+            pubBrowse.startConverter(); 
             //updatetmr.Start(); 
             //pictureBox.Image.Save("test.bmp");
             //System.Diagnostics.Process.Start("test.bmp"); 
@@ -81,12 +82,13 @@
 		
 		void MainFormLoad(object sender, EventArgs e)
 		{
-			
+			startup(); 			
 		}
 		
 		void Button1Click(object sender, EventArgs e)
 		{
 			pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
 		}
+		
 	}
 }

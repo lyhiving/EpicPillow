@@ -174,7 +174,7 @@
 		#endregion
 
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox urlTextBox;
+		public System.Windows.Forms.TextBox urlTextBox;
 		private System.Windows.Forms.LinkLabel navigateLinkLabel;
 		private System.Windows.Forms.TextBox htmlTextBox;
 		private System.Windows.Forms.LinkLabel renderLinkLabel;
