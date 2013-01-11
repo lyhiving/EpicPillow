@@ -7,7 +7,7 @@
 	using System.Text;
 	using System.ComponentModel;
 	using System.Runtime.InteropServices; 
-	using mshtml;
+	using MSHTML;
 
 	public class HtmlToBitmapConverter
 	{
