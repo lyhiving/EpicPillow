@@ -4,10 +4,23 @@
 	using System.Drawing;
 	using System.Threading;
 	using System.Windows.Forms;
+	using System.Text;
+	using System.ComponentModel;
+	using System.Runtime.InteropServices; 
 	using mshtml;
 
 	public class HtmlToBitmapConverter
 	{
+
+		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+ 
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+ 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+ 
 		public WebBrowser pubbrowser; 
 		private const int SleepTimeMiliseconds = 69;
 		public Size newSize = new Size(1920, 1080); 
@@ -101,5 +114,28 @@
         {
             return GetBitmapFromControl(pubbrowser, newSize); 
         }
+        
+        public void btnMouseClick_Click(int xMouse, int yMouse)
+        {
+            //int x = 100; // X coordinate of the click
+            //int y = 80; // Y coordinate of the click
+            int x = xMouse;
+            int y = yMouse; 
+            IntPtr handle = pubbrowser.Handle;
+            StringBuilder className = new StringBuilder(100);
+            while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
+            {
+                handle = GetWindow(handle, 5); // Get a handle to the child window
+                GetClassName(handle, className, className.Capacity);
+            }
+ 
+            IntPtr lParam = (IntPtr)((y << 16) | x); // The coordinates
+            IntPtr wParam = IntPtr.Zero; // Additional parameters for the click (e.g. Ctrl)
+            const uint downCode = 0x201; // Left click down code
+            const uint upCode = 0x202; // Left click up code
+            SendMessage(handle, downCode, wParam, lParam); // Mouse button down
+            SendMessage(handle, upCode, wParam, lParam); // Mouse button up
+        }
+        
 	}
 }

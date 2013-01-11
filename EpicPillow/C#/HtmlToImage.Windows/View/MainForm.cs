@@ -4,9 +4,15 @@
 	using System.Drawing;
 	using System.Windows.Forms;
 	using EyeOpen.Imaging;
-
+	using System.Data;
+	using System.ComponentModel;
+	using System.Collections.Generic;
+	using System.Text;
+	using System.Runtime.InteropServices; 
+	
 	public partial class MainForm : Form
 	{
+		
 		public Size size = new Size(1920, 1080);
         private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter(); 
 		public MainForm()
@@ -51,6 +57,7 @@
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
             pictureBox.Image = bmp;
+            //pubBrowse.btnMouseClick_Click(100, 80); 
         }
 		private void SetHtml()
 		{
@@ -71,5 +78,15 @@
         {
             continuousUpdate(); 
         }
+		
+		void MainFormLoad(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void Button1Click(object sender, EventArgs e)
+		{
+			pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
+		}
 	}
 }
