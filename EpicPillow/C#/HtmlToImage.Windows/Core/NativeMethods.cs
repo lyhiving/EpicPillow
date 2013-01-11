@@ -13,8 +13,10 @@
 		[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 		private interface IViewObject
 		{
-			void Draw([MarshalAs(UnmanagedType.U4)] uint dwAspect, int lindex, IntPtr pvAspect, [In] IntPtr ptd, IntPtr hdcTargetDev, IntPtr hdcDraw, [MarshalAs(UnmanagedType.Struct)] ref Rect lprcBounds, [In] IntPtr lprcWBounds, IntPtr pfnContinue, [MarshalAs(UnmanagedType.U4)] uint dwContinue);
-		}
+			
+            void Draw([MarshalAs(UnmanagedType.U4)] uint dwAspect, int lindex, IntPtr pvAspect, [In] IntPtr ptd, IntPtr hdcTargetDev, IntPtr hdcDraw, [MarshalAs(UnmanagedType.Struct)] ref Rect lprcBounds, [In] IntPtr lprcWBounds, IntPtr pfnContinue, [MarshalAs(UnmanagedType.U4)] uint dwContinue);
+		    
+        }
 
 		public static int GetSystemMetrics()
 		{
@@ -23,7 +25,6 @@
 
 		[DllImport("user32.dll")]
 		public static extern int GetSystemMetrics(int smIndex);
-
 		public static void GetImage(object obj, Image destination, Color backgroundColor)
 		{
 			using (var graphics = Graphics.FromImage(destination))
@@ -44,6 +45,7 @@
 
 					var viewObject = obj as IViewObject;
 					viewObject.Draw(1, -1, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, deviceContextHandle, ref rectangle, IntPtr.Zero, IntPtr.Zero, 0);
+                    GC.Collect(); 
 				}
 				finally
 				{

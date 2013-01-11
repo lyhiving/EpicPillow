@@ -1,0 +1,10 @@
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.csproj.ResolveComReference.cache
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\x64\Debug\EpicPillow.exe
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\x64\Debug\EpicPillow.pdb
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\ResolveAssemblyReference.cache
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.MainForm.resources
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.Properties.Resources.resources
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\GenerateResource.read.1.tlog
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\GenerateResource.write.1.tlog
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\EpicPillow.exe
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\EpicPillow.pdb

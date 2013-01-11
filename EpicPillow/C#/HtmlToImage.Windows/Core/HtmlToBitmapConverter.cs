@@ -8,28 +8,31 @@
 
 	public class HtmlToBitmapConverter
 	{
-		public WebBrowser browser; 
-		private const int SleepTimeMiliseconds = 5000;
+		public WebBrowser pubbrowser; 
+		private const int SleepTimeMiliseconds = 69;
 		public Size newSize = new Size(1920, 1080); 
 		public Bitmap Render(string html, Size size)
 		{
-			browser = CreateBrowser(size);
+			pubbrowser = CreateBrowser(size);
 
-			browser.Navigate("about:blank");
-			browser.Document.Write(html);
+			pubbrowser.Navigate("about:blank");
+			pubbrowser.Document.Write(html);
 
-			return GetBitmapFromControl(browser, newSize);
+			return GetBitmapFromControl(pubbrowser, newSize);
 		}
 
 		public Bitmap Render(Uri uri, Size size)
 		{
-			browser = CreateBrowser(size);
+			pubbrowser = CreateBrowser(size);
 
-			NavigateAndWaitForLoad(browser, uri, 0);
+			NavigateAndWaitForLoad(pubbrowser, uri, 0);
 
-			return GetBitmapFromControl(browser, newSize);
+			return GetBitmapFromControl(pubbrowser, newSize);
 		}
-
+        public void delegateNav(Uri link)
+        {
+            NavigateAndWaitForLoad(pubbrowser, link, SleepTimeMiliseconds); 
+        }
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime)
 		{
 			browser.Navigate(uri);
@@ -48,7 +51,8 @@
 				}
 			}
 			
-			while (browser.Document.Body == null)
+			//while (browser.Document.Body == null)
+            while (browser.ReadyState != WebBrowserReadyState.Complete)
 			{
 				Application.DoEvents();
 			}
@@ -84,13 +88,18 @@
 
 			return newBrowser;
 		}
-
+        Bitmap screenie; 
 		private Bitmap GetBitmapFromControl(WebBrowser browser, Size size)
 		{
-			var bitmap = new Bitmap(size.Width, size.Height);
+            screenie = null; 
+			screenie = new Bitmap(size.Width, size.Height);
 
-			NativeMethods.GetImage(browser.Document.DomDocument, bitmap, Color.White);
-			return bitmap;
+			NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
+			return screenie;
 		}
+        public Bitmap delegateScreenshot()
+        {
+            return GetBitmapFromControl(pubbrowser, newSize); 
+        }
 	}
 }

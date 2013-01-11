@@ -8,12 +8,13 @@
 	public partial class MainForm : Form
 	{
 		public Size size = new Size(1920, 1080);
-
+        private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter(); 
 		public MainForm()
 		{
 			InitializeComponent();
 
-			SetHtml();
+			//SetHtml();
+            startup(); 
 		}
 		public void setpictBoxSize(Size s)
 		{
@@ -29,14 +30,28 @@
 
 		private void NavigateLinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			
-			pictureBox.Image =
-				new HtmlToBitmapConverter()
-					.Render(new Uri(urlTextBox.Text), size);
-			pictureBox.Image.Save("test.bmp");
-			System.Diagnostics.Process.Start("test.bmp"); 
+            pubBrowse.delegateNav(new Uri(urlTextBox.Text)); 
 		}
-
+        void startup()
+        {
+            pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+            //updatetmr.Start(); 
+            //pictureBox.Image.Save("test.bmp");
+            //System.Diagnostics.Process.Start("test.bmp"); 
+            timer1.Start(); 
+            SetHtml(); 
+        }
+        public void UpdateThings()
+        {
+            continuousUpdate(); 
+        }
+        Bitmap bmp; 
+        public void continuousUpdate()
+        {
+            bmp = null; 
+            bmp = pubBrowse.delegateScreenshot();
+            pictureBox.Image = bmp;
+        }
 		private void SetHtml()
 		{
 			const string Html = 
@@ -51,5 +66,10 @@
 
 			htmlTextBox.Text = Html;
 		}
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            continuousUpdate(); 
+        }
 	}
 }
