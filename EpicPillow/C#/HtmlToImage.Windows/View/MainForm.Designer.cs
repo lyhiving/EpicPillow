@@ -61,7 +61,7 @@
 			this.urlTextBox.Name = "urlTextBox";
 			this.urlTextBox.Size = new System.Drawing.Size(480, 22);
 			this.urlTextBox.TabIndex = 1;
-			this.urlTextBox.Text = "http://youtube.com";
+			this.urlTextBox.Text = "https://www.youtube.com/embed/rgyL08nhtkw?autoplay=1";
 			// 
 			// navigateLinkLabel
 			// 
@@ -114,10 +114,12 @@
 			this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.pictureBox.TabIndex = 5;
 			this.pictureBox.TabStop = false;
+			this.pictureBox.Click += new System.EventHandler(this.PictureBoxClick);
+			this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDown);
 			// 
 			// timer1
 			// 
-			this.timer1.Interval = 200;
+			this.timer1.Interval = 50;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// textBox1
@@ -161,7 +163,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "EpicPillow Server - Eye.Open - HtmlToImage converter";
+			this.Text = "EpicPillow Server";
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
 			this.ResumeLayout(false);

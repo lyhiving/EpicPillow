@@ -90,5 +90,24 @@
 			pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
 		}
 		
+		
+		void PictureBoxClick(object sender, EventArgs e)
+		{
+		}
+		
+		void PictureBoxMouseDown(object sender, MouseEventArgs e)
+		{
+			Point mouseDownLocation = new Point(e.X, e.Y); 
+			//MessageBox.Show((e.X).ToString() + "," + (e.Y).ToString()); 
+			Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size); 
+			pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y); 
+		}
+		public Point getProportion(Point clickPoint, Size pictureBox, Size webBrowser)
+		{
+			float newX = (clickPoint.X * webBrowser.Width)/pictureBox.Width;
+			float newY = (clickPoint.Y * webBrowser.Height)/pictureBox.Height;
+			
+			return new Point((int)Math.Floor(newX), (int)Math.Floor(newY));
+		}
 	}
 }
