@@ -24,7 +24,8 @@
 		public WebBrowser pubbrowser; 
 		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
-		public Uri navURL; 
+		public Uri navURL;
+        public Size defSize = new Size(1920, 1080); 
 		public Size newSize = new Size(1920, 1080); 
 		public Bitmap Render(string html, Size size)
 		{
@@ -86,6 +87,7 @@
         }
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime)
 		{
+            browser.Size = defSize; 
 			navURL = uri; 
 			browser.Navigate(uri);
 			var count = 0;
