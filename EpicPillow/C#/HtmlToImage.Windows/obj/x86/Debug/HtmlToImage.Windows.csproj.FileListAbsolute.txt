@@ -18,3 +18,4 @@ C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windo
 C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\EpicPillow.exe
 C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\EpicPillow.pdb
+C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\Interop.MSHTML.dll

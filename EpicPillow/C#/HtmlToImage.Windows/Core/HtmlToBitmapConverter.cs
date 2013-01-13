@@ -25,8 +25,10 @@
 		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
 		public Uri navURL;
-        public Size defSize = new Size(1920, 1080); 
-		public Size newSize = new Size(1920, 1080); 
+        public Size defSize = new Size(1920,1080); 
+		public Size newSize = new Size(1920,1080); 
+		public Size minSize = new Size(640, 480); 
+		public int minPix; 
 		public Bitmap Render(string html, Size size)
 		{
 			pubbrowser = CreateBrowser(size);
@@ -41,6 +43,7 @@
 			pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
 			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
 			pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
+			minPix = minSize.Width * minSize.Height; 
 		}
 		public void docClicked(object sender, HtmlElementEventArgs e)
 		{
@@ -85,8 +88,9 @@
         {
             NavigateAndWaitForLoad(pubbrowser, link, SleepTimeMiliseconds); 
         }
-		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime)
+		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime, bool resize = true)
 		{
+			
             browser.Size = defSize; 
 			navURL = uri; 
 			browser.Navigate(uri);
@@ -104,17 +108,34 @@
 					break;
 				}
 			}
-			
+			//browser.Document.Body.ClientRectangle.Size = defSize; 
+			//browser.Size = defSize; 
 			//while (browser.Document.Body == null)
             while (browser.ReadyState != WebBrowserReadyState.Complete)
 			{
 				Application.DoEvents();
 			}
 			//browser.Size = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
-			browser.SetBounds(0, 0, browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
+			int width = defSize.Width;
+			int height = defSize.Height; 
+			if (resize)
+			{
+				var doc2 = (IHTMLDocument2)browser.Document.DomDocument;
+				var doc3 = (IHTMLDocument3)browser.Document.DomDocument; 
+				var body2 = (IHTMLElement2)doc2.body;
+				var root2 = (IHTMLElement2)doc3.documentElement; 
+    			width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+    			height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+				browser.SetBounds(0, 0, width, height); 
+				//browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
+				width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+    			height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+    			browser.SetBounds(0, 0, width, height); 
+			}
 			//MessageBox.Show(browser.Document.Body.ScrollRectangle.Width.ToString());
 			//MessageBox.Show(browser.Document.Body.ScrollRectangle.Height.ToString());
-			newSize = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
+			//newSize = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
+			newSize = new Size(width, height); 
 			HideScrollBars(browser);
 		}
 
@@ -153,6 +174,10 @@
 		}
         public Bitmap delegateScreenshot()
         {
+        	if ((newSize.Width * newSize.Height) <= minPix)
+        	{
+        		//NavigateAndWaitForLoad(pubbrowser, pubbrowser.Url, SleepTimeMiliseconds, false); 
+        	}
             return GetBitmapFromControl(pubbrowser, newSize); 
         }
         
