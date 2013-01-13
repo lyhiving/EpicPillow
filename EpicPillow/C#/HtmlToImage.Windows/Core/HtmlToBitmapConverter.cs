@@ -8,6 +8,7 @@
 	using System.ComponentModel;
 	using System.Runtime.InteropServices; 
 	using MSHTML;
+    using System.Collections.Generic; 
 
 	public class HtmlToBitmapConverter
 	{
@@ -27,7 +28,8 @@
 		public Uri navURL;
         public Size defSize = new Size(1920,1080); 
 		public Size newSize = new Size(1920,1080); 
-		public Size minSize = new Size(640, 480); 
+		public Size minSize = new Size(640, 480);
+        public List<IntPtr> Handlez = new List<IntPtr>(); 
 		public int minPix; 
 		public Bitmap Render(string html, Size size)
 		{
@@ -43,7 +45,9 @@
 			pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
 			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
 			pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
-			minPix = minSize.Width * minSize.Height; 
+			minPix = minSize.Width * minSize.Height;
+            Handlez.Add(Flash());
+            Handlez.Add(pubbrowser.Handle); 
 		}
 		public void docClicked(object sender, HtmlElementEventArgs e)
 		{
@@ -160,7 +164,6 @@
 					};
 
 			newBrowser.BringToFront();
-
 			return newBrowser;
 		}
         Bitmap screenie; 
@@ -190,11 +193,12 @@
             IntPtr handle = pubbrowser.Handle;
             StringBuilder className = new StringBuilder(100);
             while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
+            //while (className.ToString() != "TabWindowClass") 
             {
+                
                 handle = GetWindow(handle, 5); // Get a handle to the child window
                 GetClassName(handle, className, className.Capacity);
             }
- 
             IntPtr lParam = (IntPtr)((y << 16) | x); // The coordinates
             IntPtr wParam = IntPtr.Zero; // Additional parameters for the click (e.g. Ctrl)
             const uint downCode = 0x201; // Left click down code
@@ -203,5 +207,34 @@
             SendMessage(handle, upCode, wParam, lParam); // Mouse button up
         }
         
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, IntPtr windowTitle);
+        public IntPtr Flash()
+        {
+            IntPtr pControl;
+            pControl = FindWindowEx(pubbrowser.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+            pControl = FindWindowEx(pControl, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
+            pControl = FindWindowEx(pControl, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
+            pControl = FindWindowEx(pControl, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
+            return pControl;
+        }
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+        public enum WMessages : int
+        {
+            WM_LBUTTONDOWN = 0x201,
+            WM_LBUTTONUP = 0x202
+        }
+        private int MAKELPARAM(int p, int p_2)
+        {
+            return ((p_2 << 16) | (p & 0xFFFF));
+        }
+        public void DoMouseLeftClick(Point x)
+        {
+            PostMessage(Flash(), (uint)WMessages.WM_LBUTTONDOWN, 0, MAKELPARAM(x.X, x.Y));
+            PostMessage(Flash(), (uint)WMessages.WM_LBUTTONUP, 0, MAKELPARAM(x.X, x.Y));
+
+            btnMouseClick_Click(x.X, x.Y); 
+        }
 	}
 }

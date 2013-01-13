@@ -87,7 +87,7 @@
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
+			//pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
 		}
 		
 		
@@ -99,8 +99,9 @@
 		{
 			Point mouseDownLocation = new Point(e.X, e.Y); 
 			//MessageBox.Show((e.X).ToString() + "," + (e.Y).ToString()); 
-			Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size); 
-			pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y); 
+            Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size);
+            pubBrowse.DoMouseLeftClick(newPoint); 
+			//pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y);
 		}
 		public Point getProportion(Point clickPoint, Size pictureBox, Size webBrowser)
 		{
@@ -108,6 +109,11 @@
 			float newY = (clickPoint.Y * webBrowser.Height)/pictureBox.Height;
 			
 			return new Point((int)Math.Floor(newX), (int)Math.Floor(newY));
+		}
+		
+		void Button2Click(object sender, EventArgs e)
+		{
+            Object o = pubBrowse.pubbrowser.ActiveXInstance; 
 		}
 	}
 }
