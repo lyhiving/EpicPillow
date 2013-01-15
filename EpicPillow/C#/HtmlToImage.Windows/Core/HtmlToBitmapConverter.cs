@@ -237,10 +237,30 @@
             
             btnMouseClick_Click(x.X, x.Y); 
         }
+        [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindWindow(string lpClassName,
+            string lpWindowName);
+
+        // Activate an application window.
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
         public void keyboardSend(string strokes)
         {
-            pubbrowser.Focus();
-            SendKeys.Send(strokes); 
+            IntPtr flash_handle = Flash();
+            IntPtr handle = pubbrowser.Handle;
+            StringBuilder className = new StringBuilder(100);
+            while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
+            //while (className.ToString() != "TabWindowClass") 
+            {
+
+                handle = GetWindow(handle, 5); // Get a handle to the child window
+                GetClassName(handle, className, className.Capacity);
+            }
+            SetForegroundWindow(flash_handle);
+            SendKeys.SendWait(strokes);
+            SetForegroundWindow(handle);
+            SendKeys.SendWait(strokes); 
         }
 	}
 }
