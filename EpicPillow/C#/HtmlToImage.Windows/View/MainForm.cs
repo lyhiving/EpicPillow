@@ -40,13 +40,21 @@
 		}
         void startup()
         {
+            
             pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
             pubBrowse.startConverter(); 
+            pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress); 
+            
             //updatetmr.Start(); 
             //pictureBox.Image.Save("test.bmp");
             //System.Diagnostics.Process.Start("test.bmp"); 
             timer1.Start(); 
             SetHtml(); 
+
+        }
+        private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
+        {
+            pubBrowse.keyboardSend(e.KeyCode.ToString()); 
         }
         public void UpdateThings()
         {

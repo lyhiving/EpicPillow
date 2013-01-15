@@ -190,6 +190,7 @@
             //int y = 80; // Y coordinate of the click
             int x = xMouse;
             int y = yMouse; 
+            
             IntPtr handle = pubbrowser.Handle;
             StringBuilder className = new StringBuilder(100);
             while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
@@ -233,8 +234,13 @@
         {
             PostMessage(Flash(), (uint)WMessages.WM_LBUTTONDOWN, 0, MAKELPARAM(x.X, x.Y));
             PostMessage(Flash(), (uint)WMessages.WM_LBUTTONUP, 0, MAKELPARAM(x.X, x.Y));
-
+            
             btnMouseClick_Click(x.X, x.Y); 
+        }
+        public void keyboardSend(string strokes)
+        {
+            pubbrowser.Focus();
+            SendKeys.Send(strokes); 
         }
 	}
 }
