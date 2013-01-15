@@ -42,12 +42,15 @@
 		}
 		public void startConverter()
 		{
+            //defSize = Screen.PrimaryScreen.Bounds.Size;
+            //newSize = Screen.PrimaryScreen.Bounds.Size; 
+            
 			pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
 			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
 			pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
 			minPix = minSize.Width * minSize.Height;
-            Handlez.Add(Flash());
-            Handlez.Add(pubbrowser.Handle); 
+            //Handlez.Add(Flash());
+            //Handlez.Add(pubbrowser.Handle); 
 		}
 		public void docClicked(object sender, HtmlElementEventArgs e)
 		{
@@ -94,7 +97,7 @@
         }
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime, bool resize = true)
 		{
-			
+            newResize = false; 
             browser.Size = defSize; 
 			navURL = uri; 
 			browser.Navigate(uri);
@@ -175,13 +178,27 @@
 			NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
 			return screenie;
 		}
+        public bool newResize = false; 
         public Bitmap delegateScreenshot()
         {
-        	if ((newSize.Width * newSize.Height) <= minPix)
-        	{
-        		//NavigateAndWaitForLoad(pubbrowser, pubbrowser.Url, SleepTimeMiliseconds, false); 
-        	}
-            return GetBitmapFromControl(pubbrowser, newSize); 
+            //if (newResize == false)
+            //{
+                int width;
+                int height;
+                var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
+                var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
+                var body2 = (IHTMLElement2)doc2.body;
+                var root2 = (IHTMLElement2)doc3.documentElement;
+                width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                pubbrowser.SetBounds(0, 0, width, height);
+                //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
+                width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                pubbrowser.SetBounds(0, 0, width, height);
+                newResize = true; 
+            //}
+            return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }
         
         public void btnMouseClick_Click(int xMouse, int yMouse)
