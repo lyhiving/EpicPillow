@@ -54,7 +54,7 @@
         }
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
-            pubBrowse.keyboardSend(e.KeyCode.ToString()); 
+            pubBrowse.keyboardSend(e.KeyCode); 
         }
         public void UpdateThings()
         {
@@ -116,12 +116,21 @@
 			float newX = (clickPoint.X * webBrowser.Width)/pictureBox.Width;
 			float newY = (clickPoint.Y * webBrowser.Height)/pictureBox.Height;
 			
-			return new Point((int)Math.Floor(newX), (int)Math.Floor(newY));
+			//return new Point((int)Math.Floor(newX), (int)Math.Floor(newY));
+            return new Point((int)Math.Round(newX), (int)Math.Round(newY)); 
 		}
 		
 		void Button2Click(object sender, EventArgs e)
 		{
             Object o = pubBrowse.pubbrowser.ActiveXInstance; 
 		}
+
+        private void urlTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                
+            }
+        }
 	}
 }

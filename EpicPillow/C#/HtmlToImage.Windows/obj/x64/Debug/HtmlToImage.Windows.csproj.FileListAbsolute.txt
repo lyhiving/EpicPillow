@@ -18,3 +18,4 @@ C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\x64\Debug\EpicPillow.exe
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\x64\Debug\EpicPillow.pdb
 C:\Users\PillyBuilt7\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\Interop.MSHTML.dll
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.csprojResolveAssemblyReference.cache

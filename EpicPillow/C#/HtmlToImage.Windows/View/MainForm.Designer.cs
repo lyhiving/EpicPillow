@@ -57,6 +57,7 @@
             this.urlTextBox.Size = new System.Drawing.Size(361, 20);
             this.urlTextBox.TabIndex = 1;
             this.urlTextBox.Text = "https://www.youtube.com/embed/rgyL08nhtkw?autoplay=1";
+            this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
             // 
             // navigateLinkLabel
             // 

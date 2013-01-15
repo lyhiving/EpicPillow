@@ -204,8 +204,11 @@
             IntPtr wParam = IntPtr.Zero; // Additional parameters for the click (e.g. Ctrl)
             const uint downCode = 0x201; // Left click down code
             const uint upCode = 0x202; // Left click up code
+            SendMessage(Flash(), downCode, wParam, lParam);
+            SendMessage(Flash(), upCode, wParam, lParam);
             SendMessage(handle, downCode, wParam, lParam); // Mouse button down
             SendMessage(handle, upCode, wParam, lParam); // Mouse button up
+            
         }
         
         [DllImport("user32.dll", SetLastError = true)]
@@ -232,10 +235,12 @@
         }
         public void DoMouseLeftClick(Point x)
         {
-            PostMessage(Flash(), (uint)WMessages.WM_LBUTTONDOWN, 0, MAKELPARAM(x.X, x.Y));
-            PostMessage(Flash(), (uint)WMessages.WM_LBUTTONUP, 0, MAKELPARAM(x.X, x.Y));
             
-            btnMouseClick_Click(x.X, x.Y); 
+            
+            btnMouseClick_Click(x.X, x.Y);
+            //PostMessage(Flash(), (uint)WMessages.WM_LBUTTONDOWN, 0, MAKELPARAM(x.X, x.Y));
+            //PostMessage(Flash(), (uint)WMessages.WM_LBUTTONUP, 0, MAKELPARAM(x.X, x.Y));
+            //SetForegroundWindow(pubbrowser.Handle); 
         }
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName,
@@ -244,23 +249,20 @@
         // Activate an application window.
         [DllImport("USER32.DLL")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        public void keyboardSend(string strokes)
+        [DllImport("user32.dll")]
+        static extern uint keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
+        public void keyboardSend(Keys stroke)
         {
-            IntPtr flash_handle = Flash();
-            IntPtr handle = pubbrowser.Handle;
-            StringBuilder className = new StringBuilder(100);
-            while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
-            //while (className.ToString() != "TabWindowClass") 
-            {
-
-                handle = GetWindow(handle, 5); // Get a handle to the child window
-                GetClassName(handle, className, className.Capacity);
-            }
-            SetForegroundWindow(flash_handle);
-            SendKeys.SendWait(strokes);
-            SetForegroundWindow(handle);
-            SendKeys.SendWait(strokes); 
+            KeyDown(stroke);
+            KeyUp(stroke); 
+        }
+        public static void KeyDown(Keys key)
+        {
+            keybd_event((byte)key, 0, 0, 0); 
+        }
+        public static void KeyUp(Keys key)
+        {
+            keybd_event((byte)key, 0, 0x7F, 0); 
         }
 	}
 }
