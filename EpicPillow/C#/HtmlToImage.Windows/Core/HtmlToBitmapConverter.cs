@@ -183,6 +183,7 @@
         {
             //if (newResize == false)
             //{
+            /*
                 int width;
                 int height;
                 var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
@@ -196,7 +197,8 @@
                 width = Math.Max(body2.scrollWidth, root2.scrollWidth);
                 height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                 pubbrowser.SetBounds(0, 0, width, height);
-                newResize = true; 
+                newResize = true;
+            */
             //}
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }

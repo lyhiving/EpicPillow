@@ -58,7 +58,14 @@
         }
         public void UpdateThings()
         {
-            continuousUpdate(); 
+            try
+            {
+                continuousUpdate();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         Bitmap bmp; 
         public void continuousUpdate()
