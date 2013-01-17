@@ -45,9 +45,9 @@
             //defSize = Screen.PrimaryScreen.Bounds.Size;
             //newSize = Screen.PrimaryScreen.Bounds.Size; 
             
-			pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
+			//pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
 			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
-			pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
+			//pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
 			minPix = minSize.Width * minSize.Height;
             //Handlez.Add(Flash());
             //Handlez.Add(pubbrowser.Handle); 
@@ -58,20 +58,22 @@
 		}
 		private void doneLoading(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
+            /*
 			//mainFrm.urlTextBox.Text = pubbrowser.Url.ToString(); 
 			HtmlElementCollection links = pubbrowser.Document.Links;
 			foreach (HtmlElement var in links)
 			{
 				var.AttachEventHandler("onclick", LinkClicked);
 			}
+            */
 		}
 		string url = ""; 
 		private void LinkClicked(object sender, EventArgs e)
 		{
-		
+		/*
 		HtmlElement link = pubbrowser.Document.ActiveElement;
 		url = link.GetAttribute("href");
-		
+		*/
 		}
 		private void cancelWindow(object sender, CancelEventArgs e)
 		{
@@ -144,6 +146,7 @@
 			//newSize = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
 			newSize = new Size(width, height); 
 			HideScrollBars(browser);
+            resizeCount = 0; 
 		}
 
 		private void HideScrollBars(WebBrowser browser)
@@ -178,12 +181,16 @@
 			NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
 			return screenie;
 		}
-        public bool newResize = false; 
+        public bool newResize = false;
+        public int resizeCount = 0;
+        public int maxResize = 14;
         public Bitmap delegateScreenshot()
         {
             //if (newResize == false)
             //{
-            /*
+            if (resizeCount < maxResize)
+            {
+                resizeCount++;
                 int width;
                 int height;
                 var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
@@ -198,7 +205,7 @@
                 height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                 pubbrowser.SetBounds(0, 0, width, height);
                 newResize = true;
-            */
+            }
             //}
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }
