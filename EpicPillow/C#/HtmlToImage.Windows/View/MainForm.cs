@@ -36,8 +36,19 @@
 
 		private void NavigateLinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-            pubBrowse.delegateNav(new Uri(urlTextBox.Text)); 
+            navigateLink(); 
 		}
+        private void navigateLink()
+        {
+            try
+            {
+                pubBrowse.delegateNav(new Uri(urlTextBox.Text));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         void startup()
         {
             

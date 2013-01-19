@@ -156,6 +156,20 @@
 			var style = (IHTMLStyle2)document.body.style;
 			style.overflowX = Hidden;
 			style.overflowY = Hidden;
+
+            int width;
+            int height; 
+            var doc2 = (IHTMLDocument2)browser.Document.DomDocument;
+            var doc3 = (IHTMLDocument3)browser.Document.DomDocument;
+            var body2 = (IHTMLElement2)doc2.body;
+            var root2 = (IHTMLElement2)doc3.documentElement;
+            width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+            height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+            browser.SetBounds(0, 0, width, height);
+            //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
+            width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+            height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+            browser.SetBounds(0, 0, width, height); 
 		}
 
 		private WebBrowser CreateBrowser(Size size)
@@ -190,21 +204,28 @@
             //{
             if (resizeCount < maxResize)
             {
-                resizeCount++;
-                int width;
-                int height;
-                var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
-                var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
-                var body2 = (IHTMLElement2)doc2.body;
-                var root2 = (IHTMLElement2)doc3.documentElement;
-                width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                pubbrowser.SetBounds(0, 0, width, height);
-                //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
-                width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                pubbrowser.SetBounds(0, 0, width, height);
-                newResize = true;
+                try
+                {
+                    resizeCount++;
+                    int width;
+                    int height;
+                    var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
+                    var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
+                    var body2 = (IHTMLElement2)doc2.body;
+                    var root2 = (IHTMLElement2)doc3.documentElement;
+                    width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                    height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                    pubbrowser.SetBounds(0, 0, width, height);
+                    //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
+                    width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                    height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                    pubbrowser.SetBounds(0, 0, width, height);
+                    newResize = true;
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
             //}
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
