@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.3
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicCow_Client", "EpicCow_Client\EpicCow_Client.csproj", "{9B973595-2D5A-44FA-81CA-C46D2124AC3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B973595-2D5A-44FA-81CA-C46D2124AC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B973595-2D5A-44FA-81CA-C46D2124AC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B973595-2D5A-44FA-81CA-C46D2124AC3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B973595-2D5A-44FA-81CA-C46D2124AC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
