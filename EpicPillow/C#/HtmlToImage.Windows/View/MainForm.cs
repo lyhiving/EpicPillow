@@ -8,14 +8,18 @@
 	using System.ComponentModel;
 	using System.Collections.Generic;
 	using System.Text;
-	using System.Runtime.InteropServices; 
-	
+	using System.Runtime.InteropServices;
+    using System.Net;
+    using System.Net.Sockets; 
 	public partial class MainForm : Form
 	{
 		
 		public Size size = new Size(1920, 1080);
-        private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter(); 
-		public MainForm()
+        private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter();
+        public Socket mainSocket;
+        public NetworkStream s;
+        public TcpListener listener; 
+        public MainForm()
 		{
 			InitializeComponent();
 
@@ -49,19 +53,27 @@
 
             }
         }
+        public int port = 1261; 
         void startup()
         {
             
             pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
             pubBrowse.startConverter(); 
-            pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress); 
-            
+            pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
+            listener = new TcpListener(port);
+            mainSocket = listener.AcceptSocket();
+            s = new NetworkStream(mainSocket); 
             //updatetmr.Start(); 
             //pictureBox.Image.Save("test.bmp");
             //System.Diagnostics.Process.Start("test.bmp"); 
             timer1.Start(); 
             SetHtml(); 
-
+            
+        }
+        public static byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
@@ -78,12 +90,15 @@
 
             }
         }
-        Bitmap bmp; 
+        public Bitmap bmp; 
         public void continuousUpdate()
         {
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
             pictureBox.Image = bmp;
+            byte[] sendBytes = ImageToByte((Image)bmp);
+            s.Write(sendBytes, 0, sendBytes.Length); 
+            s.Flush(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
         }
 		private void SetHtml()
@@ -150,7 +165,6 @@
                 
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             pictureBox.Image.Save("test.bmp");
