@@ -10,7 +10,8 @@
 	using System.Text;
 	using System.Runtime.InteropServices;
     using System.Net;
-    using System.Net.Sockets; 
+    using System.Net.Sockets;
+    using System.IO; 
 	public partial class MainForm : Form
 	{
 		
@@ -23,7 +24,6 @@
 		{
 			InitializeComponent();
 
-			//SetHtml();
             
 		}
 		public void setpictBoxSize(Size s)
@@ -56,19 +56,63 @@
         public int port = 1261; 
         void startup()
         {
+            try
+            {
+                //initNet(); 
+                pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+                pubBrowse.startConverter();
+                pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
+
+                //updatetmr.Start(); 
+                //pictureBox.Image.Save("test.bmp");
+                //System.Diagnostics.Process.Start("test.bmp"); 
+                timer1.Start();
+                SetHtml();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString()); 
+            }
             
-            pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
-            pubBrowse.startConverter(); 
-            pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
+        }
+        public void initNet()
+        {
             listener = new TcpListener(port);
+            listener.Start();
             mainSocket = listener.AcceptSocket();
             s = new NetworkStream(mainSocket); 
-            //updatetmr.Start(); 
-            //pictureBox.Image.Save("test.bmp");
-            //System.Diagnostics.Process.Start("test.bmp"); 
-            timer1.Start(); 
-            SetHtml(); 
-            
+        }
+        public string irc_server = "irc.geekshed.net";
+        public int irc_port = 6667;
+        public string irc_channel = "#default_epic_pillow"; 
+        public void readConfig()
+        {
+            try
+            {
+                StreamReader sr = new StreamReader("config.txt");
+                string readConfig = sr.ReadToEnd();
+                sr.Close();
+                string[] configSplit = readConfig.Split('\n');
+                for (int i = 0; i < configSplit.Length; i++)
+                {
+                    if (configSplit[i].StartsWith("irc_server="))
+                    {
+                        irc_server = configSplit[i].Substring(11);
+                    }
+                    if (configSplit[i].StartsWith("irc_port="))
+                    {
+                        irc_port = Int32.Parse(configSplit[i].Substring(9));
+                    }
+                    if (configSplit[i].StartsWith("irc_channel="))
+                    {
+                        irc_channel = configSplit[i].Substring(12);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString()); 
+            }
         }
         public static byte[] ImageToByte(Image img)
         {
@@ -84,22 +128,35 @@
             try
             {
                 continuousUpdate();
+                
             }
             catch (Exception ex)
             {
 
             }
         }
-        public Bitmap bmp; 
+        public Bitmap bmp;
+        public bool isConnected = false; 
         public void continuousUpdate()
         {
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
             pictureBox.Image = bmp;
-            byte[] sendBytes = ImageToByte((Image)bmp);
-            s.Write(sendBytes, 0, sendBytes.Length); 
-            s.Flush(); 
+            if (isConnected)
+            {
+                continuousNetwork();
+            }
+            //bmp.Dispose();
+            GC.Collect(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
+        }
+        public void continuousNetwork()
+        {
+            byte[] sendBytes = ImageToByte((Image)bmp);
+            s.Write(sendBytes, 0, sendBytes.Length);
+            s.Flush();
+            
+            
         }
 		private void SetHtml()
 		{

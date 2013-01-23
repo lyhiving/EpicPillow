@@ -156,7 +156,6 @@
 			var style = (IHTMLStyle2)document.body.style;
 			style.overflowX = Hidden;
 			style.overflowY = Hidden;
-
             int width;
             int height; 
             var doc2 = (IHTMLDocument2)browser.Document.DomDocument;
