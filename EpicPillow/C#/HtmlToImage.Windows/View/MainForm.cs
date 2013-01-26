@@ -58,20 +58,20 @@
         {
             try
             {
-                //initNet(); 
-                pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
-                pubBrowse.startConverter();
-                pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
                 if (System.IO.File.Exists("config.txt"))
                 {
                     readConfig();
                 }
                 else
                 {
-                    StreamWriter sw = new StreamWriter("config.txt");
-                    sw.Close();
-                    MessageBox.Show("config.txt created - please write your config settings"); 
+                    System.Diagnostics.Process.Start("ConfigWrite.exe");
+                    Environment.Exit(0);
                 }
+                //initNet(); 
+                pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+                pubBrowse.startConverter();
+                pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
+                
                 //updatetmr.Start(); 
                 //pictureBox.Image.Save("test.bmp");
                 //System.Diagnostics.Process.Start("test.bmp"); 

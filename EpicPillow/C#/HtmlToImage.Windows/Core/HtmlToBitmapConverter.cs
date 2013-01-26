@@ -145,7 +145,7 @@
 			//MessageBox.Show(browser.Document.Body.ScrollRectangle.Height.ToString());
 			//newSize = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
 			newSize = new Size(width, height); 
-			HideScrollBars(browser);
+			//HideScrollBars(browser);
             resizeCount = 0; 
 		}
 
