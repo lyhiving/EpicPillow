@@ -29,3 +29,15 @@ C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Window
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.MainForm.resources
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.Properties.Resources.resources
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csproj.GenerateResource.Cache
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\Interop.MSHTML.dll
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csproj.ResolveComReference.cache
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\EpicPillow.exe
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\EpicPillow.pdb
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\EpicPillow.exe
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\EpicPillow.pdb
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\Cyotek.Windows.Forms.ImageBox.dll
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\Cyotek.Windows.Forms.ImageBox.pdb
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csprojResolveAssemblyReference.cache
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.MainForm.resources
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.Properties.Resources.resources
+C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csproj.GenerateResource.Cache
