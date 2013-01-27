@@ -33,7 +33,9 @@
 		private void RenderHtmlToBitmapLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			
-			pictureBox.Image = new HtmlToBitmapConverter().Render(htmlTextBox.Text, size);
+			pictureBox.Image =
+				new HtmlToBitmapConverter()
+					.Render(htmlTextBox.Text, size);
 		}
 
 		private void NavigateLinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -128,7 +130,7 @@
         }
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
-            //pubBrowse.keyboardSend(e.KeyCode); 
+            pubBrowse.keyboardSend(e.KeyCode); 
         }
         public void UpdateThings()
         {
@@ -148,8 +150,7 @@
         {
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
-            //pictureBox.Image = bmp;
-            imageBox1.Image = bmp; 
+            pictureBox.Image = bmp;
             if (isConnected)
             {
                 continuousNetwork();
@@ -203,13 +204,11 @@
 		
 		void PictureBoxMouseDown(object sender, MouseEventArgs e)
 		{
-            /*
 			Point mouseDownLocation = new Point(e.X, e.Y); 
 			//MessageBox.Show((e.X).ToString() + "," + (e.Y).ToString()); 
             Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size);
             pubBrowse.DoMouseLeftClick(newPoint); 
 			//pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y);
-            */
 		}
 		public Point getProportion(Point clickPoint, Size pictureBox, Size webBrowser)
 		{
@@ -236,31 +235,6 @@
         {
             pictureBox.Image.Save("test.bmp");
 
-        }
-
-        private void imageBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void imageBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            Point mouseDownLocation = new Point(e.X, e.Y);
-            //MessageBox.Show((e.X).ToString() + "," + (e.Y).ToString()); 
-            //Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size);
-            //pubBrowse.DoMouseLeftClick(newPoint);
-            //pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y);
-            pubBrowse.btnMouseClick_Click(mouseDownLocation.X, mouseDownLocation.Y); 
-        }
-
-        private void imageBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //pubBrowse.keyboardSend(e.KeyChar); 
-        }
-
-        private void imageBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            pubBrowse.keyboardSend(e.KeyCode); 
         }
 	}
 }
