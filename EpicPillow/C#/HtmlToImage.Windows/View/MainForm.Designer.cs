@@ -34,16 +34,21 @@
             this.navigateLinkLabel = new System.Windows.Forms.LinkLabel();
             this.htmlTextBox = new System.Windows.Forms.TextBox();
             this.renderLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(20, 13);
             this.label1.TabIndex = 0;
@@ -51,20 +56,19 @@
             // 
             // urlTextBox
             // 
-            this.urlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.urlTextBox.Location = new System.Drawing.Point(12, 25);
+            this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.urlTextBox.Location = new System.Drawing.Point(0, 13);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(361, 20);
+            this.urlTextBox.Size = new System.Drawing.Size(610, 20);
             this.urlTextBox.TabIndex = 1;
             this.urlTextBox.Text = "http://www.youtube.com/embed/rgyL08nhtkw?autoplay=1";
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
             // 
             // navigateLinkLabel
             // 
-            this.navigateLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.navigateLinkLabel.AutoSize = true;
-            this.navigateLinkLabel.Location = new System.Drawing.Point(378, 28);
+            this.navigateLinkLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.navigateLinkLabel.Location = new System.Drawing.Point(0, 33);
             this.navigateLinkLabel.Name = "navigateLinkLabel";
             this.navigateLinkLabel.Size = new System.Drawing.Size(21, 13);
             this.navigateLinkLabel.TabIndex = 2;
@@ -95,21 +99,6 @@
             this.renderLinkLabel.Text = "Render";
             this.renderLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.RenderHtmlToBitmapLinkClicked);
             // 
-            // pictureBox
-            // 
-            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(10, 60);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(592, 320);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox.TabIndex = 5;
-            this.pictureBox.TabStop = false;
-            this.pictureBox.Click += new System.EventHandler(this.PictureBoxClick);
-            this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDown);
-            // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
@@ -117,7 +106,7 @@
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Location = new System.Drawing.Point(0, 46);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(610, 23);
             this.button1.TabIndex = 6;
@@ -125,13 +114,48 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.AutoScroll = true;
+            this.tabPage1.AutoScrollMargin = new System.Drawing.Size(20, 20);
+            this.tabPage1.Controls.Add(this.pictureBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(602, 295);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "View Window";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(124, 100);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox.TabIndex = 5;
+            this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.PictureBoxClick);
+            this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBoxMouseDown);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 69);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(610, 321);
+            this.tabControl1.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(610, 390);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.renderLinkLabel);
             this.Controls.Add(this.htmlTextBox);
             this.Controls.Add(this.navigateLinkLabel);
@@ -141,7 +165,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EpicPillow Server";
             this.Load += new System.EventHandler(this.MainFormLoad);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,10 +180,12 @@
 		public System.Windows.Forms.TextBox urlTextBox;
 		private System.Windows.Forms.LinkLabel navigateLinkLabel;
 		private System.Windows.Forms.TextBox htmlTextBox;
-		private System.Windows.Forms.LinkLabel renderLinkLabel;
-		public System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.LinkLabel renderLinkLabel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabPage1;
+        public System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.TabControl tabControl1;
 	}
 }
 
