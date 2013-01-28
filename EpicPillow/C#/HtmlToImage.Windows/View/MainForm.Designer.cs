@@ -61,7 +61,7 @@
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(610, 20);
             this.urlTextBox.TabIndex = 1;
-            this.urlTextBox.Text = "http://www.youtube.com/embed/rgyL08nhtkw?autoplay=1";
+            this.urlTextBox.Text = "http://www.youtube.com/embed/4NCERdh_-j4?autoplay=1";
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
             // 
             // navigateLinkLabel
@@ -101,7 +101,6 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // button1

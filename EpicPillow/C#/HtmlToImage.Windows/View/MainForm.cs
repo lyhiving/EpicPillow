@@ -37,7 +37,10 @@
 				new HtmlToBitmapConverter()
 					.Render(htmlTextBox.Text, size);
 		}
-
+        public void updateAddress()
+        {
+            urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString(); 
+        }
 		private void NavigateLinkLabelLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
             navigateLink(); 
@@ -47,10 +50,15 @@
             try
             {
                 pubBrowse.delegateNav(new Uri(urlTextBox.Text));
+                //urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString();
             }
             catch (Exception ex)
             {
 
+            }
+            finally
+            {
+                urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString(); 
             }
         }
         public int port = 1261; 
@@ -151,6 +159,7 @@
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
             pictureBox.Image = bmp;
+            
             if (isConnected)
             {
                 continuousNetwork();

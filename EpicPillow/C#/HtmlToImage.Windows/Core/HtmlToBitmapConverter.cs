@@ -26,8 +26,8 @@
 		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
 		public Uri navURL;
-        public Size defSize = new Size(1366,768); 
-		public Size newSize = new Size(1366,768); 
+        public Size defSize = new Size(800,600); 
+		public Size newSize = new Size(800,600); 
 		public Size minSize = new Size(640, 480);
         public List<IntPtr> Handlez = new List<IntPtr>(); 
 		public int minPix; 
@@ -66,6 +66,7 @@
 				var.AttachEventHandler("onclick", LinkClicked);
 			}
             */
+            
 		}
 		string url = ""; 
 		private void LinkClicked(object sender, EventArgs e)
@@ -97,8 +98,10 @@
         {
             NavigateAndWaitForLoad(pubbrowser, link, SleepTimeMiliseconds); 
         }
+        
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri, int waitTime, bool resize = true)
 		{
+            
             newResize = false; 
             browser.Size = defSize; 
 			navURL = uri; 
@@ -188,21 +191,30 @@
         Bitmap screenie; 
 		private Bitmap GetBitmapFromControl(WebBrowser browser, Size size)
 		{
-            screenie = null; 
-			screenie = new Bitmap(size.Width, size.Height);
+            try
+            {
+                //screenie = null; 
+                screenie = new Bitmap(size.Width, size.Height);
 
-			NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
-			return screenie;
+                NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
+                return screenie;
+            }
+            catch (Exception ex)
+            {
+                screenie = new Bitmap(defSize.Width, defSize.Height);
+                NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
+                return screenie; 
+            }
 		}
         public bool newResize = false;
         public int resizeCount = 0;
-        public int maxResize = 14;
+        public int maxResize = 69;
         public Bitmap delegateScreenshot()
         {
             //if (newResize == false)
             //{
-            if (resizeCount < maxResize)
-            {
+            //if (resizeCount < maxResize)
+            //{
                 try
                 {
                     resizeCount++;
@@ -225,7 +237,7 @@
                 {
 
                 }
-            }
+            //}
             //}
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }
