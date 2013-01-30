@@ -26,8 +26,8 @@
 		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
 		public Uri navURL;
-        public Size defSize = new Size(800,600); 
-		public Size newSize = new Size(800,600); 
+        public Size defSize = new Size(1368,768); 
+		public Size newSize = new Size(1368,768); 
 		public Size minSize = new Size(640, 480);
         public List<IntPtr> Handlez = new List<IntPtr>(); 
 		public int minPix; 
@@ -106,23 +106,7 @@
             browser.Size = defSize; 
 			navURL = uri; 
 			browser.Navigate(uri);
-			var count = 0;
-
-			while (browser.ReadyState != WebBrowserReadyState.Complete)
-			{
-				Thread.Sleep(SleepTimeMiliseconds);
-				
-				Application.DoEvents();
-				count++;
-				
-				if (count > waitTime / SleepTimeMiliseconds)
-				{
-					break;
-				}
-			}
-			//browser.Document.Body.ClientRectangle.Size = defSize; 
-			//browser.Size = defSize; 
-			//while (browser.Document.Body == null)
+			
             while (browser.ReadyState != WebBrowserReadyState.Complete)
 			{
 				Application.DoEvents();

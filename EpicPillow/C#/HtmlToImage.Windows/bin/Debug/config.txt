@@ -1,3 +1,0 @@
-irc_server=irc.geekshed.net
-irc_port=6667
-irc_channel=#default_epic_pillow
