@@ -6,5 +6,3 @@ C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Clien
 C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Client\obj\Debug\ResGen.write.1.tlog
 C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.exe
 C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.pdb
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.exe
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.pdb

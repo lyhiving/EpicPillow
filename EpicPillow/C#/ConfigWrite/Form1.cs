@@ -25,13 +25,13 @@ namespace ConfigWrite
         {
             if (textBox1.Text != null && textBox2.Text != null && textBox3.Text != null)
             {
-                string writeConfig = "irc_server=" + textBox1.Text + Environment.NewLine + "irc_port=" + textBox2.Text + Environment.NewLine + "irc_channel=" + textBox3.Text + Environment.NewLine + "irc_nick=" + textBox4.Text;
+                string writeConfig = "irc_server=" + textBox1.Text + Environment.NewLine + "irc_port=" + textBox2.Text + Environment.NewLine + "irc_channel=" + textBox3.Text;
                 StreamWriter sw = new StreamWriter("config.txt");
                 sw.Write(writeConfig);
                 sw.Close();
                 MessageBox.Show("Config Settings Written to config.txt");
                 System.Diagnostics.Process.Start("config.txt");
-                //System.Diagnostics.Process.Start("EpicPillow.exe");
+                System.Diagnostics.Process.Start("EpicPillow.exe");
                 Environment.Exit(0); 
             }
             else
@@ -42,21 +42,14 @@ namespace ConfigWrite
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            int firstHalf = rnd.Next(999);
-            int secondHalf = rnd.Next(999);
-            string randomString = firstHalf.ToString() + secondHalf.ToString();
-            textBox4.Text = randomString; 
             if (System.IO.File.Exists("config.txt"))
             {
                 readConfig();
             }
-            
         }
         public string irc_server;
         public string irc_port_string;
         public string irc_channel;
-        public string irc_nick; 
         public void readConfig()
         {
             try
@@ -79,15 +72,10 @@ namespace ConfigWrite
                     {
                         irc_channel = configSplit[i].Substring(12);
                     }
-                    if (configSplit[i].StartsWith("irc_nick="))
-                    {
-                        irc_nick = configSplit[i].Substring(9); 
-                    }
                 }
                 textBox1.Text = irc_server;
                 textBox2.Text = irc_port_string;
-                textBox3.Text = irc_channel;
-                textBox4.Text = irc_nick; 
+                textBox3.Text = irc_channel; 
             }
             catch (Exception ex)
             {

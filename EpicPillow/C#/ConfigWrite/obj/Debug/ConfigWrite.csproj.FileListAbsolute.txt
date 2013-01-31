@@ -5,10 +5,3 @@ C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\De
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.csproj.GenerateResource.Cache
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.exe
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.pdb
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\bin\Debug\ConfigWrite.exe
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\bin\Debug\ConfigWrite.pdb
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.Form1.resources
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.Properties.Resources.resources
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.csproj.GenerateResource.Cache
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.exe
-C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\ConfigWrite\obj\Debug\ConfigWrite.pdb
