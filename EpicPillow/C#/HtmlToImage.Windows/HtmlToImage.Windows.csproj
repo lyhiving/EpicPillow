@@ -84,6 +84,8 @@
     <Compile Include="Core\HtmlToBitmapConverter.cs" />
     <Compile Include="Core\NativeMethods.cs" />
     <Compile Include="Core\Rect.cs" />
+    <Compile Include="ImageStreamingServer.cs" />
+    <Compile Include="MjpegWriter.cs" />
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,7 +11,9 @@
 	using System.Runtime.InteropServices;
     using System.Net;
     using System.Net.Sockets;
-    using System.IO; 
+    using System.IO;
+    using rtaNetworking.Streaming;
+    using System.Threading; 
 	public partial class MainForm : Form
 	{
 		
@@ -74,7 +76,11 @@
                 //pictureBox.Image.Save("test.bmp");
                 //System.Diagnostics.Process.Start("test.bmp"); 
                 timer1.Start();
-                SetHtml();
+                //startContinuousThread(); 
+                //SetHtml();
+                ImageStreamingServer server = new ImageStreamingServer();
+                server.ImagesSource = pictureNumerator();
+                server.Start(); 
             }
             catch (Exception ex)
             {
@@ -82,6 +88,7 @@
             }
             
         }
+        
         public static byte[] ImageToByte(Image img)
         {
             ImageConverter converter = new ImageConverter();
@@ -109,20 +116,12 @@
         List<Image> picList = new List<Image>(); 
         public void continuousUpdate()
         {
-            bmp = null; 
+            //bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
-            pictureBox.Image = bmp;
+            pictureBox.Image = pubBrowse.delegateScreenshot();
             //bmp.Dispose();
             GC.Collect(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
-        }
-        public void continuousNetwork()
-        {
-            byte[] sendBytes = ImageToByte((Image)bmp);
-            s.Write(sendBytes, 0, sendBytes.Length);
-            s.Flush();
-            
-            
         }
 		private void SetHtml()
 		{
@@ -193,6 +192,73 @@
             pictureBox.Image.Save("test.bmp");
 
         }
+        public IEnumerable<Image> pictureNumerator()
+        {
+            /*
+            Bitmap dstImage; 
+            while (true)
+            {
+                dstImage = pubBrowse.delegateScreenshot();
+                dstImage.Save("test.bmp"); 
+                yield return dstImage;
 
+            }
+            dstImage.Dispose(); 
+            yield break;
+            */
+            //Image test = Image.FromFile("test.bmp"); 
+            int width = 1368;
+            int height = 768;
+            bool showCursor = true; 
+            Size size = new Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height);
+
+            Bitmap srcImage = new Bitmap(size.Width, size.Height);
+            Graphics srcGraphics = Graphics.FromImage(srcImage);
+
+            bool scaled = (width != size.Width || height != size.Height);
+
+            Bitmap dstImage = srcImage;
+            Graphics dstGraphics = srcGraphics;
+
+            if (scaled)
+            {
+                dstImage = new Bitmap(width, height);
+                dstGraphics = Graphics.FromImage(dstImage);
+            }
+
+            Rectangle src = new Rectangle(0, 0, size.Width, size.Height);
+            Rectangle dst = new Rectangle(0, 0, width, height);
+            Size curSize = new Size(32, 32);
+
+            while (true)
+            {
+                srcGraphics.CopyFromScreen(0, 0, 0, 0, size);
+
+                if (showCursor)
+                    Cursors.Default.Draw(srcGraphics, new Rectangle(Cursor.Position, curSize));
+
+                if (scaled)
+                    dstGraphics.DrawImage(srcImage, dst, src, GraphicsUnit.Pixel);
+
+                //bmp = null; 
+                //bmp = pubBrowse.delegateScreenshot();
+                //pictureBox.Image = pubBrowse.delegateScreenshot(); 
+                //GC.Collect();
+                //MessageBox.Show("hello"); 
+                //yield return dstImage;
+                //yield return test; 
+                yield return bmp; 
+                //yield return pubBrowse.delegateScreenshot(); 
+
+            }
+
+            srcGraphics.Dispose();
+            dstGraphics.Dispose();
+
+            srcImage.Dispose();
+            dstImage.Dispose();
+
+            yield break;
+        }
 	}
 }
