@@ -1,11 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: pillybuilt
- * Date: 1/21/2013
- * Time: 2:51 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
+﻿
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,5 +22,6 @@ namespace EpicCow_Client
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
+
 	}
 }
