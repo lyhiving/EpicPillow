@@ -66,16 +66,6 @@
         {
             try
             {
-                if (System.IO.File.Exists("config.txt"))
-                {
-                    readConfig();
-                }
-                else
-                {
-                    System.Diagnostics.Process.Start("ConfigWrite.exe");
-                    Environment.Exit(0);
-                }
-                //initNet(); 
                 pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
@@ -92,52 +82,6 @@
             }
             
         }
-        public void initNet()
-        {
-            listener = new TcpListener(port);
-            listener.Start();
-            mainSocket = listener.AcceptSocket();
-            s = new NetworkStream(mainSocket); 
-        }
-        public string irc_server = "irc.geekshed.net";
-        public int irc_port = 6667;
-        public string irc_channel = "#default_epic_pillow";
-        public string irc_port_string;
-        public string irc_nick;
-        public void readConfig()
-        {
-            try
-            {
-                StreamReader sr = new StreamReader("config.txt");
-                string readConfig = sr.ReadToEnd();
-                sr.Close();
-                string[] configSplit = readConfig.Split('\n');
-                for (int i = 0; i < configSplit.Length; i++)
-                {
-                    if (configSplit[i].StartsWith("irc_server="))
-                    {
-                        irc_server = configSplit[i].Substring(11);
-                    }
-                    if (configSplit[i].StartsWith("irc_port="))
-                    {
-                        irc_port_string = configSplit[i].Substring(9);
-                        irc_port = Int32.Parse(irc_port_string); 
-                    }
-                    if (configSplit[i].StartsWith("irc_channel="))
-                    {
-                        irc_channel = configSplit[i].Substring(12);
-                    }
-                    if (configSplit[i].StartsWith("irc_nick="))
-                    {
-                        irc_nick = "SERVER_" + configSplit[i].Substring(9);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
         public static byte[] ImageToByte(Image img)
         {
             ImageConverter converter = new ImageConverter();
@@ -146,30 +90,6 @@
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
             pubBrowse.keyboardSend(e.KeyCode); 
-        }
-        public System.Net.Sockets.Socket sock;
-        string buf;
-        string mail;
-        string rmsg;
-        string owner;
-        public void irc_Start()
-        {
-            owner = irc_nick;
-            System.Net.IPHostEntry ipHostInfo = System.Net.Dns.GetHostEntry(irc_server);
-            System.Net.IPEndPoint EP = new System.Net.IPEndPoint(ipHostInfo.AddressList[0], port);
-            sock = new System.Net.Sockets.Socket(EP.Address.AddressFamily, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
-            sock.Connect(irc_server, irc_port);
-            send("NICK " + irc_nick);
-            send("USER " + irc_nick + " 0 * :" + owner);
-            send("JOIN " + irc_channel);
-            send("MODE " + irc_nick + " +B");
-
-        }
-        public void send(string msg)
-        {
-            msg += "\r\n";
-            Byte[] data = System.Text.ASCIIEncoding.UTF8.GetBytes(msg);
-            sock.Send(data, msg.Length, System.Net.Sockets.SocketFlags.None);
         }
 
         public void UpdateThings()
@@ -185,17 +105,13 @@
             }
         }
         public Bitmap bmp;
-        public bool isConnected = false; 
+        public bool isConnected = false;
+        List<Image> picList = new List<Image>(); 
         public void continuousUpdate()
         {
             bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
             pictureBox.Image = bmp;
-            
-            if (isConnected)
-            {
-                continuousNetwork();
-            }
             //bmp.Dispose();
             GC.Collect(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
@@ -277,5 +193,6 @@
             pictureBox.Image.Save("test.bmp");
 
         }
+
 	}
 }
