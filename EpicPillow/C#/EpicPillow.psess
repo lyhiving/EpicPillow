@@ -71,6 +71,9 @@
     <Report>
       <Path>EpicPillow130201.vsp</Path>
     </Report>
+    <Report>
+      <Path>EpicPillow130202.vsp</Path>
+    </Report>
   </Reports>
   <Launches>
     <ProjBinary>
