@@ -180,13 +180,13 @@
                 //screenie = null; 
                 screenie = new Bitmap(size.Width, size.Height);
 
-                NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
+                NativeMethods.GetImage(GetDomDocument(), screenie, Color.White);
                 return screenie;
             }
             catch (Exception ex)
             {
                 screenie = new Bitmap(defSize.Width, defSize.Height);
-                NativeMethods.GetImage(browser.Document.DomDocument, screenie, Color.White);
+                NativeMethods.GetImage(GetDomDocument(), screenie, Color.White);
                 return screenie; 
             }
 		}
@@ -302,6 +302,19 @@
         public static void KeyUp(Keys key)
         {
             keybd_event((byte)key, 0, 0x7F, 0); 
+        }
+        public delegate object GetDomHandler(); 
+        public object GetDomDocument()
+        {
+            if (pubbrowser.InvokeRequired)
+            {
+                return pubbrowser.Invoke(new GetDomHandler(GetDomDocument)) as object;
+
+            }
+            else
+            {
+                return pubbrowser.Document.DomDocument; 
+            }
         }
 	}
 }

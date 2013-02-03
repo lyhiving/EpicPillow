@@ -75,7 +75,8 @@
                 //updatetmr.Start(); 
                 //pictureBox.Image.Save("test.bmp");
                 //System.Diagnostics.Process.Start("test.bmp"); 
-                timer1.Start();
+                //timer1.Start();
+                startUpdate(); 
                 //startContinuousThread(); 
                 //SetHtml();
                 ImageStreamingServer server = new ImageStreamingServer();
@@ -113,12 +114,24 @@
         }
         public Bitmap bmp;
         public bool isConnected = false;
-        List<Image> picList = new List<Image>(); 
+        List<Image> picList = new List<Image>();
+        public void startUpdate()
+        {
+            Thread t = new Thread(updateThread);
+            t.Start(); 
+        }
+        public void updateThread()
+        {
+            while (true)
+            {
+                continuousUpdate(); 
+            }
+        }
         public void continuousUpdate()
         {
             //bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
-            pictureBox.Image = pubBrowse.delegateScreenshot();
+            //pictureBox.Image = pubBrowse.delegateScreenshot();
             //bmp.Dispose();
             GC.Collect(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
