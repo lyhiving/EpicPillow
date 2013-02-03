@@ -29,7 +29,7 @@
         public Size defSize = new Size(1368,768); 
 		public Size newSize = new Size(1368,768); 
 		public Size minSize = new Size(640, 480);
-        public List<IntPtr> Handlez = new List<IntPtr>(); 
+        //public List<IntPtr> Handlez = new List<IntPtr>(); 
 		public int minPix; 
 		public Bitmap Render(string html, Size size)
 		{
@@ -228,15 +228,12 @@
         
         public void btnMouseClick_Click(int xMouse, int yMouse)
         {
-            //int x = 100; // X coordinate of the click
-            //int y = 80; // Y coordinate of the click
             int x = xMouse;
             int y = yMouse; 
             
             IntPtr handle = pubbrowser.Handle;
             StringBuilder className = new StringBuilder(100);
-            while (className.ToString() != "Internet Explorer_Server") // The class control for the browser
-            //while (className.ToString() != "TabWindowClass") 
+            while (className.ToString() != "Internet Explorer_Server") 
             {
                 
                 handle = GetWindow(handle, 5); // Get a handle to the child window

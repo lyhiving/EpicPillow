@@ -8,3 +8,12 @@ C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Clien
 C:\Users\pillybuilt\Documents\SharpDevelop Projects\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.pdb
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.exe
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.pdb
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.exe
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.pdb
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\bin\Debug\EpicCow_Client.exe
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\bin\Debug\EpicCow_Client.pdb
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.csprojResolveAssemblyReference.cache
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.MainForm.resources
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\obj\Debug\EpicCow_Client.csproj.GenerateResource.Cache
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\bin\Debug\MjpegProcessor.dll
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\EpicCow_Client\EpicCow_Client\bin\Debug\MjpegProcessor.pdb

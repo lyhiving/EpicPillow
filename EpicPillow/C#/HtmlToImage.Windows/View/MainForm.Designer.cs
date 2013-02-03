@@ -39,7 +39,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button2 = new System.Windows.Forms.Button();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -62,7 +61,7 @@
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(610, 20);
             this.urlTextBox.TabIndex = 1;
-            this.urlTextBox.Text = "http://www.youtube.com/embed/4NCERdh_-j4?autoplay=1";
+            this.urlTextBox.Text = "http://www.youtube.com/embed/JWvgETOo5ek?autoplay=1";
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
             // 
             // navigateLinkLabel
@@ -131,6 +130,7 @@
             // pictureBox
             // 
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pictureBox.Location = new System.Drawing.Point(3, 0);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(124, 100);
@@ -150,21 +150,11 @@
             this.tabControl1.Size = new System.Drawing.Size(610, 321);
             this.tabControl1.TabIndex = 7;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(532, 45);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(610, 390);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.renderLinkLabel);
@@ -197,7 +187,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         public System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.Button button2;
 	}
 }
 

@@ -80,7 +80,7 @@
                 //SetHtml();
                 ImageStreamingServer server = new ImageStreamingServer();
                 server.ImagesSource = pictureNumerator();
-                server.Start(port); 
+                server.Start(8080); 
             }
             catch (Exception ex)
             {
