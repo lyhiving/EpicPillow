@@ -69,6 +69,9 @@
     <BaseAddress>4194304</BaseAddress>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MjpegProcessor">
+      <HintPath>..\..\..\..\..\..\Downloads\mjpeg-97494\MJPEG\MjpegProcessor\bin\Debug\MjpegProcessor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

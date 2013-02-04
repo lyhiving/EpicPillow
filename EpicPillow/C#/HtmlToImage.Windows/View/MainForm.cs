@@ -13,15 +13,14 @@
     using System.Net.Sockets;
     using System.IO;
     using rtaNetworking.Streaming;
-    using System.Threading; 
+    using System.Threading;
+    using MjpegProcessor; 
 	public partial class MainForm : Form
 	{
 		
 		public Size size = new Size(1920, 1080);
         private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter();
-        public Socket mainSocket;
-        public NetworkStream s;
-        public TcpListener listener; 
+        MjpegDecoder _mjpeg; 
         public MainForm()
 		{
 			InitializeComponent();
@@ -35,9 +34,7 @@
 		private void RenderHtmlToBitmapLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			
-			pictureBox.Image =
-				new HtmlToBitmapConverter()
-					.Render(htmlTextBox.Text, size);
+			pictureBox.Image = new HtmlToBitmapConverter().Render(htmlTextBox.Text, size);
 		}
         public void updateAddress()
         {
@@ -63,7 +60,8 @@
                 urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString(); 
             }
         }
-        public int port = 1261; 
+        public int port = 1261;
+        public int outport = 8080; 
         void startup()
         {
             try
@@ -71,17 +69,23 @@
                 pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
+                _mjpeg = new MjpegDecoder();
+                _mjpeg.FrameReady += mjpeg_FrameReady;
                 
                 //updatetmr.Start(); 
                 //pictureBox.Image.Save("test.bmp");
                 //System.Diagnostics.Process.Start("test.bmp"); 
                 //timer1.Start();
                 startUpdate(); 
+
                 //startContinuousThread(); 
                 //SetHtml();
                 ImageStreamingServer server = new ImageStreamingServer();
                 server.ImagesSource = pictureNumerator();
-                server.Start(8080); 
+                server.Start(outport);
+                //MessageBox.Show("http://" + LocalIPAddress() + ":" + outport.ToString()); 
+                _mjpeg.ParseStream(new Uri("http://" + LocalIPAddress() + ":" + outport.ToString())); 
+                //_mjpeg.ParseStream(new Uri("http://192.168.0.2:8080")); 
             }
             catch (Exception ex)
             {
@@ -89,7 +93,36 @@
             }
             
         }
-        
+        public void startupdatePicture()
+        {
+            Thread t = new Thread(updatePicture);
+            t.Start(); 
+        }
+        public void updatePicture()
+        {
+            while (true)
+            {
+                pictureBox.Image = _mjpeg.Bitmap; 
+            }
+        }
+        public string LocalIPAddress()
+        {
+            IPHostEntry host;
+            string localIP = "";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ip.ToString();
+                }
+            }
+            return localIP;
+        }
+        private void mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
+        {
+            pictureBox.Image = e.Bitmap;
+        }
         public static byte[] ImageToByte(Image img)
         {
             ImageConverter converter = new ImageConverter();
@@ -118,7 +151,9 @@
         public void startUpdate()
         {
             Thread t = new Thread(updateThread);
+            //t.Priority = ThreadPriority.AboveNormal; 
             t.Start(); 
+            
         }
         public void updateThread()
         {
@@ -136,24 +171,9 @@
             GC.Collect(); 
             //pubBrowse.btnMouseClick_Click(100, 80); 
         }
-		private void SetHtml()
-		{
-			const string Html = 
-				"<html>" + "\r\n" +
-				"\t<body>" + "\r\n" +
-				"\t\tleft" + "\r\n" +
-				"\t\t<div style=\"text-align: right\">" + "\r\n" +
-				"\t\t\tright" + "\r\n" +
-				"\t\t</div>" + "\r\n" +
-				"\t</body>" + "\r\n" +
-			    "</html>";
-
-			htmlTextBox.Text = Html;
-		}
-
         private void timer1_Tick(object sender, EventArgs e)
         {
-            continuousUpdate(); 
+            pictureBox.Image = _mjpeg.Bitmap; 
         }
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -220,39 +240,8 @@
             yield break;
             */
             //Image test = Image.FromFile("test.bmp"); 
-            int width = 1368;
-            int height = 768;
-            bool showCursor = true; 
-            Size size = new Size(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width, System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height);
-
-            Bitmap srcImage = new Bitmap(size.Width, size.Height);
-            Graphics srcGraphics = Graphics.FromImage(srcImage);
-
-            bool scaled = (width != size.Width || height != size.Height);
-
-            Bitmap dstImage = srcImage;
-            Graphics dstGraphics = srcGraphics;
-
-            if (scaled)
-            {
-                dstImage = new Bitmap(width, height);
-                dstGraphics = Graphics.FromImage(dstImage);
-            }
-
-            Rectangle src = new Rectangle(0, 0, size.Width, size.Height);
-            Rectangle dst = new Rectangle(0, 0, width, height);
-            Size curSize = new Size(32, 32);
-
             while (true)
             {
-                srcGraphics.CopyFromScreen(0, 0, 0, 0, size);
-
-                if (showCursor)
-                    Cursors.Default.Draw(srcGraphics, new Rectangle(Cursor.Position, curSize));
-
-                if (scaled)
-                    dstGraphics.DrawImage(srcImage, dst, src, GraphicsUnit.Pixel);
-
                 //bmp = null; 
                 //bmp = pubBrowse.delegateScreenshot();
                 //pictureBox.Image = pubBrowse.delegateScreenshot(); 
@@ -264,12 +253,6 @@
                 //yield return pubBrowse.delegateScreenshot(); 
 
             }
-
-            srcGraphics.Dispose();
-            dstGraphics.Dispose();
-
-            srcImage.Dispose();
-            dstImage.Dispose();
 
             yield break;
         }

@@ -39,3 +39,5 @@ C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.MainForm.resources
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.Properties.Resources.resources
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csproj.GenerateResource.Cache
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\MjpegProcessor.dll
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\MjpegProcessor.pdb
