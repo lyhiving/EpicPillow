@@ -49,7 +49,6 @@
             try
             {
                 pubBrowse.delegateNav(new Uri(urlTextBox.Text));
-                //urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString();
             }
             catch (Exception ex)
             {
@@ -61,7 +60,8 @@
             }
         }
         public int port = 1261;
-        public int outport = 8080; 
+        public int outport = 8080;
+        ImageStreamingServer server = new ImageStreamingServer();
         void startup()
         {
             try
@@ -71,27 +71,29 @@
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
                 _mjpeg = new MjpegDecoder();
                 _mjpeg.FrameReady += mjpeg_FrameReady;
-                
-                //updatetmr.Start(); 
-                //pictureBox.Image.Save("test.bmp");
-                //System.Diagnostics.Process.Start("test.bmp"); 
-                //timer1.Start();
                 startUpdate(); 
-
-                //startContinuousThread(); 
-                //SetHtml();
-                ImageStreamingServer server = new ImageStreamingServer();
                 server.ImagesSource = pictureNumerator();
                 server.Start(outport);
-                //MessageBox.Show("http://" + LocalIPAddress() + ":" + outport.ToString()); 
-                _mjpeg.ParseStream(new Uri("http://" + LocalIPAddress() + ":" + outport.ToString())); 
-                //_mjpeg.ParseStream(new Uri("http://192.168.0.2:8080")); 
+                parseWait(); 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString()); 
             }
             
+        }
+        public void parseWait()
+        {
+            Thread t = new Thread(mjpegParse);
+            t.Start(); 
+        }
+        public void mjpegParse()
+        {
+            while (!server.IsRunning)
+            {
+                Thread.Sleep(8000); 
+            }
+            _mjpeg.ParseStream(new Uri("http://" + LocalIPAddress() + ":" + outport.ToString()));
         }
         public void startupdatePicture()
         {
@@ -142,7 +144,6 @@
             }
             catch (Exception ex)
             {
-
             }
         }
         public Bitmap bmp;
@@ -151,7 +152,6 @@
         public void startUpdate()
         {
             Thread t = new Thread(updateThread);
-            //t.Priority = ThreadPriority.AboveNormal; 
             t.Start(); 
             
         }
@@ -164,12 +164,8 @@
         }
         public void continuousUpdate()
         {
-            //bmp = null; 
             bmp = pubBrowse.delegateScreenshot();
-            //pictureBox.Image = pubBrowse.delegateScreenshot();
-            //bmp.Dispose();
             GC.Collect(); 
-            //pubBrowse.btnMouseClick_Click(100, 80); 
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -183,28 +179,20 @@
 		
 		void Button1Click(object sender, EventArgs e)
 		{
-			//pubBrowse.btnMouseClick_Click(Int32.Parse(textBox1.Text), Int32.Parse(textBox2.Text)); 
 		}
-		
-		
 		void PictureBoxClick(object sender, EventArgs e)
 		{
 		}
-		
 		void PictureBoxMouseDown(object sender, MouseEventArgs e)
 		{
 			Point mouseDownLocation = new Point(e.X, e.Y); 
-			//MessageBox.Show((e.X).ToString() + "," + (e.Y).ToString()); 
             Point newPoint = getProportion(mouseDownLocation, pictureBox.Size, pubBrowse.pubbrowser.Size);
             pubBrowse.DoMouseLeftClick(newPoint); 
-			//pubBrowse.btnMouseClick_Click(newPoint.X, newPoint.Y);
 		}
 		public Point getProportion(Point clickPoint, Size pictureBox, Size webBrowser)
 		{
 			float newX = (clickPoint.X * webBrowser.Width)/pictureBox.Width;
 			float newY = (clickPoint.Y * webBrowser.Height)/pictureBox.Height;
-			
-			//return new Point((int)Math.Floor(newX), (int)Math.Floor(newY));
             return new Point((int)Math.Round(newX), (int)Math.Round(newY)); 
 		}
 		
@@ -227,31 +215,9 @@
         }
         public IEnumerable<Image> pictureNumerator()
         {
-            /*
-            Bitmap dstImage; 
             while (true)
             {
-                dstImage = pubBrowse.delegateScreenshot();
-                dstImage.Save("test.bmp"); 
-                yield return dstImage;
-
-            }
-            dstImage.Dispose(); 
-            yield break;
-            */
-            //Image test = Image.FromFile("test.bmp"); 
-            while (true)
-            {
-                //bmp = null; 
-                //bmp = pubBrowse.delegateScreenshot();
-                //pictureBox.Image = pubBrowse.delegateScreenshot(); 
-                //GC.Collect();
-                //MessageBox.Show("hello"); 
-                //yield return dstImage;
-                //yield return test; 
                 yield return bmp; 
-                //yield return pubBrowse.delegateScreenshot(); 
-
             }
 
             yield break;

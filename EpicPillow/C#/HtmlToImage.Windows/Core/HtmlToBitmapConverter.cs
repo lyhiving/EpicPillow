@@ -12,24 +12,18 @@
 
 	public class HtmlToBitmapConverter
 	{
-
 		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
- 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
- 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
- 
 		public WebBrowser pubbrowser; 
-		//public HtmlToImage.Windows.MainForm mainFrm = new HtmlToImage.Windows.MainForm(); 
 		private const int SleepTimeMiliseconds = 69;
 		public Uri navURL;
         public Size defSize = new Size(800,600); 
 		public Size newSize = new Size(800,600); 
 		public Size minSize = new Size(640, 480);
-        //public List<IntPtr> Handlez = new List<IntPtr>(); 
 		public int minPix; 
 		public Bitmap Render(string html, Size size)
 		{
@@ -42,49 +36,22 @@
 		}
 		public void startConverter()
 		{
-            //defSize = Screen.PrimaryScreen.Bounds.Size;
-            //newSize = Screen.PrimaryScreen.Bounds.Size; 
-            
-			//pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading);
 			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
-			//pubbrowser.Document.Click += new HtmlElementEventHandler(docClicked);
 			minPix = minSize.Width * minSize.Height;
-            //Handlez.Add(Flash());
-            //Handlez.Add(pubbrowser.Handle); 
 		}
 		public void docClicked(object sender, HtmlElementEventArgs e)
 		{
-			
 		}
 		private void doneLoading(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-            /*
-			//mainFrm.urlTextBox.Text = pubbrowser.Url.ToString(); 
-			HtmlElementCollection links = pubbrowser.Document.Links;
-			foreach (HtmlElement var in links)
-			{
-				var.AttachEventHandler("onclick", LinkClicked);
-			}
-            */
-            
 		}
 		string url = ""; 
 		private void LinkClicked(object sender, EventArgs e)
 		{
-		/*
-		HtmlElement link = pubbrowser.Document.ActiveElement;
-		url = link.GetAttribute("href");
-		*/
 		}
 		private void cancelWindow(object sender, CancelEventArgs e)
 		{
-			//MessageBox.Show(pubbrowser.StatusText); 
-			
 			e.Cancel = true;
-			//delegateNav(new Uri(url)); 
-			//delegateNav(navURL);
-			//MessageBox.Show(e.ToString()); 
-			//delegateNav(new Uri(e.ToString()));
 		}
 		public Bitmap Render(Uri uri, Size size)
 		{
@@ -111,7 +78,6 @@
 			{
 				Application.DoEvents();
 			}
-			//browser.Size = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
 			int width = defSize.Width;
 			int height = defSize.Height; 
 			if (resize)
@@ -123,16 +89,11 @@
     			width = Math.Max(body2.scrollWidth, root2.scrollWidth);
     			height = Math.Max(root2.scrollHeight, body2.scrollHeight);
 				browser.SetBounds(0, 0, width, height); 
-				//browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
 				width = Math.Max(body2.scrollWidth, root2.scrollWidth);
     			height = Math.Max(root2.scrollHeight, body2.scrollHeight);
     			browser.SetBounds(0, 0, width, height); 
 			}
-			//MessageBox.Show(browser.Document.Body.ScrollRectangle.Width.ToString());
-			//MessageBox.Show(browser.Document.Body.ScrollRectangle.Height.ToString());
-			//newSize = new Size(browser.Document.Body.ScrollRectangle.Width, browser.Document.Body.ScrollRectangle.Height); 
 			newSize = new Size(width, height); 
-			//HideScrollBars(browser);
             resizeCount = 0; 
 		}
 
@@ -152,7 +113,6 @@
             width = Math.Max(body2.scrollWidth, root2.scrollWidth);
             height = Math.Max(root2.scrollHeight, body2.scrollHeight);
             browser.SetBounds(0, 0, width, height);
-            //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
             width = Math.Max(body2.scrollWidth, root2.scrollWidth);
             height = Math.Max(root2.scrollHeight, body2.scrollHeight);
             browser.SetBounds(0, 0, width, height); 
@@ -177,7 +137,6 @@
 		{
             try
             {
-                //screenie = null; 
                 screenie = new Bitmap(size.Width, size.Height);
 
                 NativeMethods.GetImage(GetDomDocument(), screenie, Color.White);
@@ -195,10 +154,6 @@
         public int maxResize = 69;
         public Bitmap delegateScreenshot()
         {
-            //if (newResize == false)
-            //{
-            //if (resizeCount < maxResize)
-            //{
                 try
                 {
                     resizeCount++;
@@ -211,7 +166,6 @@
                     width = Math.Max(body2.scrollWidth, root2.scrollWidth);
                     height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                     pubbrowser.SetBounds(0, 0, width, height);
-                    //browser.SetBounds(0, 0, browser.Document.Body.ClientRectangle.Size.Width, browser.Document.Body.ClientRectangle.Size.Height); 
                     width = Math.Max(body2.scrollWidth, root2.scrollWidth);
                     height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                     pubbrowser.SetBounds(0, 0, width, height);
@@ -219,10 +173,7 @@
                 }
                 catch (Exception ex)
                 {
-
                 }
-            //}
-            //}
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }
         
@@ -230,23 +181,21 @@
         {
             int x = xMouse;
             int y = yMouse; 
-            
             IntPtr handle = pubbrowser.Handle;
             StringBuilder className = new StringBuilder(100);
             while (className.ToString() != "Internet Explorer_Server") 
             {
-                
-                handle = GetWindow(handle, 5); // Get a handle to the child window
+                handle = GetWindow(handle, 5); 
                 GetClassName(handle, className, className.Capacity);
             }
-            IntPtr lParam = (IntPtr)((y << 16) | x); // The coordinates
-            IntPtr wParam = IntPtr.Zero; // Additional parameters for the click (e.g. Ctrl)
-            const uint downCode = 0x201; // Left click down code
-            const uint upCode = 0x202; // Left click up code
+            IntPtr lParam = (IntPtr)((y << 16) | x); 
+            IntPtr wParam = IntPtr.Zero;
+            const uint downCode = 0x201; 
+            const uint upCode = 0x202; 
             SendMessage(Flash(), downCode, wParam, lParam);
             SendMessage(Flash(), upCode, wParam, lParam);
-            SendMessage(handle, downCode, wParam, lParam); // Mouse button down
-            SendMessage(handle, upCode, wParam, lParam); // Mouse button up
+            SendMessage(handle, downCode, wParam, lParam); 
+            SendMessage(handle, upCode, wParam, lParam); 
             
         }
         
@@ -274,18 +223,10 @@
         }
         public void DoMouseLeftClick(Point x)
         {
-            
-            
             btnMouseClick_Click(x.X, x.Y);
-            //PostMessage(Flash(), (uint)WMessages.WM_LBUTTONDOWN, 0, MAKELPARAM(x.X, x.Y));
-            //PostMessage(Flash(), (uint)WMessages.WM_LBUTTONUP, 0, MAKELPARAM(x.X, x.Y));
-            //SetForegroundWindow(pubbrowser.Handle); 
         }
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
-        public static extern IntPtr FindWindow(string lpClassName,
-            string lpWindowName);
-
-        // Activate an application window.
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("USER32.DLL")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
