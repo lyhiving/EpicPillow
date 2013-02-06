@@ -14,13 +14,11 @@
     using System.IO;
     using rtaNetworking.Streaming;
     using System.Threading;
-    using MjpegProcessor; 
 	public partial class MainForm : Form
 	{
 		
 		public Size size = new Size(1920, 1080);
         private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter();
-        MjpegDecoder _mjpeg; 
         public MainForm()
 		{
 			InitializeComponent();
@@ -69,43 +67,16 @@
                 pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
-                _mjpeg = new MjpegDecoder();
-                _mjpeg.FrameReady += mjpeg_FrameReady;
                 startUpdate(); 
                 server.ImagesSource = pictureNumerator();
                 server.Start(outport);
-                parseWait(); 
+                timer1.Start(); 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString()); 
             }
             
-        }
-        public void parseWait()
-        {
-            Thread t = new Thread(mjpegParse);
-            t.Start(); 
-        }
-        public void mjpegParse()
-        {
-            while (!server.IsRunning)
-            {
-                Thread.Sleep(8000); 
-            }
-            _mjpeg.ParseStream(new Uri("http://" + LocalIPAddress() + ":" + outport.ToString()));
-        }
-        public void startupdatePicture()
-        {
-            Thread t = new Thread(updatePicture);
-            t.Start(); 
-        }
-        public void updatePicture()
-        {
-            while (true)
-            {
-                pictureBox.Image = _mjpeg.Bitmap; 
-            }
         }
         public string LocalIPAddress()
         {
@@ -120,10 +91,6 @@
                 }
             }
             return localIP;
-        }
-        private void mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
-        {
-            pictureBox.Image = e.Bitmap;
         }
         public static byte[] ImageToByte(Image img)
         {
@@ -169,7 +136,7 @@
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            pictureBox.Image = _mjpeg.Bitmap; 
+            pictureBox.Image = bmp; 
         }
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -221,6 +188,11 @@
             }
 
             yield break;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(0); 
         }
 	}
 }

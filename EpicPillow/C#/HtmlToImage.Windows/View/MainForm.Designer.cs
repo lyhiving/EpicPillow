@@ -165,6 +165,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EpicPillow Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainFormLoad);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
