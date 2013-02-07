@@ -39,6 +39,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -150,11 +151,23 @@
             this.tabControl1.Size = new System.Drawing.Size(610, 321);
             this.tabControl1.TabIndex = 7;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.checkBox1.Location = new System.Drawing.Point(0, 373);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(610, 17);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "Display";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(610, 390);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.renderLinkLabel);
@@ -188,6 +201,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         public System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.CheckBox checkBox1;
 	}
 }
 

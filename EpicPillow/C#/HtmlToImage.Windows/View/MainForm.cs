@@ -136,7 +136,10 @@
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            pictureBox.Image = bmp; 
+            if (checkBox1.Checked)
+            {
+                pictureBox.Image = bmp;
+            }
         }
 		
 		void MainFormLoad(object sender, EventArgs e)

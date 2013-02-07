@@ -25,7 +25,6 @@ C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Window
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\EpicPillow.pdb
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\EpicPillow.exe
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\bin\Debug\EpicPillow.pdb
-C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csprojResolveAssemblyReference.cache
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.MainForm.resources
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.Properties.Resources.resources
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x86\Debug\HtmlToImage.Windows.csproj.GenerateResource.Cache
