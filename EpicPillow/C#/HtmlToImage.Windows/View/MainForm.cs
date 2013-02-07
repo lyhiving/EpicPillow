@@ -67,7 +67,8 @@
                 pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
-                startUpdate(); 
+                startUpdate();
+                startudpListen(); 
                 server.ImagesSource = pictureNumerator();
                 server.Start(outport);
                 timer1.Start(); 
@@ -141,7 +142,42 @@
                 pictureBox.Image = bmp;
             }
         }
-		
+        public void startudpListen()
+        {
+            Thread t = new Thread(udpListen);
+            t.Start(); 
+        }
+        void udpListen()
+        {
+            byte[] data = new byte[1024];
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 1261);
+            UdpClient newsock = new UdpClient(ipep);
+
+            //Console.WriteLine("Waiting for a client...");
+
+            IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
+            /*
+            data = newsock.Receive(ref sender);
+
+            Console.WriteLine("Message received from {0}:", sender.ToString());
+            Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
+
+            string welcome = "Welcome to my test server";
+            data = Encoding.ASCII.GetBytes(welcome);
+            newsock.Send(data, data.Length, sender);
+            */
+            while (true)
+            {
+                data = newsock.Receive(ref sender);
+
+                //Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
+
+                mail = Encoding.ASCII.GetString(data, 0, data.Length);
+                //MessageBox.Show(mail); 
+                newsock.Send(data, data.Length, sender);
+            }
+        }
+        string mail = ""; 
 		void MainFormLoad(object sender, EventArgs e)
 		{
 			startup(); 			
@@ -181,7 +217,6 @@
         private void button1_Click(object sender, EventArgs e)
         {
             pictureBox.Image.Save("test.bmp");
-
         }
         public IEnumerable<Image> pictureNumerator()
         {
