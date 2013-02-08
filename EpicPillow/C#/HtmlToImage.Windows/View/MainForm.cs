@@ -133,19 +133,36 @@
         public void continuousUpdate()
         {
             bmp = pubBrowse.delegateScreenshot();
+            if (pictBoxShow)
+            {
+                SetPicture(pubBrowse.delegateScreenshot()); 
+            }
             GC.Collect(); 
         }
+        bool pictBoxShow = false; 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
-            {
-                pictureBox.Image = bmp;
-            }
+            pictBoxShow = checkBox1.Checked; 
         }
         public void startudpListen()
         {
             Thread t = new Thread(udpListen);
             t.Start(); 
+        }
+        private void SetPicture(Image img)
+        {
+            if (pictureBox.InvokeRequired)
+            {
+                pictureBox.Invoke(new MethodInvoker(
+                delegate()
+                {
+                    pictureBox.Image = img;
+                }));
+            }
+            else
+            {
+                pictureBox.Image = img;
+            }
         }
         void udpListen()
         {
@@ -224,8 +241,6 @@
             {
                 yield return bmp; 
             }
-
-            yield break;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
