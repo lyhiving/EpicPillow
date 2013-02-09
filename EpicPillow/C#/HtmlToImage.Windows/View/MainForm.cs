@@ -120,6 +120,7 @@
         public void startUpdate()
         {
             Thread t = new Thread(updateThread);
+            t.Priority = ThreadPriority.AboveNormal; 
             t.Start(); 
             
         }
@@ -185,13 +186,51 @@
             */
             while (true)
             {
-                data = newsock.Receive(ref sender);
+                //try
+                //{
+                    data = newsock.Receive(ref sender);
 
-                //Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
+                    //Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
 
-                mail = Encoding.ASCII.GetString(data, 0, data.Length);
-                //MessageBox.Show(mail); 
-                newsock.Send(data, data.Length, sender);
+                    mail = Encoding.ASCII.GetString(data, 0, data.Length).Replace("\0", "");
+                    //MessageBox.Show(mail); 
+                    try
+                    {
+                        exec_Cmd(mail);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    newsock.Send(data, data.Length, sender);
+                //}
+                //catch (Exception ex)
+                //{
+
+                //}
+            }
+        }
+        ImageKeyConverter konverter = new ImageKeyConverter(); 
+        public void exec_Cmd(string recv)
+        {
+            if (recv.StartsWith("lclick"))
+            {
+                string[] coordString = recv.Split('(')[1].Split(')')[0].Split(',');
+                Point clickPoint = new Point(Int32.Parse(coordString[0]), Int32.Parse(coordString[1]));
+                pubBrowse.DoMouseLeftClick(clickPoint); 
+            }
+            else if (recv.StartsWith("nav"))
+            {
+                string navurl = recv.Split('(')[1].Split(')')[0];
+                pubBrowse.delegateNav(new Uri(navurl)); 
+            }
+            else if (recv.StartsWith("type"))
+            {
+                string typestring = recv.Split('(')[1].Split(')')[0];
+                foreach (char key in typestring)
+                {
+                    pubBrowse.keyboardSend(((Keys)konverter.ConvertFromString(key.ToString())));
+                }
             }
         }
         string mail = ""; 
