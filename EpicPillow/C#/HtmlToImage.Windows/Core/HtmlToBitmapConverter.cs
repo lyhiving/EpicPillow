@@ -67,19 +67,79 @@
         
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri)
 		{
-            
-            browser.Size = defSize; 
-			navURL = uri; 
-			browser.Navigate(uri);
-			
-            while (browser.ReadyState != WebBrowserReadyState.Complete)
+
+            threadbrowseSize(pubbrowser, defSize);
+			navURL = uri;
+            threadbrowseNav(pubbrowser, navURL);
+            browserReady = false; 
+            while (browserReady != true)
 			{
+                threadbrowseReady(browser);
+                //MessageBox.Show(browserReady.ToString()); 
+                //Thread.Sleep(100); 
 				Application.DoEvents();
 			}
             browseResize();  
             resizeCount = 0; 
 		}
-
+        bool browserReady = false; 
+        public void threadbrowseReady(WebBrowser tBrowser)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    if (tBrowser.ReadyState != WebBrowserReadyState.Complete)
+                    {
+                        browserReady = false; 
+                    }
+                    else
+                    {
+                        browserReady = true; 
+                    }
+                    //MessageBox.Show(browserReady.ToString()); 
+                }));
+            }
+            else
+            {
+                if (tBrowser.ReadyState != WebBrowserReadyState.Complete)
+                {
+                    browserReady = false;
+                }
+                else
+                {
+                    browserReady = true;
+                }
+            }
+        }
+        public void threadbrowseSize(WebBrowser tBrowser, Size defSize)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    tBrowser.Size = defSize; 
+                }));
+            }
+            else
+            {
+                tBrowser.Size = defSize; 
+            }
+        }
+        public void threadbrowseNav(WebBrowser tBrowser, Uri uri)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    tBrowser.Navigate(uri); 
+                }));
+            }
+            else
+            {
+                tBrowser.Navigate(uri); 
+            }
+        }
 		private void HideScrollBars(WebBrowser browser)
 		{
 			const string Hidden = "hidden";
@@ -128,24 +188,9 @@
         {
                 try
                 {
-                    browseResize(); 
-                    
-                }
-                catch (Exception ex)
-                {
-                }
-            return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
-        }
-        public void browseResize()
-        {
-            try
-            {
-                if (pubbrowser.InvokeRequired)
-                {
-                    pubbrowser.BeginInvoke((MethodInvoker)delegate()
+                    //threadbrowseReady(pubbrowser);
+                    if (browserReady)
                     {
-                        int width;
-                        int height;
                         var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
                         var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
                         var body2 = (IHTMLElement2)doc2.body;
@@ -156,13 +201,40 @@
                         width = Math.Max(body2.scrollWidth, root2.scrollWidth);
                         height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                         pubbrowser.SetBounds(0, 0, width, height);
-
-                    });
+                        //browseResize();
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
+            return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
+        }
+        int width = 0;
+        int height = 0;
+        
+        public void browseResize()
+        {
+            try
+            {
+                if (pubbrowser.InvokeRequired)
+                {
+                    pubbrowser.Invoke(new MethodInvoker( delegate()
+                    {
+                        var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
+                        var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
+                        var body2 = (IHTMLElement2)doc2.body;
+                        var root2 = (IHTMLElement2)doc3.documentElement;
+                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                        pubbrowser.SetBounds(0, 0, width, height);
+                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+                        pubbrowser.SetBounds(0, 0, width, height);
+                        
+                    }));
                 }
                 else
                 {
-                    int width;
-                    int height;
                     var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
                     var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
                     var body2 = (IHTMLElement2)doc2.body;

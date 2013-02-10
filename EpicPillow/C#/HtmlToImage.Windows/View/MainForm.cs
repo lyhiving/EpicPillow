@@ -148,7 +148,7 @@
         public void startudpListen()
         {
             Thread t = new Thread(udpListen);
-            //t.SetApartmentState(ApartmentState.STA); 
+            t.SetApartmentState(ApartmentState.STA); 
             t.Start();
         }
         private void SetPicture(Image img)
