@@ -253,11 +253,28 @@
 
             }
         }
+        IntPtr browseHandle;
+        public void threadbrowseHandle(WebBrowser tBrowser)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    browseHandle = tBrowser.Handle; 
+                }));
+            }
+            else
+            {
+                browseHandle = tBrowser.Handle; 
+            }
+        }
         public void btnMouseClick_Click(int xMouse, int yMouse)
         {
             int x = xMouse;
             int y = yMouse; 
-            IntPtr handle = pubbrowser.Handle;
+            //IntPtr handle = pubbrowser.Handle;
+            threadbrowseHandle(pubbrowser);
+            IntPtr handle = browseHandle; 
             StringBuilder className = new StringBuilder(100);
             while (className.ToString() != "Internet Explorer_Server") 
             {
@@ -279,8 +296,9 @@
         public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, IntPtr windowTitle);
         public IntPtr Flash()
         {
+            threadbrowseHandle(pubbrowser); 
             IntPtr pControl;
-            pControl = FindWindowEx(pubbrowser.Handle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+            pControl = FindWindowEx(browseHandle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
             pControl = FindWindowEx(pControl, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
             pControl = FindWindowEx(pControl, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
             pControl = FindWindowEx(pControl, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
