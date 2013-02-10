@@ -148,7 +148,8 @@
         public void startudpListen()
         {
             Thread t = new Thread(udpListen);
-            t.Start(); 
+            //t.SetApartmentState(ApartmentState.STA); 
+            t.Start();
         }
         private void SetPicture(Image img)
         {
@@ -163,6 +164,21 @@
             else
             {
                 pictureBox.Image = img;
+            }
+        }
+        private void SetURL(string url)
+        {
+            if (urlTextBox.InvokeRequired)
+            {
+                urlTextBox.Invoke(new MethodInvoker(
+                delegate()
+                {
+                    urlTextBox.Text = url;
+                }));
+            }
+            else
+            {
+                urlTextBox.Text = url; 
             }
         }
         void udpListen()
@@ -222,7 +238,8 @@
             else if (recv.StartsWith("nav"))
             {
                 string navurl = recv.Split('(')[1].Split(')')[0];
-                pubBrowse.delegateNav(new Uri(navurl)); 
+                SetURL(navurl); 
+                pubBrowse.delegateNav(new Uri(urlTextBox.Text));
             }
             else if (recv.StartsWith("type"))
             {
