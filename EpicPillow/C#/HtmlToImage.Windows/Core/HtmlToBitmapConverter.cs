@@ -8,7 +8,8 @@
 	using System.ComponentModel;
 	using System.Runtime.InteropServices; 
 	using MSHTML;
-    using System.Collections.Generic; 
+    using System.Collections.Generic;
+    using System.IO; 
 
 	public class HtmlToBitmapConverter
 	{
@@ -18,6 +19,10 @@
         static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+        //[DllImport("user32.dll", EntryPoint = "FindWindowEx")]
+        //public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 		public WebBrowser pubbrowser; 
 		public Uri navURL;
         public Size defSize = new Size(1366,768); 
@@ -82,7 +87,24 @@
             browseResize();  
             resizeCount = 0; 
 		}
-        bool browserReady = false; 
+        void Send(string message, IntPtr winHandle)
+        {
+            SendMessage(winHandle, 0x000C, 0, message);
+        }
+        [DllImport("user32.dll", SetLastError = true)]  
+	    static extern IntPtr FindWindow(string lpClassName, string lpWindowName); 
+	    [DllImport("user32.dll", SetLastError = true)]  
+	    static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);  
+	 
+	    //[DllImport("user32.dll")]  
+	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
+        bool browserReady = false;
+        const int WM_KEYDOWN = 0x100;
+        void SendStrokes(char key)
+        {
+            PostMessage(Flash(), WM_KEYDOWN, key, 0);
+            PostMessage(IEHandle(), WM_KEYDOWN, key, 0); 
+        }
         public void threadbrowseReady(WebBrowser tBrowser)
         {
             if (tBrowser.InvokeRequired)
@@ -254,7 +276,7 @@
             }
         }
         IntPtr browseHandle;
-        public void threadbrowseHandle(WebBrowser tBrowser)
+        public void threadbrowseHandle(Control tBrowser)
         {
             if (tBrowser.InvokeRequired)
             {
@@ -287,9 +309,9 @@
             const uint upCode = 0x202; 
             SendMessage(Flash(), downCode, wParam, lParam);
             SendMessage(Flash(), upCode, wParam, lParam);
-            SendMessage(handle, downCode, wParam, lParam); 
-            SendMessage(handle, upCode, wParam, lParam); 
-            
+            SendMessage(handle, downCode, wParam, lParam);
+            SendMessage(handle, upCode, wParam, lParam);
+
         }
         
         [DllImport("user32.dll", SetLastError = true)]
@@ -303,6 +325,18 @@
             pControl = FindWindowEx(pControl, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
             pControl = FindWindowEx(pControl, IntPtr.Zero, "MacromediaFlashPlayerActiveX", IntPtr.Zero);
             return pControl;
+        }
+        public IntPtr IEHandle()
+        {
+            threadbrowseHandle(pubbrowser);
+            IntPtr handle = browseHandle;
+            StringBuilder className = new StringBuilder(100);
+            while (className.ToString() != "Internet Explorer_Server")
+            {
+                handle = GetWindow(handle, 5);
+                GetClassName(handle, className, className.Capacity);
+            }
+            return handle; 
         }
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
@@ -319,16 +353,65 @@
         {
             btnMouseClick_Click(x.X, x.Y);
         }
-        [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        //[DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
+        //public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("USER32.DLL")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
         static extern uint keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
-        public void keyboardSend(Keys stroke)
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        public void keyboardSend(char stroke)
         {
-            KeyDown(stroke);
-            KeyUp(stroke); 
+            //threadbrowseHandle(pubbrowser);
+            //IntPtr ptrFF = browseHandle;
+            //SetForegroundWindow(ptrFF);
+            //SendKeys.SendWait(stroke); 
+            //KeyDown(stroke);
+            //KeyUp(stroke); 
+            /*
+            threadbrowseHandle(pubbrowser);
+            IntPtr handle = browseHandle;
+            StringBuilder className = new StringBuilder(100);
+            while (className.ToString() != "Internet Explorer_Server")
+            {
+                handle = GetWindow(handle, 5);
+                GetClassName(handle, className, className.Capacity);
+            }
+            */
+            /*
+            PostMessage(Flash(), (byte)stroke, 0, 0);
+            PostMessage(Flash(), (byte)stroke, 0x7F, 0);
+            PostMessage(handle, (byte)stroke, 0, 0);
+            PostMessage(handle, (byte)stroke, 0x7F, 0);
+             * 
+             * */
+            SendStrokes(stroke);
+        }
+        private string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            IntPtr handle = IntPtr.Zero;
+            StringBuilder Buff = new StringBuilder(nChars);
+            handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
+        }
+        private string HandleToString(IntPtr handle)
+        {
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
         }
         public static void KeyDown(Keys key)
         {

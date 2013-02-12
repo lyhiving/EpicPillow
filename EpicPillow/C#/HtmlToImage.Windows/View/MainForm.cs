@@ -100,7 +100,7 @@
         }
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
-            pubBrowse.keyboardSend(e.KeyCode); 
+            pubBrowse.keyboardSend((char)e.KeyCode); 
         }
 
         public void UpdateThings()
@@ -226,7 +226,7 @@
                 //}
             }
         }
-        ImageKeyConverter konverter = new ImageKeyConverter(); 
+        KeysConverter kc = new KeysConverter(); 
         public void exec_Cmd(string recv)
         {
             if (recv.StartsWith("lclick"))
@@ -244,10 +244,19 @@
             else if (recv.StartsWith("type"))
             {
                 string typestring = recv.Split('(')[1].Split(')')[0];
-                foreach (char key in typestring)
+
+                /*
+                for (int i = 0; i < typestring.Length; i++)
                 {
-                    pubBrowse.keyboardSend(((Keys)konverter.ConvertFromString(key.ToString())));
+                    pubBrowse.keyboardSend((Keys)typestring[i]);
+                    //MessageBox.Show(((Keys)typestring[i]).ToString()); 
                 }
+                 * */
+                foreach (char c in typestring)
+                {
+                    pubBrowse.keyboardSend(c); 
+                }
+                //pubBrowse.keyboardSend(typestring); 
             }
         }
         string mail = ""; 
