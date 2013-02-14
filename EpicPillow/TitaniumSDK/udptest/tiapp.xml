@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="acs-oauth-secret-production" type="string">d4OCLSl9Unh3OafpGSiE6fAPw9I3q74q</property>
+    <property name="acs-oauth-key-production" type="string">1vRDhfY8Onjowt9GOL9pBUxepfJgW2Mo</property>
+    <property name="acs-api-key-production" type="string">AZIOv5fLHIVY9fZO9IfxyQTQ9lXpHnRW</property>
+    <property name="acs-oauth-secret-development" type="string">LKrkw5XpedVuLqVPWaf4b2Dqx164hSUa</property>
+    <property name="acs-oauth-key-development" type="string">NDrjAjc8juRG1kJJ3lNroXJlamFOB11R</property>
+    <property name="acs-api-key-development" type="string">1yhOJAmMrMRKRfpZDnUqyVrbqxsP7KfS</property>
+    <deployment-targets>
+        <target device="mobileweb">true</target>
+        <target device="iphone">false</target>
+        <target device="ipad">false</target>
+        <target device="android">true</target>
+        <target device="blackberry">false</target>
+    </deployment-targets>
+    <sdk-version>3.0.0.GA</sdk-version>
+    <id>com.pillow.udp</id>
+    <name>udptest</name>
+    <version>1.0</version>
+    <publisher>pillybuilt</publisher>
+    <url>http://</url>
+    <description>not specified</description>
+    <copyright>2013 by pillybuilt</copyright>
+    <icon>appicon.png</icon>
+    <persistent-wifi>false</persistent-wifi>
+    <prerendered-icon>false</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>02fa0c96-8700-40fc-a314-ed5093888a65</guid>
+    <property name="ti.ui.defaultunit">system</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs">ti.cloud</module>
+        <module platform="android">ti.udp</module>
+    </modules>
+</ti:app>

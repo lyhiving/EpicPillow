@@ -1,0 +1,29 @@
+Logfile initialized
+[INFO] logfile = C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\build.log
+[DEBUG] C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py simulator udptest C:\Users\pillybuilt\Documents\AndroidSDK\adt-bundle-windows-x86_64\adt-bundle-windows-x86_64\sdk C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest com.pillow.udp 8 WVGA854
+[INFO] Building udptest for Android ... one moment
+[INFO] Titanium SDK version: 3.0.0 (12/12/12 18:49 a5894b3)
+[DEBUG] Waiting for device to be ready ...
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 0 seconds)
+[DEBUG] waited 0.013000 seconds on emulator to get ready
+[DEBUG] com.pillow.udp installed? True
+[INFO] Fastdev server running, deploying in Fastdev mode
+[INFO] Copying CommonJS modules...
+[INFO] Copying project resources..
+[INFO] Tiapp.xml unchanged, skipping class generation
+[DEBUG] Processing Android resource drawables
+[DEBUG] found drawable-long-land-hdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-long-land-hdpi\default.png
+[DEBUG] found drawable-long-land-ldpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-long-land-ldpi\default.png
+[DEBUG] found drawable-long-port-hdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-long-port-hdpi\default.png
+[DEBUG] found drawable-long-port-ldpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-long-port-ldpi\default.png
+[DEBUG] found drawable-notlong-land-hdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-land-hdpi\default.png
+[DEBUG] found drawable-notlong-land-ldpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-land-ldpi\default.png
+[DEBUG] found drawable-notlong-land-mdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-land-mdpi\default.png
+[DEBUG] found drawable-notlong-port-hdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-port-hdpi\default.png
+[DEBUG] found drawable-notlong-port-ldpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-port-ldpi\default.png
+[DEBUG] found drawable-notlong-port-mdpi splash screen at C:\Users\pillybuilt\My Documents\Titanium_Studio_Workspace\udptest\Resources\android\images\res-notlong-port-mdpi\default.png
+[INFO] Re-launching application ... udptest
+[INFO] Launching application ... udptest
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.pillow.udp/.UdptestActivity }
+
