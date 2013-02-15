@@ -100,7 +100,7 @@
 	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
         bool browserReady = false;
         const int WM_KEYDOWN = 0x100;
-        void SendStrokes(char key)
+        void SendStrokes(int key)
         {
             PostMessage(Flash(), WM_KEYDOWN, key, 0);
             PostMessage(IEHandle(), WM_KEYDOWN, key, 0); 
@@ -363,7 +363,8 @@
         static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll")]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-        public void keyboardSend(char stroke)
+        KeysConverter kc = new KeysConverter(); 
+        public void keyboardSend(int stroke)
         {
             //threadbrowseHandle(pubbrowser);
             //IntPtr ptrFF = browseHandle;
@@ -388,6 +389,7 @@
             PostMessage(handle, (byte)stroke, 0x7F, 0);
              * 
              * */
+            
             SendStrokes(stroke);
         }
         private string GetActiveWindowTitle()

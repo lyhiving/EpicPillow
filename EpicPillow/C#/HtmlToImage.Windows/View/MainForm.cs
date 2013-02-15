@@ -100,7 +100,7 @@
         }
         private void picture_keyPress(object sender, PreviewKeyDownEventArgs e)
         {
-            pubBrowse.keyboardSend((char)e.KeyCode); 
+            pubBrowse.keyboardSend((int)e.KeyCode); 
         }
 
         public void UpdateThings()
@@ -254,7 +254,7 @@
                  * */
                 foreach (char c in typestring)
                 {
-                    pubBrowse.keyboardSend(c); 
+                    pubBrowse.keyboardSend((int)c); 
                 }
                 //pubBrowse.keyboardSend(typestring); 
             }
