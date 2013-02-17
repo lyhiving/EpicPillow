@@ -9,7 +9,8 @@
 	using System.Runtime.InteropServices; 
 	using MSHTML;
     using System.Collections.Generic;
-    using System.IO; 
+    using System.IO;
+    using System.Diagnostics; 
 
 	public class HtmlToBitmapConverter
 	{
@@ -74,12 +75,14 @@
 		{
 
             threadbrowseSize(pubbrowser, defSize);
+            threadbrowseBounds(pubbrowser, defSize.Width, defSize.Height); 
 			navURL = uri;
             threadbrowseNav(pubbrowser, navURL);
             browserReady = false; 
             while (browserReady != true)
 			{
                 threadbrowseReady(browser);
+                threadbrowseBounds(pubbrowser, defSize.Width, defSize.Height); 
                 //MessageBox.Show(browserReady.ToString()); 
                 //Thread.Sleep(100); 
 				Application.DoEvents();
@@ -100,7 +103,11 @@
 	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
         bool browserReady = false;
         const int WM_KEYDOWN = 0x100;
+<<<<<<< HEAD
         void SendStrokes(int key)
+=======
+        public void SendStrokes(int key)
+>>>>>>> hopefully fixed the resizing problems from thread
         {
             PostMessage(Flash(), WM_KEYDOWN, key, 0);
             PostMessage(IEHandle(), WM_KEYDOWN, key, 0); 
@@ -213,6 +220,7 @@
                     //threadbrowseReady(pubbrowser);
                     if (browserReady)
                     {
+                        /*
                         var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
                         var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
                         var body2 = (IHTMLElement2)doc2.body;
@@ -223,7 +231,8 @@
                         width = Math.Max(body2.scrollWidth, root2.scrollWidth);
                         height = Math.Max(root2.scrollHeight, body2.scrollHeight);
                         pubbrowser.SetBounds(0, 0, width, height);
-                        //browseResize();
+                         * */
+                        browseResize();
                     }
                 }
                 catch (Exception ex)
@@ -233,41 +242,115 @@
         }
         int width = 0;
         int height = 0;
-        
+        IHTMLDocument2 pubDoc2 = null;
+        IHTMLDocument3 pubDoc3 = null; 
+        public void threadbrowsedoc2(WebBrowser tBrowser)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    pubDoc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
+                    docDone++; 
+                }));
+            }
+            else
+            {
+                pubDoc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
+                docDone++; 
+            }
+        }
+        public void threadbrowsedoc3(WebBrowser tBrowser)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    pubDoc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
+                    docDone++; 
+                }));
+            }
+            else
+            {
+                pubDoc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
+                docDone++; 
+            }
+        }
+        public int docDone = 0; 
+        public void threadbrowseDoc(WebBrowser tBrowser)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    docDone = 0; 
+                    threadbrowsedoc2(tBrowser);
+                        threadbrowsedoc3(tBrowser);
+                }));
+            }
+            else
+            {
+                docDone = 0; 
+                threadbrowsedoc2(tBrowser);
+                        threadbrowsedoc3(tBrowser);
+            }
+        }
+        public void threadbrowseBounds(WebBrowser tBrowser, int w, int h)
+        {
+            if (tBrowser.InvokeRequired)
+            {
+                tBrowser.Invoke(new MethodInvoker(delegate()
+                {
+                    tBrowser.SetBounds(0, 0, w, h); 
+                }));
+            }
+            else
+            {
+                tBrowser.SetBounds(0, 0, w, h); 
+            }
+        }
+        public void browseResizeNext()
+        {
+            var doc2 = pubDoc2;
+            var doc3 = pubDoc3;
+            var body2 = (IHTMLElement2)doc2.body;
+            var root2 = (IHTMLElement2)(doc3.documentElement);
+            width = Math.Max(body2.scrollWidth, root2.scrollWidth);
+            height = Math.Max(root2.scrollHeight, body2.scrollHeight);
+            threadbrowseBounds(pubbrowser, width, height);
+            threadbrowseDoc(pubbrowser);
+            docDone = 0; 
+        }
         public void browseResize()
         {
             try
             {
-                if (pubbrowser.InvokeRequired)
+                threadbrowseReady(pubbrowser);
+                if (browserReady)
                 {
-                    pubbrowser.Invoke(new MethodInvoker( delegate()
+                    docDone = 0;
+                    if (pubbrowser.InvokeRequired)
                     {
-                        var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
-                        var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
-                        var body2 = (IHTMLElement2)doc2.body;
-                        var root2 = (IHTMLElement2)doc3.documentElement;
-                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                        pubbrowser.SetBounds(0, 0, width, height);
-                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                        pubbrowser.SetBounds(0, 0, width, height);
-                        
-                    }));
-                }
-                else
-                {
-                    var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
-                    var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
-                    var body2 = (IHTMLElement2)doc2.body;
-                    var root2 = (IHTMLElement2)doc3.documentElement;
-                    width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                    height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                    pubbrowser.SetBounds(0, 0, width, height);
-                    width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                    height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                    pubbrowser.SetBounds(0, 0, width, height);
+                        pubbrowser.Invoke(new MethodInvoker(delegate()
+                        {
+                            threadbrowseDoc(pubbrowser);
+                            while (docDone != 2)
+                            {
 
+                                Application.DoEvents();
+                            }
+                            browseResizeNext();
+                        }));
+                    }
+                    else
+                    {
+                        threadbrowseDoc(pubbrowser);
+                        while (docDone != 2)
+                        {
+                            Application.DoEvents();
+                        }
+                        browseResizeNext();
+                    }
                 }
             }
             catch (Exception ex)
