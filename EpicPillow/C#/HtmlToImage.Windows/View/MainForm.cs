@@ -244,25 +244,9 @@
             else if (recv.StartsWith("type"))
             {
                 string typestring = recv.Split('(')[1].Split(')')[0];
-<<<<<<< HEAD
-
-                /*
-                for (int i = 0; i < typestring.Length; i++)
-                {
-                    pubBrowse.keyboardSend((Keys)typestring[i]);
-                    //MessageBox.Show(((Keys)typestring[i]).ToString()); 
-                }
-                 * */
-                foreach (char c in typestring)
-                {
-                    pubBrowse.keyboardSend((int)c); 
-                }
-                //pubBrowse.keyboardSend(typestring); 
-=======
                 var o = kc.ConvertFromString(typestring);
                 Keys keyCode = (Keys)o;
                 pubBrowse.keyboardSend((char)keyCode); 
->>>>>>> hopefully fixed the resizing problems from thread
             }
         }
         string mail = ""; 

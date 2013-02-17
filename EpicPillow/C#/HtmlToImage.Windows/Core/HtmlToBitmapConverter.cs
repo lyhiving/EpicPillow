@@ -103,11 +103,7 @@
 	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
         bool browserReady = false;
         const int WM_KEYDOWN = 0x100;
-<<<<<<< HEAD
-        void SendStrokes(int key)
-=======
         public void SendStrokes(int key)
->>>>>>> hopefully fixed the resizing problems from thread
         {
             PostMessage(Flash(), WM_KEYDOWN, key, 0);
             PostMessage(IEHandle(), WM_KEYDOWN, key, 0); 
