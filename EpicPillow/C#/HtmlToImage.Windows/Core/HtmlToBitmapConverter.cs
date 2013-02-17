@@ -102,11 +102,17 @@
 	    //[DllImport("user32.dll")]  
 	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
         bool browserReady = false;
-        const int WM_KEYDOWN = 0x100;
-        public void SendStrokes(int key)
+        const int WM_KEYDOWN = 0x0100;
+        const int WM_KEYUP = 0x0101;
+        const int WM_CHAR = 0x0102; 
+        const int VK_SHIFT = 0x010;
+        const int WM_SYSKEYDOWN = 0x0104;
+        const int WM_SYSKEYUP = 0x0105; 
+        
+        public void SendStrokes(char key)
         {
-            PostMessage(Flash(), WM_KEYDOWN, key, 0);
-            PostMessage(IEHandle(), WM_KEYDOWN, key, 0); 
+            PostMessage(Flash(), WM_CHAR, key, 0);
+            PostMessage(IEHandle(), WM_CHAR, key, 0);
         }
         public void threadbrowseReady(WebBrowser tBrowser)
         {
@@ -469,7 +475,7 @@
              * 
              * */
             
-            SendStrokes(stroke);
+            SendStrokes((char)stroke);
         }
         private string GetActiveWindowTitle()
         {

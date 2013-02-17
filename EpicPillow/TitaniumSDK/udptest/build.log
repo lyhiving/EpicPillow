@@ -1,12 +1,12 @@
 Logfile initialized
 [INFO] logfile = C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\build.log
-[DEBUG] C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py simulator udptest C:\Users\pillybuilt\Documents\AndroidSDK\adt-bundle-windows-x86_64\adt-bundle-windows-x86_64\sdk C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest com.pillow.udp 8 WVGA854 /127.0.0.1:59173
+[DEBUG] C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py simulator udptest C:\Users\pillybuilt\Documents\AndroidSDK\adt-bundle-windows-x86_64\adt-bundle-windows-x86_64\sdk C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest com.pillow.udp 8 WVGA854
 [INFO] Building udptest for Android ... one moment
 [INFO] Titanium SDK version: 3.0.0 (12/12/12 18:49 a5894b3)
 [DEBUG] Waiting for device to be ready ...
 [TRACE] adb devices returned 2 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.060000 seconds on emulator to get ready
+[DEBUG] waited 0.013000 seconds on emulator to get ready
 [DEBUG] com.pillow.udp installed? False
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying CommonJS modules...

@@ -244,9 +244,10 @@
             else if (recv.StartsWith("type"))
             {
                 string typestring = recv.Split('(')[1].Split(')')[0];
-                var o = kc.ConvertFromString(typestring);
-                Keys keyCode = (Keys)o;
-                pubBrowse.keyboardSend((char)keyCode); 
+                for (int i = 0; i < typestring.Length; i++)
+                {
+                    pubBrowse.SendStrokes((char)typestring[i]); 
+                }
             }
         }
         string mail = ""; 
