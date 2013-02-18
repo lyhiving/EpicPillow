@@ -4,13 +4,17 @@ Logfile initialized
 [INFO] Building udptest for Android ... one moment
 [INFO] Titanium SDK version: 3.0.0 (12/12/12 18:49 a5894b3)
 [DEBUG] Waiting for device to be ready ...
-[TRACE] adb devices returned 2 devices/emulators
-[DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.013000 seconds on emulator to get ready
-[DEBUG] com.pillow.udp installed? False
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 1 devices/emulators
+[DEBUG] Device connected... (waited 10 seconds)
+[DEBUG] waited 10.039000 seconds on emulator to get ready
+[INFO] Waiting for the Android Emulator to become available
+[DEBUG] com.pillow.udp installed? True
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying CommonJS modules...
 [INFO] Copying project resources..
+[TRACE] COPYING MODIFIED FILE: C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\app.js => C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\build\android\bin\assets\Resources\app.js
 [INFO] Tiapp.xml unchanged, skipping class generation
 [DEBUG] Processing Android resource drawables
 [DEBUG] found drawable-long-land-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-long-land-hdpi\default.png
@@ -23,14 +27,8 @@ Logfile initialized
 [DEBUG] found drawable-notlong-port-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-hdpi\default.png
 [DEBUG] found drawable-notlong-port-ldpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-ldpi\default.png
 [DEBUG] found drawable-notlong-port-mdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-mdpi\default.png
-[ERROR] Exception occured while building Android project:
-[ERROR] Traceback (most recent call last):
-[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 2376, in <module>
-[ERROR]     builder.build_and_run(False, avd_id, debugger_host=debugger_host)
-[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 2146, in build_and_run
-[ERROR]     self.push_deploy_json()
-[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 1825, in push_deploy_json
-[ERROR]     sdcard_available = self.wait_for_sdcard()
-[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 1780, in wait_for_sdcard
-[ERROR]     if 'SDCARD READY' in output:
-[ERROR] TypeError: argument of type 'NoneType' is not iterable
+[INFO] Waiting for SDCard to become available..
+[INFO] Re-launching application ... udptest
+[INFO] Launching application ... udptest
+[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.pillow.udp/.UdptestActivity }
+

@@ -1,9 +1,17 @@
 var UDP = require('ti.udp');
-
+Titanium.UI.setBackgroundColor('#000');
+var tabGroup = Titanium.UI.createTabGroup();
 var u = Ti.Android != undefined ? 'dp' : 0;
 var win = Ti.UI.createWindow({
-    backgroundColor: '#fff',
+	title: 'udpSendWin',
+    backgroundColor: '#000',
     layout: 'vertical'
+});
+var tab1 = Titanium.UI.createTab({
+	icon:'KS_nav_views.png',
+	title:'udpTab',
+	window:win
+	
 });
 
 /*
@@ -128,5 +136,25 @@ var status = Ti.UI.createLabel({
     top: 10 + u, left: 10 + u, right: 10 + u, height: 'auto'
 });
 win.add(status);
-
-win.open();
+var win2 = Titanium.UI.createWindow({
+	title:'ViewWin',
+	backgroundColor:'#fff'
+	
+});
+var tab2 = Titanium.UI.createTab({  
+    icon:'KS_nav_ui.png',
+    title:'ViewTab',
+    window:win2
+});
+var label2 = Titanium.UI.createLabel({
+	color:'#999',
+	text:'testWin2',
+	font:{fontSize:20,fontFamily:'Helvetica Neue'},
+	textAlign:'center',
+	width:'auto'
+});
+win2.add(label2);
+tabGroup.addTab(tab1);  
+tabGroup.addTab(tab2); 
+tabGroup.open();
+//win.open();
