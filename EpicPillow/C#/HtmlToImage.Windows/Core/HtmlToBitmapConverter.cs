@@ -413,15 +413,11 @@
         }
         public IntPtr IEHandle()
         {
-            threadbrowseHandle(pubbrowser);
-            IntPtr handle = browseHandle;
-            StringBuilder className = new StringBuilder(100);
-            while (className.ToString() != "Internet Explorer_Server")
-            {
-                handle = GetWindow(handle, 5);
-                GetClassName(handle, className, className.Capacity);
-            }
-            return handle; 
+            IntPtr pControl;
+            pControl = FindWindowEx(browseHandle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
+            pControl = FindWindowEx(pControl, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
+            pControl = FindWindowEx(pControl, IntPtr.Zero, "Internet Explorer_Server", IntPtr.Zero);
+            return pControl; 
         }
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);

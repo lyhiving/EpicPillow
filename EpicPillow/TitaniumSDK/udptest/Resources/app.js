@@ -153,7 +153,11 @@ var label2 = Titanium.UI.createLabel({
 	textAlign:'center',
 	width:'auto'
 });
+var image = Titanium.UI.createImageView({
+	image:'KS_nav_ui.png'
+});
 win2.add(label2);
+win2.add(image);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2); 
 tabGroup.open();
