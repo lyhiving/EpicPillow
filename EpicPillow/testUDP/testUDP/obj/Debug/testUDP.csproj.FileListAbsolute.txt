@@ -1,0 +1,5 @@
+c:\users\pillybuilt\documents\visual studio 2012\Projects\testUDP\testUDP\bin\Debug\testUDP.exe
+c:\users\pillybuilt\documents\visual studio 2012\Projects\testUDP\testUDP\bin\Debug\testUDP.pdb
+c:\users\pillybuilt\documents\visual studio 2012\Projects\testUDP\testUDP\obj\Debug\testUDP.csprojResolveAssemblyReference.cache
+c:\users\pillybuilt\documents\visual studio 2012\Projects\testUDP\testUDP\obj\Debug\testUDP.exe
+c:\users\pillybuilt\documents\visual studio 2012\Projects\testUDP\testUDP\obj\Debug\testUDP.pdb

@@ -42,6 +42,34 @@
 		{
             navigateLink(); 
 		}
+        public void optsetPorts()
+        {
+            if (File.Exists("config.txt"))
+            {
+                try
+                {
+                    StreamReader sr = new StreamReader("config.txt");
+                    string configRead = sr.ReadToEnd();
+                    sr.Close();
+                    string[] configLines = configRead.Split('\n');
+                    foreach (string line in configLines)
+                    {
+                        if (line.StartsWith("inport="))
+                        {
+                            inport = Int32.Parse(line.Substring(7));
+                        }
+                        else if (line.StartsWith("outport="))
+                        {
+                            outport = Int32.Parse(line.Substring(8));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
         private void navigateLink()
         {
             try
@@ -57,13 +85,14 @@
                 urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString(); 
             }
         }
-        public int port = 1261;
+        public int inport = 1261;
         public int outport = 8080;
         ImageStreamingServer server = new ImageStreamingServer();
         void startup()
         {
             try
             {
+                optsetPorts(); 
                 pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
@@ -184,7 +213,7 @@
         void udpListen()
         {
             byte[] data = new byte[1024];
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, 1261);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, inport);
             UdpClient newsock = new UdpClient(ipep);
 
             //Console.WriteLine("Waiting for a client...");
@@ -226,6 +255,7 @@
                 //}
             }
         }
+
         KeysConverter kc = new KeysConverter(); 
         public void exec_Cmd(string recv)
         {
