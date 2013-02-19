@@ -20,14 +20,12 @@
         static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-        //[DllImport("user32.dll", EntryPoint = "FindWindowEx")]
-        //public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
         [DllImport("User32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 		public WebBrowser pubbrowser; 
 		public Uri navURL;
-        public Size defSize = new Size(1366,768); 
-		public Size newSize = new Size(1366,768); 
+        public Size defSize = new Size(800,600); 
+		public Size newSize = new Size(800,600); 
 		public Size minSize = new Size(640, 480);
 		public int minPix; 
 		public Bitmap Render(string html, Size size)
@@ -83,8 +81,6 @@
 			{
                 threadbrowseReady(browser);
                 threadbrowseBounds(pubbrowser, defSize.Width, defSize.Height); 
-                //MessageBox.Show(browserReady.ToString()); 
-                //Thread.Sleep(100); 
 				Application.DoEvents();
 			}
             browseResize();  
@@ -98,9 +94,6 @@
 	    static extern IntPtr FindWindow(string lpClassName, string lpWindowName); 
 	    [DllImport("user32.dll", SetLastError = true)]  
 	    static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);  
-	 
-	    //[DllImport("user32.dll")]  
-	    //private static extern bool PostMessage(IntPtr hWnd, UInt32 Msg, Int32 wParam, Int32 lParam); 
         bool browserReady = false;
         const int WM_KEYDOWN = 0x0100;
         const int WM_KEYUP = 0x0101;
@@ -128,7 +121,6 @@
                     {
                         browserReady = true; 
                     }
-                    //MessageBox.Show(browserReady.ToString()); 
                 }));
             }
             else
@@ -219,21 +211,8 @@
         {
                 try
                 {
-                    //threadbrowseReady(pubbrowser);
                     if (browserReady)
                     {
-                        /*
-                        var doc2 = (IHTMLDocument2)pubbrowser.Document.DomDocument;
-                        var doc3 = (IHTMLDocument3)pubbrowser.Document.DomDocument;
-                        var body2 = (IHTMLElement2)doc2.body;
-                        var root2 = (IHTMLElement2)doc3.documentElement;
-                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                        pubbrowser.SetBounds(0, 0, width, height);
-                        width = Math.Max(body2.scrollWidth, root2.scrollWidth);
-                        height = Math.Max(root2.scrollHeight, body2.scrollHeight);
-                        pubbrowser.SetBounds(0, 0, width, height);
-                         * */
                         browseResize();
                     }
                 }
@@ -379,23 +358,14 @@
         {
             int x = xMouse;
             int y = yMouse; 
-            //IntPtr handle = pubbrowser.Handle;
-            threadbrowseHandle(pubbrowser);
-            IntPtr handle = browseHandle; 
-            StringBuilder className = new StringBuilder(100);
-            while (className.ToString() != "Internet Explorer_Server") 
-            {
-                handle = GetWindow(handle, 5); 
-                GetClassName(handle, className, className.Capacity);
-            }
             IntPtr lParam = (IntPtr)((y << 16) | x); 
             IntPtr wParam = IntPtr.Zero;
             const uint downCode = 0x201; 
             const uint upCode = 0x202; 
             SendMessage(Flash(), downCode, wParam, lParam);
             SendMessage(Flash(), upCode, wParam, lParam);
-            SendMessage(handle, downCode, wParam, lParam);
-            SendMessage(handle, upCode, wParam, lParam);
+            SendMessage(IEHandle(), downCode, wParam, lParam);
+            SendMessage(IEHandle(), upCode, wParam, lParam);
 
         }
         
@@ -413,6 +383,7 @@
         }
         public IntPtr IEHandle()
         {
+            threadbrowseHandle(pubbrowser); 
             IntPtr pControl;
             pControl = FindWindowEx(browseHandle, IntPtr.Zero, "Shell Embedding", IntPtr.Zero);
             pControl = FindWindowEx(pControl, IntPtr.Zero, "Shell DocObject View", IntPtr.Zero);
@@ -434,8 +405,6 @@
         {
             btnMouseClick_Click(x.X, x.Y);
         }
-        //[DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
-        //public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         [DllImport("USER32.DLL")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
@@ -447,30 +416,6 @@
         KeysConverter kc = new KeysConverter(); 
         public void keyboardSend(int stroke)
         {
-            //threadbrowseHandle(pubbrowser);
-            //IntPtr ptrFF = browseHandle;
-            //SetForegroundWindow(ptrFF);
-            //SendKeys.SendWait(stroke); 
-            //KeyDown(stroke);
-            //KeyUp(stroke); 
-            /*
-            threadbrowseHandle(pubbrowser);
-            IntPtr handle = browseHandle;
-            StringBuilder className = new StringBuilder(100);
-            while (className.ToString() != "Internet Explorer_Server")
-            {
-                handle = GetWindow(handle, 5);
-                GetClassName(handle, className, className.Capacity);
-            }
-            */
-            /*
-            PostMessage(Flash(), (byte)stroke, 0, 0);
-            PostMessage(Flash(), (byte)stroke, 0x7F, 0);
-            PostMessage(handle, (byte)stroke, 0, 0);
-            PostMessage(handle, (byte)stroke, 0x7F, 0);
-             * 
-             * */
-            
             SendStrokes((char)stroke);
         }
         private string GetActiveWindowTitle()

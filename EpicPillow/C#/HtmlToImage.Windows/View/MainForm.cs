@@ -143,6 +143,7 @@
             {
             }
         }
+        
         public Bitmap bmp;
         public bool isConnected = false;
         List<Image> picList = new List<Image>();

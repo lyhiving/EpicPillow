@@ -153,12 +153,44 @@ var label2 = Titanium.UI.createLabel({
 	textAlign:'center',
 	width:'auto'
 });
-var image = Titanium.UI.createImageView({
-	image:'KS_nav_ui.png'
+var imageBox = Titanium.UI.createImageView({
+    top:0,
+    left: 0,
+    right: 0,
+    image: 'KS_nav_ui.png'
 });
 win2.add(label2);
-win2.add(image);
+win2.add(imageBox);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2); 
 tabGroup.open();
+//var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
+var URL = 'http://192.168.0.2:1262';
+var c = Titanium.Network.createHTTPClient();
+c.setTimeout(10000);
+c.onload = function() 
+{
+	if (c.status == 200)
+	{
+		imageBox.image = this.responseData;
+	}
+}
+function updateImage()
+{
+	try
+	{
+		c.open('GET', URL);
+		c.send(); 
+	}
+	catch(e)
+	{
+		
+	}
+}
+var updateWrap = function()
+{
+	updateImage();
+	setTimeout(updateWrap, 10000);
+};
+setTimeout(updateWrap, 10000); 
 //win.open();
