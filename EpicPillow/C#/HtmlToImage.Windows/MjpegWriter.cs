@@ -50,6 +50,7 @@ namespace rtaNetworking.Streaming
                     "Content-Type: multipart/x-mixed-replace; boundary=" +
                     this.Boundary +
                     "\r\n"
+                   //""
                  );
 
             this.Stream.Flush();
@@ -70,6 +71,7 @@ namespace rtaNetworking.Streaming
             sb.AppendLine(this.Boundary);
             sb.AppendLine("Content-Type: image/jpeg");
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            sb.AppendLine("Connection: keep-alive"); 
             sb.AppendLine(); 
 
             Write(sb.ToString());

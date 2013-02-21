@@ -78,9 +78,19 @@ namespace HtmlToImage.Windows.View
             NetworkStream ns = new NetworkStream(client, true); 
             using (rtaNetworking.Streaming.MjpegWriter wr = new rtaNetworking.Streaming.MjpegWriter(ns))
             {
-                wr.WriteHeader();
-                wr.Write(GlobalPillow.currentFrame);
+                try
+                {
+                    wr.WriteHeader();
+                    wr.Write((Image)GlobalPillow.currentFrame.Clone());
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
+            ns.Close();
+            client.Close(); 
+            Thread.CurrentThread.Join(); 
         }
         byte[] ImageToByte(Image img)
         {

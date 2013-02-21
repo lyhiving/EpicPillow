@@ -221,11 +221,10 @@
         }
         public void continuousUpdate()
         {
-
             GlobalPillow.currentFrame = pubBrowse.delegateScreenshot();
             if (pictBoxShow)
             {
-                SetPicture(pubBrowse.delegateScreenshot()); 
+                SetPicture((Image)GlobalPillow.currentFrame.Clone()); 
             }
             GC.Collect(); 
         }
@@ -372,7 +371,7 @@
         {
             while (true)
             {
-                yield return GlobalPillow.currentFrame; 
+                yield return (Image)GlobalPillow.currentFrame.Clone(); 
             }
         }
 
