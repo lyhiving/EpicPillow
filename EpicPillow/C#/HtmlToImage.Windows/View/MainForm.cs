@@ -16,14 +16,11 @@
     using System.Threading;
 	public partial class MainForm : Form
 	{
-		
 		public Size size = new Size(1920, 1080);
         private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter();
         public MainForm()
 		{
 			InitializeComponent();
-
-            
 		}
 		public void setpictBoxSize(Size s)
 		{
@@ -42,6 +39,10 @@
 		{
             navigateLink(); 
 		}
+        public bool mjpgvideo = true;
+        public bool jpgimg = true;
+        public int jpgport = 1263;
+        
         public void optsetPorts()
         {
             if (File.Exists("config.txt"))
@@ -54,13 +55,55 @@
                     string[] configLines = configRead.Split('\n');
                     foreach (string line in configLines)
                     {
-                        if (line.StartsWith("inport="))
+                        if (line.StartsWith("udpport="))
                         {
-                            inport = Int32.Parse(line.Substring(7));
+                            udpport = Int32.Parse(line.Substring(8));
                         }
-                        else if (line.StartsWith("outport="))
+                        else if (line.StartsWith("mjpgport="))
                         {
-                            outport = Int32.Parse(line.Substring(8));
+                            mjpgport = Int32.Parse(line.Substring(9));
+                        }
+                        else if (line.StartsWith("mjpgvideo="))
+                        {
+                            string mjpgVal = line.Substring(10);
+                            if (mjpgVal == "true")
+                            {
+                                mjpgvideo = true;
+                            }
+                            else if (mjpgVal == "false")
+                            {
+                                mjpgvideo = false;
+                            }
+                            else if (line.StartsWith("jpgimg="))
+                            {
+                                string jpgVal = line.Substring(7);
+                                if (jpgVal == "true")
+                                {
+                                    jpgimg = true; 
+                                }
+                                else if (jpgVal == "false")
+                                {
+                                    jpgimg = false; 
+                                }
+                            }
+                            else if (line.StartsWith("jpgport="))
+                            {
+                                jpgport = Int32.Parse(line.Substring(8)); 
+                            }
+                            else if (line.StartsWith("picBoxShow="))
+                            {
+                                string picShowVal = line.Substring(11);
+                                if (picShowVal == "true")
+                                {
+                                    checkBox1.Checked = true;
+                                    pictBoxShow = true;
+                                }
+                                else if (picShowVal == "false")
+                                {
+                                    checkBox1.Checked = false;
+                                    pictBoxShow = false; 
+                                }
+                            }
                         }
                     }
                 }
@@ -85,21 +128,30 @@
                 urlTextBox.Text = pubBrowse.pubbrowser.Url.ToString(); 
             }
         }
-        public int inport = 1261;
-        public int outport = 8080;
+        public int udpport = 1261;
+        public int mjpgport = 1262;
+        HtmlToImage.Windows.View.PillowServer pillyServer;
         ImageStreamingServer server = new ImageStreamingServer();
         void startup()
         {
             try
             {
-                optsetPorts(); 
-                pictureBox.Image = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+                optsetPorts();
+                GlobalPillow.currentFrame = pubBrowse.Render(new Uri(urlTextBox.Text), size);
+                pictureBox.Image = GlobalPillow.currentFrame; 
                 pubBrowse.startConverter();
                 pictureBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(picture_keyPress);
                 startUpdate();
-                startudpListen(); 
-                server.ImagesSource = pictureNumerator();
-                server.Start(outport);
+                startudpListen();
+                if (mjpgvideo)
+                {
+                    server.ImagesSource = pictureNumerator();
+                    server.Start(mjpgport);
+                }
+                if (jpgimg)
+                {
+                    startpillowServer(); 
+                }
                 timer1.Start(); 
             }
             catch (Exception ex)
@@ -107,6 +159,13 @@
                 MessageBox.Show(ex.ToString()); 
             }
             
+        }
+        void startpillowServer()
+        {
+            pillyServer = new HtmlToImage.Windows.View.PillowServer(); 
+            pillyServer.imageSrc = GlobalPillow.currentFrame;
+            pillyServer.serverPort = jpgport;
+            pillyServer.startPillow(); 
         }
         public string LocalIPAddress()
         {
@@ -144,7 +203,6 @@
             }
         }
         
-        public Bitmap bmp;
         public bool isConnected = false;
         List<Image> picList = new List<Image>();
         public void startUpdate()
@@ -163,7 +221,8 @@
         }
         public void continuousUpdate()
         {
-            bmp = pubBrowse.delegateScreenshot();
+
+            GlobalPillow.currentFrame = pubBrowse.delegateScreenshot();
             if (pictBoxShow)
             {
                 SetPicture(pubBrowse.delegateScreenshot()); 
@@ -214,22 +273,9 @@
         void udpListen()
         {
             byte[] data = new byte[1024];
-            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, inport);
+            IPEndPoint ipep = new IPEndPoint(IPAddress.Any, udpport);
             UdpClient newsock = new UdpClient(ipep);
-
-            //Console.WriteLine("Waiting for a client...");
-
             IPEndPoint sender = new IPEndPoint(IPAddress.Any, 0);
-            /*
-            data = newsock.Receive(ref sender);
-
-            Console.WriteLine("Message received from {0}:", sender.ToString());
-            Console.WriteLine(Encoding.ASCII.GetString(data, 0, data.Length));
-
-            string welcome = "Welcome to my test server";
-            data = Encoding.ASCII.GetBytes(welcome);
-            newsock.Send(data, data.Length, sender);
-            */
             while (true)
             {
                 //try
@@ -326,7 +372,7 @@
         {
             while (true)
             {
-                yield return bmp; 
+                yield return GlobalPillow.currentFrame; 
             }
         }
 

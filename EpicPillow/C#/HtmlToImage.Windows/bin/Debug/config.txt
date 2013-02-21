@@ -1,2 +1,6 @@
-inport=1261
-outport=1262
+udpport=1261
+mjpgport=1262
+mjpgvideo=true
+jpgport=1263
+picBoxShow=true
+jpgimg=true
