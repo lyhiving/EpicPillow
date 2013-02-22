@@ -19,34 +19,6 @@ namespace HtmlToImage.Windows.View
         }
         public void startPillow()
         {
-            /*
-            //listener.Prefixes.Add(string.Format("http://*:{0}/", serverPort)); 
-            string hostName = Dns.GetHostName();
-            IPHostEntry hostEntry = Dns.GetHostByName(hostName);
-            foreach (IPAddress ip in hostEntry.AddressList)
-            {
-                try
-                {
-                    listener.Prefixes.Add(string.Format("http://{0}:{1}/", ip, serverPort));
-                }
-                catch (Exception ex)
-                {
-                    Environment.Exit(0); 
-                }
-            }
-            listener.Start();
-            while (true)
-            {
-                HttpListenerContext context = listener.GetContext();
-                ParameterizedThreadStart start = new ParameterizedThreadStart(Handle);
-                Thread t = new Thread(start);
-                t.Start(context); 
-            }
-             * */
-            
-
-            //foreach (Socket client in Server.IncommingConnectoins())
-            //    ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), client);
             Thread t = new Thread(Listen);
             t.Start(); 
         }
@@ -58,6 +30,7 @@ namespace HtmlToImage.Windows.View
             Server.Listen(10);
 
             System.Diagnostics.Debug.WriteLine(string.Format("Server started on port {0}.", serverPort));
+            /*
             while (true)
             {
                 Socket s = Server.Accept();
@@ -65,6 +38,18 @@ namespace HtmlToImage.Windows.View
                 Thread t = new Thread(start);
                 t.Start(s);
             }
+             * */
+            foreach (Socket client in Connections(Server))
+            {
+                //ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), client);
+                
+                Handle(client); 
+            }
+        }
+        public static IEnumerable<Socket> Connections(Socket server)
+        {
+            while (true)
+                yield return server.Accept();
         }
         void Handle(object clientSock)
         {
@@ -78,19 +63,19 @@ namespace HtmlToImage.Windows.View
             NetworkStream ns = new NetworkStream(client, true); 
             using (rtaNetworking.Streaming.MjpegWriter wr = new rtaNetworking.Streaming.MjpegWriter(ns))
             {
-                try
-                {
-                    wr.WriteHeader();
-                    wr.Write((Image)GlobalPillow.currentFrame.Clone());
-                }
-                catch (Exception ex)
-                {
+                //try
+                //{
+                    wr.minWriteHeader();
+                    wr.writeImg((Image)GlobalPillow.currentFrame.Clone());
+                //}
+                //catch (Exception ex)
+                //{
 
-                }
+                //}
             }
             ns.Close();
             client.Close(); 
-            Thread.CurrentThread.Join(); 
+            //Thread.CurrentThread.Join(); 
         }
         byte[] ImageToByte(Image img)
         {

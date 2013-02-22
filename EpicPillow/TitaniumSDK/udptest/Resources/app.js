@@ -165,9 +165,9 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2); 
 tabGroup.open();
 //var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
-var URL = 'http://192.168.0.2:1262';
+var URL = 'http://192.168.0.2:1263';
 var c = Titanium.Network.createHTTPClient();
-c.setTimeout(10000);
+c.setTimeout(2000);
 c.onload = function() 
 {
 	if (c.status == 200)
@@ -190,7 +190,7 @@ function updateImage()
 var updateWrap = function()
 {
 	updateImage();
-	setTimeout(updateWrap, 10000);
+	setTimeout(updateWrap, 2000);
 };
-setTimeout(updateWrap, 10000); 
+setTimeout(updateWrap, 2000); 
 //win.open();

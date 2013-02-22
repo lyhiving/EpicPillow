@@ -55,7 +55,16 @@ namespace rtaNetworking.Streaming
 
             this.Stream.Flush();
        }
+        public void minWriteHeader()
+        {
 
+            Write(
+                    "HTTP/1.1 304 Not Modified\r\n"
+                //""
+                 );
+
+            this.Stream.Flush();
+        }
         public void Write(Image image)
         {
             MemoryStream ms = BytesOf(image);
@@ -71,7 +80,7 @@ namespace rtaNetworking.Streaming
             sb.AppendLine(this.Boundary);
             sb.AppendLine("Content-Type: image/jpeg");
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
-            sb.AppendLine("Connection: keep-alive"); 
+            //sb.AppendLine("Connection: keep-alive"); 
             sb.AppendLine(); 
 
             Write(sb.ToString());
@@ -81,16 +90,40 @@ namespace rtaNetworking.Streaming
             this.Stream.Flush();
 
         }
+        public void writeImg(Image image)
+        {
+            byte[] imgbyte = ImageToByte(image); 
+            //MemoryStream imageStream = BytesOf(image);
+            StringBuilder sb = new StringBuilder();
 
+            sb.AppendLine("Content-Type: image/jpeg");
+            sb.AppendLine("Content-Length: " + imgbyte.Length); 
+            sb.AppendLine("Connection: keep-alive");
+            sb.AppendLine();
+
+            Write(sb.ToString());
+            Write(imgbyte); 
+            //imageStream.WriteTo(this.Stream);
+            //Write("\r\n");
+            Write(Environment.NewLine); 
+            this.Stream.Flush();
+        }
+        byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
         private void Write(byte[] data)
         {
             this.Stream.Write(data, 0, data.Length);
+            System.Diagnostics.Debug.Write(data.Length.ToString()); 
         }
 
         private void Write(string text)
         {
             byte[] data = BytesOf(text);
             this.Stream.Write(data, 0, data.Length);
+            System.Diagnostics.Debug.Write(text); 
         }
 
         private static byte[] BytesOf(string text)
