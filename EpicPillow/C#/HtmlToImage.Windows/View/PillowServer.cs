@@ -61,11 +61,11 @@ namespace HtmlToImage.Windows.View
              * */
             Socket client = (Socket)clientSock;
             NetworkStream ns = new NetworkStream(client, true); 
-            using (rtaNetworking.Streaming.MjpegWriter wr = new rtaNetworking.Streaming.MjpegWriter(ns))
+            using (rtaNetworking.Streaming.MjpegWriter wr = new rtaNetworking.Streaming.MjpegWriter(client))
             {
                 try
                 {
-                    wr.WriteHeader();
+                    wr.minWriteHeader();
                     wr.writeImg((Image)GlobalPillow.currentFrame.Clone());
                 }
                 catch (Exception ex)

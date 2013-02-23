@@ -167,7 +167,7 @@ namespace rtaNetworking.Streaming
 
             try
             {
-                using (MjpegWriter wr = new MjpegWriter(new NetworkStream(socket, true)))
+                using (MjpegWriter wr = new MjpegWriter(socket))
                 {
 
                     // Writes the response header to the client.
@@ -179,7 +179,7 @@ namespace rtaNetworking.Streaming
                         if (this.Interval > 0)
                             Thread.Sleep(this.Interval);
 
-                        wr.Write(imgStream);
+                        wr.Write(imgStream, true);
                     }
 
                 }

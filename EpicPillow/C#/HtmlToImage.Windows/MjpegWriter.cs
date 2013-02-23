@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Net.Sockets;
 
 // -------------------------------------------------
 // Developed By : Ragheed Al-Tayeb
@@ -26,13 +27,13 @@ namespace rtaNetworking.Streaming
 
         private string _Boundary;
 
-        public MjpegWriter(Stream stream)
+        public MjpegWriter(Socket stream)
             : this(stream, "--boundary")
         {
 
         }
 
-        public MjpegWriter(Stream stream,string boundary)
+        public MjpegWriter(Socket stream,string boundary)
         {
 
             this.Stream = stream;
@@ -40,7 +41,7 @@ namespace rtaNetworking.Streaming
         }
 
         public string Boundary { get; private set; }
-        public Stream Stream { get; private set; }
+        public Socket Stream { get; private set; }
 
         public void WriteHeader()
         {
@@ -53,36 +54,54 @@ namespace rtaNetworking.Streaming
                    //""
                  );
 
-            this.Stream.Flush();
+            //this.Stream.Flush();
        }
+        public void minWriteHeader()
+        {
+
+            Write(
+                    "HTTP/1.1 200\r\n"
+                //""
+                 );
+
+            //this.Stream.Flush();
+        }
         public void Write(Image image)
         {
             MemoryStream ms = BytesOf(image);
             this.Write(ms);
         }
 
-        public void Write(MemoryStream imageStream)
+        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false)
         {
 
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine();
-            sb.AppendLine(this.Boundary);
+            
+            if (boundary)
+            {
+                sb.AppendLine();
+                sb.AppendLine(this.Boundary);
+            }
             sb.AppendLine("Content-Type: image/jpeg");
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
-            //sb.AppendLine("Connection: keep-alive"); 
+            if (keepalive)
+            {
+                sb.AppendLine("Connection: keep-alive");
+            }
             sb.AppendLine(); 
 
             Write(sb.ToString());
-            imageStream.WriteTo(this.Stream);
+            imageStream.WriteTo(new NetworkStream(this.Stream));
             Write("\r\n");
             
-            this.Stream.Flush();
+            //this.Stream.Flush();
 
         }
         public void writeImg(Image image)
         {
-            Write(image); 
+            MemoryStream ms = BytesOf(image);
+            Write(ms, false, true); 
         }
         byte[] ImageToByte(Image img)
         {
@@ -91,14 +110,16 @@ namespace rtaNetworking.Streaming
         }
         private void Write(byte[] data)
         {
-            this.Stream.Write(data, 0, data.Length);
+            //this.Stream.Send(data, data.Length);
+            this.Stream.Send(data); 
             System.Diagnostics.Debug.Write(data.Length.ToString()); 
         }
 
         private void Write(string text)
         {
             byte[] data = BytesOf(text);
-            this.Stream.Write(data, 0, data.Length);
+            //this.Stream.Write(data, 0, data.Length);
+            this.Stream.Send(data); 
             System.Diagnostics.Debug.Write(text); 
         }
 
@@ -118,8 +139,8 @@ namespace rtaNetworking.Streaming
         {
 
             byte[] data = new byte[length];
-            int count = this.Stream.Read(data,0,data.Length);
-
+            int count = this.Stream.Receive(data);
+            
             if (count != 0)
                 return Encoding.ASCII.GetString(data, 0, count);
 

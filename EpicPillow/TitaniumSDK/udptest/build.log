@@ -1,6 +1,6 @@
 Logfile initialized
 [INFO] logfile = C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\build.log
-[DEBUG] C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py simulator udptest C:\Users\pillybuilt\Documents\AndroidSDK\adt-bundle-windows-x86_64\adt-bundle-windows-x86_64\sdk C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest com.pillow.udp 8 WVGA854 /127.0.0.1:57189
+[DEBUG] C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py simulator udptest C:\Users\pillybuilt\Documents\AndroidSDK\adt-bundle-windows-x86_64\adt-bundle-windows-x86_64\sdk C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest com.pillow.udp 8 WVGA854 /127.0.0.1:50921
 [INFO] Building udptest for Android ... one moment
 [INFO] Titanium SDK version: 3.0.0 (12/12/12 18:49 a5894b3)
 [DEBUG] Waiting for device to be ready ...
@@ -14,21 +14,16 @@ Logfile initialized
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying CommonJS modules...
 [INFO] Copying project resources..
+[TRACE] COPYING MODIFIED FILE: C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\app.js => C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\build\android\bin\assets\Resources\app.js
 [INFO] Tiapp.xml unchanged, skipping class generation
-[DEBUG] Processing Android resource drawables
-[DEBUG] found drawable-long-land-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-long-land-hdpi\default.png
-[DEBUG] found drawable-long-land-ldpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-long-land-ldpi\default.png
-[DEBUG] found drawable-long-port-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-long-port-hdpi\default.png
-[DEBUG] found drawable-long-port-ldpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-long-port-ldpi\default.png
-[DEBUG] found drawable-notlong-land-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-land-hdpi\default.png
-[DEBUG] found drawable-notlong-land-ldpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-land-ldpi\default.png
-[DEBUG] found drawable-notlong-land-mdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-land-mdpi\default.png
-[DEBUG] found drawable-notlong-port-hdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-hdpi\default.png
-[DEBUG] found drawable-notlong-port-ldpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-ldpi\default.png
-[DEBUG] found drawable-notlong-port-mdpi splash screen at C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\TitaniumSDK\udptest\Resources\android\images\res-notlong-port-mdpi\default.png
-[INFO] Waiting for SDCard to become available..
-[INFO] Re-launching application ... udptest
-[INFO] Launching application ... udptest
-[TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.pillow.udp/.UdptestActivity }
-
-[INFO] Forwarding host port 57189 to device for debugging.
+[ERROR] Exception occured while building Android project:
+[ERROR] Traceback (most recent call last):
+[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 2376, in <module>
+[ERROR]     builder.build_and_run(False, avd_id, debugger_host=debugger_host)
+[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 2104, in build_and_run
+[ERROR]     self.merge_internal_module_resources()
+[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 1865, in merge_internal_module_resources
+[ERROR]     zip_extractall(res_zip_file, self.project_dir)
+[ERROR]   File "C:\Users\pillybuilt\AppData\Roaming\Titanium\mobilesdk\win32\3.0.0.GA\android\builder.py", line 183, in zip_extractall
+[ERROR]     out_file = open(file_path, "wb")
+[ERROR] IOError: [Errno 22] invalid mode ('wb') or filename: u'C:\\Users\\pillybuilt\\Documents\\GitHub\\EpicPillow\\EpicPillow\\TitaniumSDK\\udptest\\build\\android\\res\\values\\strings.xml'
