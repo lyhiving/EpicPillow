@@ -72,7 +72,7 @@ namespace rtaNetworking.Streaming
             this.Write(ms);
         }
 
-        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false)
+        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false, string contenttype = "image/jpeg")
         {
 
             StringBuilder sb = new StringBuilder();
@@ -83,7 +83,7 @@ namespace rtaNetworking.Streaming
                 sb.AppendLine();
                 sb.AppendLine(this.Boundary);
             }
-            sb.AppendLine("Content-Type: image/jpeg");
+            sb.AppendLine("Content-Type: " + contenttype); 
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
             if (keepalive)
             {
@@ -101,7 +101,7 @@ namespace rtaNetworking.Streaming
         public void writeImg(Image image)
         {
             MemoryStream ms = BytesOf(image);
-            Write(ms, false, true); 
+            Write(ms, false, true, "image"); 
         }
         byte[] ImageToByte(Image img)
         {
@@ -134,7 +134,6 @@ namespace rtaNetworking.Streaming
             image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms;
         }
-
         public string ReadRequest(int length)
         {
 

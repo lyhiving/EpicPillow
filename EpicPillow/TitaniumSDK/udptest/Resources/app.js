@@ -170,10 +170,10 @@ var c = Titanium.Network.createHTTPClient();
 c.setTimeout(2000);
 c.onload = function() 
 {
-	//if (c.status == 200)
-	//{
+	if (c.status == 200)
+	{
 		imageBox.image = this.responseData;
-	//}
+	}
 }
 function updateImage()
 {
