@@ -83,16 +83,22 @@ namespace rtaNetworking.Streaming
                 sb.AppendLine();
                 sb.AppendLine(this.Boundary);
             }
-            sb.AppendLine("Content-Type: " + contenttype); 
-            sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r")); 
+            sb.AppendLine("Content-Type: " + contenttype);
+
             if (keepalive)
             {
                 sb.AppendLine("Connection: keep-alive");
             }
-            sb.AppendLine(); 
-
+            else
+            {
+                sb.AppendLine("Connection: Close"); 
+            }
+            sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            sb.AppendLine();
             Write(sb.ToString());
             imageStream.WriteTo(new NetworkStream(this.Stream));
+            //Write(ImageToByte((Image)HtmlToImage.Windows.GlobalPillow.currentFrame.Clone())); 
             Write("\r\n");
             
             //this.Stream.Flush();
@@ -101,7 +107,7 @@ namespace rtaNetworking.Streaming
         public void writeImg(Image image)
         {
             MemoryStream ms = BytesOf(image);
-            Write(ms, false, true, "image"); 
+            Write(ms, false, false, "image/jpeg"); 
         }
         byte[] ImageToByte(Image img)
         {
@@ -131,7 +137,7 @@ namespace rtaNetworking.Streaming
         private static MemoryStream BytesOf(Image image)
         {
             MemoryStream ms = new MemoryStream();
-            image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
             return ms;
         }
         public string ReadRequest(int length)

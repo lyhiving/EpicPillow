@@ -43,7 +43,11 @@ namespace HtmlToImage.Windows.View
             {
                 //ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), client);
                 
-                Handle(client); 
+                //Handle(client); 
+                //Socket s = Server.Accept();
+                ParameterizedThreadStart start = new ParameterizedThreadStart(Handle);
+                Thread t = new Thread(start);
+                t.Start(client);
             }
         }
         public static IEnumerable<Socket> Connections(Socket server)
@@ -75,7 +79,7 @@ namespace HtmlToImage.Windows.View
             }
             ns.Close();
             client.Close(); 
-            //Thread.CurrentThread.Join(); 
+            Thread.CurrentThread.Join(); 
         }
         byte[] ImageToByte(Image img)
         {

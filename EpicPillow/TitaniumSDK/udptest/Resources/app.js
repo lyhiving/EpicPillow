@@ -165,8 +165,9 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2); 
 tabGroup.open();
 //var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
+var c = Titanium.Network.createHTTPClient(); 
+var seed = new Date(); 
 var URL = 'http://192.168.0.2:1263';
-var c = Titanium.Network.createHTTPClient();
 c.setTimeout(2000);
 c.onload = function() 
 {
@@ -193,5 +194,18 @@ var updateWrap = function()
 	updateImage();
 	setTimeout(updateWrap, 2000);
 };
-setTimeout(updateWrap, 2000); 
+//setTimeout(updateWrap, 2000); 
+Ti.include('createRemoteImageView.js');
+
+// create image views…
+var remoteImage = Ti.UI.createRemoteImageView({
+    image: 'http://www.google.de/logos/classicplus.png',
+    // defaultImage: 'images/default.png', // default images are also handled
+    hires: true,
+    width: 275,
+    height: 95,
+    top: 0,
+    left: 0
+});
+Ti.UI.currentWindow.add(remoteImage);
 //win.open();
