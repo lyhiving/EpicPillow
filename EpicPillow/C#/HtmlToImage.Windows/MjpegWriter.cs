@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Net.Sockets;
+using System.Drawing.Imaging;
 
 // -------------------------------------------------
 // Developed By : Ragheed Al-Tayeb
@@ -21,7 +22,7 @@ namespace rtaNetworking.Streaming
     /// </summary>
     public class MjpegWriter:IDisposable 
     {
-
+        
         private static byte[] CRLF = new byte[] { 13, 10 };
         private static byte[] EmptyLine = new byte[] { 13, 10, 13, 10};
 
@@ -104,10 +105,14 @@ namespace rtaNetworking.Streaming
             //this.Stream.Flush();
 
         }
+        public void EndSock()
+        {
+            this.Stream.Close(); 
+        }
         public void writeImg(Image image)
         {
-            MemoryStream ms = BytesOf(image);
-            Write(ms, false, false, "image/jpeg"); 
+            MemoryStream ms = BytesOf(image, 10);
+            Write(ms, false, true, "image/jpeg"); 
         }
         byte[] ImageToByte(Image img)
         {
@@ -133,12 +138,54 @@ namespace rtaNetworking.Streaming
         {
             return Encoding.ASCII.GetBytes(text);
         }
-
-        private static MemoryStream BytesOf(Image image)
+        //from MrPolite in VBForums
+        public static MemoryStream SaveJpeg(MemoryStream path, Image img, int quality)
         {
-            MemoryStream ms = new MemoryStream();
-            image.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            return ms;
+            if (quality < 0 || quality > 100)
+                throw new ArgumentOutOfRangeException("quality must be between 0 and 100.");
+
+
+            // Encoder parameter for image quality 
+            EncoderParameter qualityParam =
+                new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+            // Jpeg image codec 
+            ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
+
+            EncoderParameters encoderParams = new EncoderParameters(1);
+            encoderParams.Param[0] = qualityParam;
+
+            img.Save(path, jpegCodec, encoderParams);
+            return path; 
+        }
+
+        /// <summary> 
+        /// Returns the image codec with the given mime type 
+        /// </summary> 
+        private static ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            // Get image codecs for all image formats 
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+
+            // Find the correct image codec 
+            for (int i = 0; i < codecs.Length; i++)
+                if (codecs[i].MimeType == mimeType)
+                    return codecs[i];
+            return null;
+        }  
+        private static MemoryStream BytesOf(Image image, int compress = 0)
+        {
+            if (compress != 0)
+            {
+                MemoryStream ms = new MemoryStream();
+                SaveJpeg(ms, image, compress);
+                return ms; 
+            }
+            else
+            {
+                MemoryStream ms = new MemoryStream();
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms;
+            }
         }
         public string ReadRequest(int length)
         {

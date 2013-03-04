@@ -43,11 +43,11 @@ namespace HtmlToImage.Windows.View
             {
                 //ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), client);
                 
-                //Handle(client); 
+                Handle(client); 
                 //Socket s = Server.Accept();
-                ParameterizedThreadStart start = new ParameterizedThreadStart(Handle);
-                Thread t = new Thread(start);
-                t.Start(client);
+                //ParameterizedThreadStart start = new ParameterizedThreadStart(Handle);
+                //Thread t = new Thread(start);
+                //t.Start(client);
             }
         }
         public static IEnumerable<Socket> Connections(Socket server)
@@ -64,22 +64,24 @@ namespace HtmlToImage.Windows.View
             c.Response.OutputStream.Close(); 
              * */
             Socket client = (Socket)clientSock;
-            NetworkStream ns = new NetworkStream(client, true); 
             using (rtaNetworking.Streaming.MjpegWriter wr = new rtaNetworking.Streaming.MjpegWriter(client))
             {
                 try
                 {
                     wr.minWriteHeader();
                     wr.writeImg((Image)GlobalPillow.currentFrame.Clone());
+                    wr.EndSock();
+                    System.Diagnostics.Debug.WriteLine("wr EndSock"); 
                 }
                 catch (Exception ex)
                 {
 
                 }
             }
-            ns.Close();
-            client.Close(); 
-            Thread.CurrentThread.Join(); 
+            client.Close();
+            System.Diagnostics.Debug.WriteLine("client Closed"); 
+            //Thread.CurrentThread.Join();
+            //System.Diagnostics.Debug.WriteLine("Thread joined"); 
         }
         byte[] ImageToByte(Image img)
         {

@@ -164,25 +164,39 @@ win2.add(imageBox);
 tabGroup.addTab(tab1);  
 tabGroup.addTab(tab2); 
 tabGroup.open();
-//var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
-var c = Titanium.Network.createHTTPClient(); 
 var seed = new Date(); 
-var URL = 'http://192.168.0.2:1263';
+var cacheFilename = "frame"; 
+
+
+//var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
+var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
+var URL = '192.168.0.2:1263';
+var c = Titanium.Network.createHTTPClient();
 c.setTimeout(2000);
+c.enableKeepAlive = true; 
 c.onload = function() 
 {
-	if (c.status == 200)
-	{
-		imageBox.image = this.responseData;
-	}
+	//if (c.status == 200)
+	//{
+		cacheFile.write(this.responseData); 
+		imageBox.image = cacheFile.nativePath; 
+		//imageBox.image = URL; 
+		//imageBox.image = this.responseData; 
+		//delete(cacheFile); 
+	//}
 }
+
+var ImageLoader = require("ImageLoader"); 
 function updateImage()
 {
 	try
 	{
+		
 		c.open('GET', URL);
 		c.send(); 
-		//imageBox.image = URL; 
+		//imageBox.image = URL + "/frame.jpg?" + seed.getTime();
+		//ImageLoader.LoadRemoteImage(imageBox, URL); 
+		
 	}
 	catch(e)
 	{
@@ -194,18 +208,5 @@ var updateWrap = function()
 	updateImage();
 	setTimeout(updateWrap, 2000);
 };
-//setTimeout(updateWrap, 2000); 
-Ti.include('createRemoteImageView.js');
-
-// create image views…
-var remoteImage = Ti.UI.createRemoteImageView({
-    image: 'http://www.google.de/logos/classicplus.png',
-    // defaultImage: 'images/default.png', // default images are also handled
-    hires: true,
-    width: 275,
-    height: 95,
-    top: 0,
-    left: 0
-});
-Ti.UI.currentWindow.add(remoteImage);
+setTimeout(updateWrap, 2000); 
 //win.open();
