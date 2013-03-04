@@ -61,7 +61,7 @@ namespace rtaNetworking.Streaming
         {
 
             Write(
-                    "HTTP/1.1 200\r\n"
+                    "HTTP/1.1 200 OK\r\n"
                 //""
                  );
 
@@ -78,7 +78,7 @@ namespace rtaNetworking.Streaming
 
             StringBuilder sb = new StringBuilder();
 
-            
+            //sb.AppendLine(); 
             if (boundary)
             {
                 sb.AppendLine();
@@ -111,8 +111,8 @@ namespace rtaNetworking.Streaming
         }
         public void writeImg(Image image)
         {
-            MemoryStream ms = BytesOf(image, 10);
-            Write(ms, false, true, "image/jpeg"); 
+            MemoryStream ms = BytesOf(image, 15);
+            Write(ms, false, false, "image/jpeg"); 
         }
         byte[] ImageToByte(Image img)
         {

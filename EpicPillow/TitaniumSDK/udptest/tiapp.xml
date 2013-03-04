@@ -43,6 +43,8 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <property name="ti.android.httpclient.maxbuffersize" type="int">10485760</property>
+
     <mobileweb>
         <precache/>
         <splash>

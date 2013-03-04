@@ -165,33 +165,42 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2); 
 tabGroup.open();
 var seed = new Date(); 
-var cacheFilename = "frame"; 
+var cacheFilename = "frame.jpg"; 
 
 
 //var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
-var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
-var URL = '192.168.0.2:1263';
+
+var URL = 'http://192.168.0.2:1263/frame.jpg?' + seed.getTime();
 var c = Titanium.Network.createHTTPClient();
-c.setTimeout(2000);
-c.enableKeepAlive = true; 
+c.setTimeout(500);
+c.enableKeepAlive = false; 
+c.autoRedirect = true;
 c.onload = function() 
 {
-	//if (c.status == 200)
-	//{
+	if (c.status == 200)
+	{
+		/*
+		var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
 		cacheFile.write(this.responseData); 
 		imageBox.image = cacheFile.nativePath; 
+		cacheFile.deleteFile(); 
+		*/
 		//imageBox.image = URL; 
-		//imageBox.image = this.responseData; 
-		//delete(cacheFile); 
-	//}
+		imageBox.image = this.responseData; 
+		
+		Ti.API.info('headers=' + "\r\n" + this.allResponseHeaders);
+	}
 }
 
-var ImageLoader = require("ImageLoader"); 
 function updateImage()
 {
 	try
 	{
-		
+		//imageBox.url = URL; 
+		if (c.connected)
+		{
+			c.abort();
+		}
 		c.open('GET', URL);
 		c.send(); 
 		//imageBox.image = URL + "/frame.jpg?" + seed.getTime();
@@ -200,13 +209,13 @@ function updateImage()
 	}
 	catch(e)
 	{
-		
+		c.abort();
 	}
 }
 var updateWrap = function()
 {
 	updateImage();
-	setTimeout(updateWrap, 2000);
+	setTimeout(updateWrap, 500);
 };
-setTimeout(updateWrap, 2000); 
+setTimeout(updateWrap, 500); 
 //win.open();
