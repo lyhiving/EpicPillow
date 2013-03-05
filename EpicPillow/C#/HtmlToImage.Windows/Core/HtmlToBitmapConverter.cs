@@ -24,8 +24,8 @@
         public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
 		public WebBrowser pubbrowser; 
 		public Uri navURL;
-        public Size defSize = new Size(800,600); 
-		public Size newSize = new Size(800,600); 
+        public Size defSize = new Size(640,480); 
+		public Size newSize = new Size(640,480); 
 		public Size minSize = new Size(640, 480);
 		public int minPix; 
 		public Bitmap Render(string html, Size size)

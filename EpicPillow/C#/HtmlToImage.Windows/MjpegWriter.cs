@@ -111,7 +111,7 @@ namespace rtaNetworking.Streaming
         }
         public void writeImg(Image image)
         {
-            MemoryStream ms = BytesOf(image, 15);
+            MemoryStream ms = BytesOf(image, 10);
             Write(ms, false, false, "image/jpeg"); 
         }
         byte[] ImageToByte(Image img)

@@ -172,21 +172,27 @@ var cacheFilename = "frame.jpg";
 
 var URL = 'http://192.168.0.2:1263/frame.jpg?' + seed.getTime();
 var c = Titanium.Network.createHTTPClient();
-c.setTimeout(500);
+var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
+//c.setTimeout(500);
 c.enableKeepAlive = false; 
 c.autoRedirect = true;
 c.onload = function() 
 {
 	if (c.status == 200)
 	{
-		/*
-		var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
+		
+		oldf = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
+		if (oldf != null)
+		{
+			oldf.deleteFile(); 
+		}
+		
+		cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
 		cacheFile.write(this.responseData); 
 		imageBox.image = cacheFile.nativePath; 
-		cacheFile.deleteFile(); 
-		*/
+		
 		//imageBox.image = URL; 
-		imageBox.image = this.responseData; 
+		//imageBox.image = this.responseData; 
 		
 		Ti.API.info('headers=' + "\r\n" + this.allResponseHeaders);
 	}
