@@ -165,8 +165,8 @@ tabGroup.addTab(tab1);
 tabGroup.addTab(tab2); 
 tabGroup.open();
 var seed = new Date(); 
-var cacheFilename = "frame.jpg"; 
-
+var cacheFilename = "frame"; 
+var cacheFileextension = ".jpg"; 
 
 //var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
 
@@ -176,21 +176,43 @@ var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, ca
 //c.setTimeout(500);
 c.enableKeepAlive = false; 
 c.autoRedirect = true;
+var count = 0; 
 c.onload = function() 
 {
 	if (c.status == 200)
 	{
 		
-		oldf = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
+		oldf = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename + count.toString() + cacheFileextension);
 		if (oldf != null)
 		{
 			oldf.deleteFile(); 
 		}
 		
-		cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
-		cacheFile.write(this.responseData); 
-		imageBox.image = cacheFile.nativePath; 
 		
+		if (this.responseData != null)
+		{
+			if (count == 10)
+			{
+				count = 0;
+			}
+			else
+			{
+				count++; 
+			}
+			cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename + count.toString() + cacheFileextension);
+			cacheFile.write(this.responseData); 
+			imageBox.image = cacheFile.nativePath; 
+			Ti.API.info("image set as responseData");
+			Ti.API.info(cacheFile.nativePath); 
+			
+		}
+		else
+		{
+			Ti.API.info("response Data was null"); 
+		}
+		
+		
+		//imageBox.image = (Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,cacheFilename).write(this.responseData)).nativePath; 
 		//imageBox.image = URL; 
 		//imageBox.image = this.responseData; 
 		
@@ -203,12 +225,15 @@ function updateImage()
 	try
 	{
 		//imageBox.url = URL; 
+		//imageBox.image = URL; 
+		
 		if (c.connected)
 		{
 			c.abort();
 		}
 		c.open('GET', URL);
-		c.send(); 
+		c.send();
+		 
 		//imageBox.image = URL + "/frame.jpg?" + seed.getTime();
 		//ImageLoader.LoadRemoteImage(imageBox, URL); 
 		
@@ -221,7 +246,8 @@ function updateImage()
 var updateWrap = function()
 {
 	updateImage();
-	setTimeout(updateWrap, 500);
+	setTimeout(updateWrap, 200);
 };
-setTimeout(updateWrap, 500); 
+setTimeout(updateWrap, 200); 
+imageBox.image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename).nativePath; 
 //win.open();

@@ -73,7 +73,7 @@ namespace rtaNetworking.Streaming
             this.Write(ms);
         }
 
-        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false, string contenttype = "image/jpeg")
+        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false, string contenttype = "image/jpeg", bool nocachecontrol = false)
         {
 
             StringBuilder sb = new StringBuilder();
@@ -94,6 +94,10 @@ namespace rtaNetworking.Streaming
             else
             {
                 sb.AppendLine("Connection: Close"); 
+            }
+            if (nocachecontrol)
+            {
+                sb.AppendLine("Cache-Control: no-cache"); 
             }
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
             sb.AppendLine();
