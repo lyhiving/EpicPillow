@@ -22,6 +22,7 @@ var socket = UDP.createSocket();
 /*
  Start the server...
  */
+/*
 var startSocket = Ti.UI.createButton({
     title: 'Start Socket',
     top: 10 + u, left: 10 + u, right: 10 + u, height: 40 + u
@@ -32,7 +33,10 @@ startSocket.addEventListener('click', function () {
     });
 });
 win.add(startSocket);
-
+*/
+socket.start({
+        port: 1261
+    });
 var sendTo = Ti.UI.createTextField({
     height: 44 + u, top: 10 + u, left: 10 + u, right: 10 + u,
     borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
@@ -158,6 +162,21 @@ var imageBox = Titanium.UI.createImageView({
     left: 0,
     right: 0,
     image: 'KS_nav_ui.png'
+});
+imageBox.addEventListener('touchstart', function(e) 
+{
+	var xCoord = Math.floor(e.x);
+	var yCoord = Math.floor(e.y);
+	Ti.API.info('touchstart fired x: ' + xCoord + ' y: ' + yCoord);
+	var i = imageBox.toImage();
+	Ti.API.info('image size x: ' + i.width + ' y: ' + i.height); 
+	var sendDat = 'lclick2(' + xCoord + ',' + yCoord + ',' + i.width + ',' + i.height + ')';
+	Ti.API.info(sendDat);
+	socket.sendString({
+        host: sendTo.value,
+        data: sendDat
+    });
+    Ti.API.info('data sent');
 });
 win2.add(label2);
 win2.add(imageBox);

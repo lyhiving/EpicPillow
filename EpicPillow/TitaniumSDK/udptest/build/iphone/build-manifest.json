@@ -1,0 +1,23 @@
+{
+	"target": "simulator",
+	"deployType": "development",
+	"deviceFamily": "iphone",
+	"iosSdkPath": "/Users/User/Library/Application Support/Titanium/mobilesdk/osx/3.0.2.GA/iphone",
+	"appGuid": "02fa0c96-8700-40fc-a314-ed5093888a65",
+	"tiCoreHash": "fa476584d63923183b326150e75416b3",
+	"modulesHash": "b61752ae1e698ae13c44e720aea40dde",
+	"nativeModulesHash": "db8bfdf962627697bf699311ea46a5ba",
+	"gitHash": "5a77fe7",
+	"name": "udptest",
+	"id": "com.pillow.udp",
+	"analytics": true,
+	"publisher": "pillybuilt",
+	"url": "http://",
+	"version": "1.0",
+	"description": "not specified",
+	"copyright": "2013 by pillybuilt",
+	"guid": "02fa0c96-8700-40fc-a314-ed5093888a65",
+	"skipJSMinification": false,
+	"forceCopy": false,
+	"forceCopyAll": false
+}
