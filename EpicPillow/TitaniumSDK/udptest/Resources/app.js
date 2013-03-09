@@ -165,8 +165,8 @@ var imageBox = Titanium.UI.createImageView({
 });
 imageBox.addEventListener('touchstart', function(e) 
 {
-	var xCoord = Math.floor(e.x);
-	var yCoord = Math.floor(e.y);
+	var xCoord = Math.round(e.x);
+	var yCoord = Math.round(e.y);
 	Ti.API.info('touchstart fired x: ' + xCoord + ' y: ' + yCoord);
 	var i = imageBox.toImage();
 	Ti.API.info('image size x: ' + i.width + ' y: ' + i.height); 
