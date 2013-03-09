@@ -5,7 +5,7 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using System.Drawing;
-using System.Net.Sockets; 
+using System.Net.Sockets;
 namespace HtmlToImage.Windows.View
 {
     class PillowServer
@@ -41,9 +41,8 @@ namespace HtmlToImage.Windows.View
              * */
             foreach (Socket client in Connections(Server))
             {
-                //ThreadPool.QueueUserWorkItem(new WaitCallback(ClientThread), client);
-                
-                Handle(client); 
+                ThreadPool.QueueUserWorkItem(new WaitCallback(Handle), client);
+                //Handle(client); 
                 //Socket s = Server.Accept();
                 //ParameterizedThreadStart start = new ParameterizedThreadStart(Handle);
                 //Thread t = new Thread(start);
@@ -71,17 +70,17 @@ namespace HtmlToImage.Windows.View
                     wr.minWriteHeader();
                     wr.writeImg((Image)GlobalPillow.currentFrame.Clone());
                     wr.EndSock();
-                    System.Diagnostics.Debug.WriteLine("wr EndSock"); 
+                    System.Diagnostics.Debug.WriteLine("wr EndSock");
+                    
                 }
                 catch (Exception ex)
                 {
-
                 }
             }
             client.Close();
             System.Diagnostics.Debug.WriteLine("client Closed"); 
             //Thread.CurrentThread.Join();
-            //System.Diagnostics.Debug.WriteLine("Thread joined"); 
+            //System.Diagnostics.Debug.WriteLine("Thread joined");
         }
         byte[] ImageToByte(Image img)
         {

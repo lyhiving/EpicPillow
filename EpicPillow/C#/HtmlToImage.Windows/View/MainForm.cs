@@ -305,6 +305,7 @@
         KeysConverter kc = new KeysConverter(); 
         public void exec_Cmd(string recv)
         {
+            System.Diagnostics.Debug.WriteLine(recv); 
             if (recv.StartsWith("lclick"))
             {
                 string[] coordString = recv.Split('(')[1].Split(')')[0].Split(',');
@@ -324,6 +325,16 @@
                 {
                     pubBrowse.SendStrokes((char)typestring[i]); 
                 }
+            }
+            else if (recv.StartsWith("lclick2"))
+            {
+                string[] coordString = recv.Split('(')[1].Split(')')[0].Split(',');
+                Point clickPoint = new Point(Int32.Parse(coordString[0]), Int32.Parse(coordString[1]));
+                Size viewSize = new Size(Int32.Parse(coordString[2]), Int32.Parse(coordString[3]));
+                //pubBrowse.DoMouseLeftClick(clickPoint);
+                Point newPoint = getProportion(clickPoint, viewSize, pubBrowse.pubbrowser.Size);
+                System.Diagnostics.Debug.WriteLine("newx: " + newPoint.X + " newy: " + newPoint.Y); 
+                pubBrowse.DoMouseLeftClick(newPoint); 
             }
         }
         string mail = ""; 
