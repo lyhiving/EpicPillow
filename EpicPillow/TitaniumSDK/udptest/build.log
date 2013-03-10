@@ -4,9 +4,9 @@ Logfile initialized
 [INFO] Building udptest for Android ... one moment
 [INFO] Titanium SDK version: 3.0.2 (02/15/13 19:02 5a77fe7)
 [DEBUG] Waiting for device to be ready ...
-[TRACE] adb devices returned 1 devices/emulators
+[TRACE] adb devices returned 2 devices/emulators
 [DEBUG] Device connected... (waited 0 seconds)
-[DEBUG] waited 0.014000 seconds on emulator to get ready
+[DEBUG] waited 0.018000 seconds on emulator to get ready
 [DEBUG] com.pillow.udp installed? True
 [INFO] Fastdev server running, deploying in Fastdev mode
 [INFO] Copying CommonJS modules...
@@ -26,5 +26,4 @@ Logfile initialized
 [INFO] Re-launching application ... udptest
 [INFO] Launching application ... udptest
 [TRACE] Launch output: Starting: Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.pillow.udp/.UdptestActivity }
-Warning: Activity not started, its current task has been brought to the front
 

@@ -326,17 +326,24 @@
                     pubBrowse.SendStrokes((char)typestring[i]); 
                 }
             }
-            else if (recv.StartsWith("lclick2"))
+            else if (recv.StartsWith("2lclick"))
             {
                 string[] coordString = recv.Split('(')[1].Split(')')[0].Split(',');
-                Point clickPoint = new Point(Int32.Parse(coordString[0]), Int32.Parse(coordString[1]));
-                Size viewSize = new Size(Int32.Parse(coordString[2]), Int32.Parse(coordString[3]));
+                //Point clickPoint = new Point(Int32.Parse(coordString[0]), Int32.Parse(coordString[1]));
+                //Size viewSize = new Size(Int32.Parse(coordString[2]), Int32.Parse(coordString[3]));
                 //pubBrowse.DoMouseLeftClick(clickPoint);
-                Point newPoint = getProportion(clickPoint, viewSize, pubBrowse.pubbrowser.Size);
-                System.Diagnostics.Debug.WriteLine("newx: " + newPoint.X + " newy: " + newPoint.Y); 
+                float newX = (((float)(Int32.Parse(coordString[0]))) * ((float)pubBrowse.pubbrowser.Size.Width)) / ((float)(Int32.Parse(coordString[2])));
+                float newY = (((float)(Int32.Parse(coordString[1]))) * ((float)pubBrowse.pubbrowser.Size.Height)) / ((float)(Int32.Parse(coordString[3])));
+                System.Diagnostics.Debug.WriteLine(newX.ToString());
+                System.Diagnostics.Debug.WriteLine(newY.ToString());
+                Point newPoint = new Point((int)Math.Round(newX), (int)Math.Round(newY)); 
+                //Point newPoint = getProportion(clickPoint, viewSize, pubBrowse.pubbrowser.Size);
+                
+                //System.Diagnostics.Debug.Write(newPoint.ToString()); 
                 pubBrowse.DoMouseLeftClick(newPoint); 
             }
         }
+        
         string mail = ""; 
 		void MainFormLoad(object sender, EventArgs e)
 		{

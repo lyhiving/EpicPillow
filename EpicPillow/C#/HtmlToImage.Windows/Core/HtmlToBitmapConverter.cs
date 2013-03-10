@@ -404,6 +404,7 @@
         public void DoMouseLeftClick(Point x)
         {
             btnMouseClick_Click(x.X, x.Y);
+            System.Diagnostics.Debug.WriteLine(x.X.ToString() + "," + x.Y.ToString()); 
         }
         [DllImport("USER32.DLL")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);

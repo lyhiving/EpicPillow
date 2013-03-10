@@ -87,6 +87,7 @@ namespace rtaNetworking.Streaming
             }
             sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r"));
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            sb.AppendLine("Content-Type: image/jpeg"); 
             sb.AppendLine();
             Write(sb.ToString());
             imageStream.WriteTo(new NetworkStream(this.Stream));
