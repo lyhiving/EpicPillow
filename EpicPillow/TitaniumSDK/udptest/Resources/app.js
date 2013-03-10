@@ -265,8 +265,8 @@ function updateImage()
 var updateWrap = function()
 {
 	updateImage();
-	setTimeout(updateWrap, 200);
+	setTimeout(updateWrap, 500);
 };
-setTimeout(updateWrap, 200); 
+setTimeout(updateWrap, 500); 
 imageBox.image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename).nativePath; 
 //win.open();

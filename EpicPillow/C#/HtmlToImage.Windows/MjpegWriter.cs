@@ -61,7 +61,8 @@ namespace rtaNetworking.Streaming
         {
 
             Write(
-                    "HTTP/1.1 200 OK\r\n"
+                    "HTTP/1.1 200 OK\r\n" + 
+                    "Content-Type: multipart/x-mixed-replace\r\n"
                 //""
                  );
 
@@ -73,7 +74,7 @@ namespace rtaNetworking.Streaming
             this.Write(ms);
         }
 
-        public void Write(MemoryStream imageStream, bool boundary = false, bool keepalive = false, string contenttype = "image/jpeg", bool nocachecontrol = false)
+        public void Write(MemoryStream imageStream, bool boundary = false)
         {
 
             StringBuilder sb = new StringBuilder();
@@ -84,21 +85,7 @@ namespace rtaNetworking.Streaming
                 sb.AppendLine();
                 sb.AppendLine(this.Boundary);
             }
-            sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r")); 
-            sb.AppendLine("Content-Type: " + contenttype);
-
-            if (keepalive)
-            {
-                sb.AppendLine("Connection: keep-alive");
-            }
-            else
-            {
-                sb.AppendLine("Connection: Close"); 
-            }
-            if (nocachecontrol)
-            {
-                sb.AppendLine("Cache-Control: no-cache"); 
-            }
+            sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r"));
             sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
             sb.AppendLine();
             Write(sb.ToString());
@@ -116,7 +103,7 @@ namespace rtaNetworking.Streaming
         public void writeImg(Image image)
         {
             MemoryStream ms = BytesOf(image, 10);
-            Write(ms, false, true, "image/jpeg"); 
+            Write(ms); 
         }
         byte[] ImageToByte(Image img)
         {
