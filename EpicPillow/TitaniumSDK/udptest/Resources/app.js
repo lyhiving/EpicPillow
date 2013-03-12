@@ -184,11 +184,16 @@ var label2 = Titanium.UI.createLabel({
 var dimensionOffset = 50; 
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
+var scrollView = Titanium.UI.createScrollView({
+	//contentWidth: 'auto',
+	//contentHeight: 'auto',
+	showVerticalScrollIndicator: true,
+	showHorizontalScrollIndicator: true
+});
 var imageBox = Titanium.UI.createImageView({
-	top : 0,
-	left : 0,
-	width : pWidth,
-	height : pHeight,
+	
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
 	//right: 0,
 	image : 'KS_nav_ui.png'
 });
@@ -207,7 +212,9 @@ imageBox.addEventListener('touchstart', function(e) {
 	Ti.API.info('data sent');
 });
 win2.add(label2);
-win2.add(imageBox);
+scrollView.add(imageBox);
+win2.add(scrollView); 
+//win2.add(imageBox);
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);
 tabGroup.open();
