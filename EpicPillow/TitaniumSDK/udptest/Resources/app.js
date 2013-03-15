@@ -184,24 +184,31 @@ var label2 = Titanium.UI.createLabel({
 var dimensionOffset = 50; 
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
-var scrollView = Titanium.UI.createScrollView({
-	//contentWidth: 'auto',
-	//contentHeight: 'auto',
-	showVerticalScrollIndicator: true,
-	showHorizontalScrollIndicator: true
-});
+
 var imageBox = Titanium.UI.createImageView({
 	
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
+	//width: 'auto',
+	//height: 'auto',
 	//right: 0,
 	image : 'KS_nav_ui.png'
+});
+var scrollView = Titanium.UI.createScrollView({
+	//contentWidth: 'auto',
+	//contentHeight: 'auto',
+	//contentWidth: Ti.UI.SIZE,
+	//contentHeight: imageBox.height,
+	//width: Ti.UI.SIZE,
+	//height: Ti.UI.SIZE,
+	showVerticalScrollIndicator: true,
+	showHorizontalScrollIndicator: true
 });
 imageBox.addEventListener('touchstart', function(e) {
 	var xCoord = Math.round(e.x);
 	var yCoord = Math.round(e.y);
-	Ti.API.info('touchstart fired x: ' + xCoord + ' y: ' + yCoord);
 	var i = imageBox.toImage();
+	Ti.API.info('touchstart fired x: ' + xCoord + ' y: ' + yCoord);
 	Ti.API.info('image size x: ' + i.width + ' y: ' + i.height);
 	var sendDat = '2lclick(' + xCoord + ',' + yCoord + ',' + i.width + ',' + i.height + ')';
 	Ti.API.info(sendDat);
@@ -248,9 +255,11 @@ c.onload = function() {
 			cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename + count.toString() + cacheFileextension);
 			cacheFile.write(this.responseData);
 			imageBox.image = cacheFile.nativePath;
+			scrollView.width = imageBox.width;
+			scrollView.height = imageBox.height;
 			Ti.API.info("image set as responseData");
 			Ti.API.info(cacheFile.nativePath);
-
+			
 		} else {
 			Ti.API.info("response Data was null");
 		}
