@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/ApplicationMods.m \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/ApplicationMods.h
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/ApplicationMods.m \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/ApplicationMods.h

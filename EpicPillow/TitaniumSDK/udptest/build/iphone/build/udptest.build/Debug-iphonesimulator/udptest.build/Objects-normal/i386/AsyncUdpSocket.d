@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/AsyncUdpSocket.m \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/AsyncUdpSocket.h
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/AsyncUdpSocket.m \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/AsyncUdpSocket.h

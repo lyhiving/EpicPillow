@@ -1,4 +1,4 @@
 dependencies: \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CAXException.cpp \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CAXException.h \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CADebugMacros.h
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CAXException.cpp \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CAXException.h \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/CADebugMacros.h

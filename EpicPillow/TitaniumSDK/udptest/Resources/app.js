@@ -45,7 +45,7 @@ var sendTo = Ti.UI.createTextField({
 	borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	//value: Ti.App.Properties.getString('SavedSendTo', '')
 	//value: "192.168.0.2"
-	value : "75.139.132.111"
+	value : "192.168.0.7"
 });
 win.add(sendTo);
 var sendStuff = Ti.UI.createTextField({
@@ -184,16 +184,28 @@ var label2 = Titanium.UI.createLabel({
 var dimensionOffset = 50; 
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
+var vidsrc = 'http://192.168.0.7:1262';
+var playerHTML = '<html><body style="background:#000;padding:0px;margin:0px;"><img src="'+vidsrc+'"></body></html>'
 
-var imageBox = Titanium.UI.createImageView({
-	
-	width: Ti.UI.FILL,
-	height: Ti.UI.FILL,
-	//width: 'auto',
-	//height: 'auto',
-	//right: 0,
-	image : 'KS_nav_ui.png'
+var webBox = Titanium.UI.createWebView({
+	html: playerHTML
+	//url: vidsrc
 });
+webBox.addEventListener('touchstart', function(e) {
+	var xCoord = Math.round(e.x);
+	var yCoord = Math.round(e.y);
+	var sendDat = 'lclick(' + xCoord + ',' + yCoord + ')';
+	Ti.API.info(sendDat);
+	socket.sendString({
+		host : sendTo.value,
+		data : sendDat
+	});
+});
+/*
+var webBox = Titanium.UI.createWebView({
+	url: vidsrc
+});
+*/
 var scrollView = Titanium.UI.createScrollView({
 	//contentWidth: 'auto',
 	//contentHeight: 'auto',
@@ -204,96 +216,27 @@ var scrollView = Titanium.UI.createScrollView({
 	showVerticalScrollIndicator: true,
 	showHorizontalScrollIndicator: true
 });
-imageBox.addEventListener('touchstart', function(e) {
-	var xCoord = Math.round(e.x);
-	var yCoord = Math.round(e.y);
-	var i = imageBox.toImage();
-	Ti.API.info('touchstart fired x: ' + xCoord + ' y: ' + yCoord);
-	Ti.API.info('image size x: ' + i.width + ' y: ' + i.height);
-	var sendDat = '2lclick(' + xCoord + ',' + yCoord + ',' + i.width + ',' + i.height + ')';
-	Ti.API.info(sendDat);
-	socket.sendString({
-		host : sendTo.value,
-		data : sendDat
-	});
-	Ti.API.info('data sent');
-});
 win2.add(label2);
-scrollView.add(imageBox);
+scrollView.add(webBox);
+//scrollView.add(imageBox);
 win2.add(scrollView); 
 //win2.add(imageBox);
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);
 tabGroup.open();
-var seed = new Date();
-var cacheFilename = "frame";
-var cacheFileextension = ".jpg";
-
-//var URL = 'https://www.haiku-os.org/files/star-thank-you.png';
-
-var URL = 'http://192.168.0.2:1263/frame.jpg?' + seed.getTime();
-var c = Titanium.Network.createHTTPClient();
-var cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename);
-//c.setTimeout(500);
-c.enableKeepAlive = false;
-c.autoRedirect = true;
-var count = 0;
-c.onload = function() {
-	if (c.status == 200) {
-
-		oldf = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename + count.toString() + cacheFileextension);
-		if (oldf != null) {
-			oldf.deleteFile();
-		}
-
-		if (this.responseData != null) {
-			if (count == 10) {
-				count = 0;
-			} else {
-				count++;
-			}
-			cacheFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename + count.toString() + cacheFileextension);
-			cacheFile.write(this.responseData);
-			imageBox.image = cacheFile.nativePath;
-			scrollView.width = imageBox.width;
-			scrollView.height = imageBox.height;
-			Ti.API.info("image set as responseData");
-			Ti.API.info(cacheFile.nativePath);
-			
-		} else {
-			Ti.API.info("response Data was null");
-		}
-
-		//imageBox.image = (Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory,cacheFilename).write(this.responseData)).nativePath;
-		//imageBox.image = URL;
-		//imageBox.image = this.responseData;
-
-		Ti.API.info('headers=' + "\r\n" + this.allResponseHeaders);
+function updateView()
+{
+	try
+	{
+		Titanium.API.debug("start update");
+		//webBox.html = "";
+		webBox.html = playerHTML; 
+		//webBox.reload();
+		Titanium.API.debug("start update finish");
+	}
+	catch(e)
+	{
+		
 	}
 }
-function updateImage() {
-	try {
-		//imageBox.url = URL;
-		//imageBox.image = URL;
-
-		if (c.connected) {
-			c.abort();
-		}
-		c.open('GET', URL);
-		c.send();
-
-		//imageBox.image = URL + "/frame.jpg?" + seed.getTime();
-		//ImageLoader.LoadRemoteImage(imageBox, URL);
-
-	} catch(e) {
-		c.abort();
-	}
-}
-
-var updateWrap = function() {
-	updateImage();
-	setTimeout(updateWrap, 250);
-};
-setTimeout(updateWrap, 250);
-imageBox.image = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, cacheFilename).nativePath;
-//win.open();
+setInterval(updateView, 1000); 

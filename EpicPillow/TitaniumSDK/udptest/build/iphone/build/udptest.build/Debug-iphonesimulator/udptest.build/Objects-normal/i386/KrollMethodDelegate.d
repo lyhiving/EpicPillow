@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/KrollMethodDelegate.m \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/KrollMethodDelegate.h
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/KrollMethodDelegate.m \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/KrollMethodDelegate.h

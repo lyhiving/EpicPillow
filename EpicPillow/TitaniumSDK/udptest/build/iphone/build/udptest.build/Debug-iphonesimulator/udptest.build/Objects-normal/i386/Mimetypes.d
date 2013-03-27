@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/Mimetypes.m \
-  /Users/User/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/Mimetypes.h
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/Mimetypes.m \
+  /Users/jwpilly/EpicPillow/EpicPillow/TitaniumSDK/udptest/build/iphone/Classes/Mimetypes.h
