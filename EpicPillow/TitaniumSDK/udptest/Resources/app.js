@@ -188,10 +188,12 @@ var vidsrc = 'http://192.168.0.7:1262';
 var playerHTML = '<html><body style="background:#000;padding:0px;margin:0px;"><img src="'+vidsrc+'"></body></html>'
 
 var webBox = Titanium.UI.createWebView({
-	html: playerHTML
+	html: playerHTML,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
 	//url: vidsrc
 });
-webBox.addEventListener('touchstart', function(e) {
+webBox.addEventListener('longpress', function(e) {
 	var xCoord = Math.round(e.x);
 	var yCoord = Math.round(e.y);
 	var sendDat = 'lclick(' + xCoord + ',' + yCoord + ')';
@@ -209,10 +211,8 @@ var webBox = Titanium.UI.createWebView({
 var scrollView = Titanium.UI.createScrollView({
 	//contentWidth: 'auto',
 	//contentHeight: 'auto',
-	//contentWidth: Ti.UI.SIZE,
-	//contentHeight: imageBox.height,
-	//width: Ti.UI.SIZE,
-	//height: Ti.UI.SIZE,
+	contentWidth: Ti.UI.SIZE,
+	contentHeight: Ti.UI.SIZE,
 	showVerticalScrollIndicator: true,
 	showHorizontalScrollIndicator: true
 });
@@ -239,4 +239,4 @@ function updateView()
 		
 	}
 }
-setInterval(updateView, 1000); 
+setInterval(updateView, 10000); 
