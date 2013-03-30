@@ -1,10 +1,10 @@
 var UDP = require('ti.udp');
-Titanium.UI.setBackgroundColor('#000');
+Titanium.UI.setBackgroundColor('orange');
 var tabGroup = Titanium.UI.createTabGroup();
 var u = Ti.Android != undefined ? 'dp' : 0;
 var win = Ti.UI.createWindow({
 	title : 'udpSendWin',
-	backgroundColor : '#000',
+	backgroundColor : 'orange',
 	layout : 'vertical'
 });
 var tab1 = Titanium.UI.createTab({
@@ -42,7 +42,7 @@ var sendTo = Ti.UI.createTextField({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	//borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	//value: Ti.App.Properties.getString('SavedSendTo', '')
 	//value: "192.168.0.2"
 	value : "192.168.0.7"
@@ -53,7 +53,7 @@ var sendStuff = Ti.UI.createTextField({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	//borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	//value: Ti.App.Properties.getString('SavedSendTo', '')
 	//value: "192.168.0.2"
 	value : "nav(http://youtube.com)"
@@ -160,6 +160,14 @@ var status = Ti.UI.createLabel({
 	right : 10 + u,
 	height : 'auto'
 });
+var memstatus = Ti.UI.createLabel({
+	text : 'Available Memory',
+	top : 10 + u,
+	left : 10 + u,
+	right : 10 + u,
+	height : 'auto'
+});
+win.add(memstatus);
 win.add(status);
 var win2 = Titanium.UI.createWindow({
 	title : 'ViewWin',
@@ -185,13 +193,11 @@ var dimensionOffset = 50;
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
 var vidsrc = 'http://192.168.0.7:1262';
-var playerHTML = '<html><body style="background:#000;padding:0px;margin:0px;"><img src="'+vidsrc+'"></body></html>'
-
+var playerHTML = '<html><body style="background:#000;padding:0px;margin:0px;"><img src="'+vidsrc+'"></body></html>';
 var webBox = Titanium.UI.createWebView({
 	html: playerHTML,
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE
-	//url: vidsrc
 });
 webBox.addEventListener('longpress', function(e) {
 	var xCoord = Math.round(e.x);
@@ -211,6 +217,8 @@ var webBox = Titanium.UI.createWebView({
 var scrollView = Titanium.UI.createScrollView({
 	//contentWidth: 'auto',
 	//contentHeight: 'auto',
+	maxZoomScale: 1,
+	minZoomScale: 0.1,
 	contentWidth: Ti.UI.SIZE,
 	contentHeight: Ti.UI.SIZE,
 	showVerticalScrollIndicator: true,
@@ -228,15 +236,36 @@ function updateView()
 {
 	try
 	{
-		Titanium.API.debug("start update");
-		//webBox.html = "";
-		webBox.html = playerHTML; 
+		
+		Titanium.API.error("start update");
+	 
+		
+		//webBox.html = null;
+		
 		//webBox.reload();
-		Titanium.API.debug("start update finish");
+		//webBox.release();
+		
+		webBox.repaint();
+		Titanium.API.error(Titanium.Platform.availableMemory);
+		memstatus.text = Titanium.Platform.availableMemory.toString();
+		//Titanium.API.error(webBox.loading);
+		//webBox.release();
 	}
 	catch(e)
 	{
 		
 	}
 }
-setInterval(updateView, 10000); 
+function releaseView()
+{
+	try
+	{
+		webBox.reload();
+	}
+	catch(e)
+	{
+		
+	}
+}
+setInterval(updateView, 1000); 
+setInterval(releaseView, 15000);
