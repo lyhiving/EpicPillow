@@ -260,6 +260,7 @@ function releaseView()
 {
 	try
 	{
+		webBox.stopLoading(true);
 		webBox.reload();
 	}
 	catch(e)
