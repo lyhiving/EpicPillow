@@ -193,7 +193,7 @@ var dimensionOffset = 50;
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
 var vidsrc = 'http://192.168.0.7:1262';
-var playerHTML = '<html><body style="background:#000;padding:0px;margin:0px;"><img src="'+vidsrc+'"></body></html>';
+var playerHTML = '<img src=' + vidsrc + ' />';
 var webBox = Titanium.UI.createWebView({
 	html: playerHTML,
 	width: Ti.UI.SIZE,
@@ -226,6 +226,8 @@ var scrollView = Titanium.UI.createScrollView({
 });
 win2.add(label2);
 scrollView.add(webBox);
+webBox.show();
+var mode = 1;
 //scrollView.add(imageBox);
 win2.add(scrollView); 
 //win2.add(imageBox);
@@ -239,13 +241,20 @@ function updateView()
 		
 		Titanium.API.error("start update");
 	 
-		
+		if (mode == 1)
+		{
+			//webBox.repaint(); 
+		}
+		else if (mode == 2)
+		{
+			//webBox2.repaint();
+		}
 		//webBox.html = null;
 		
 		//webBox.reload();
 		//webBox.release();
 		
-		webBox.repaint();
+		//webBox.repaint();
 		Titanium.API.error(Titanium.Platform.availableMemory);
 		memstatus.text = Titanium.Platform.availableMemory.toString();
 		//Titanium.API.error(webBox.loading);
@@ -261,12 +270,16 @@ function releaseView()
 	try
 	{
 		webBox.stopLoading(true);
+<<<<<<< HEAD
 		webBox.reload();
+=======
+		webBox.reload(); 
+>>>>>>> memory issue a tiny bit better
 	}
 	catch(e)
 	{
 		
 	}
 }
-setInterval(updateView, 1000); 
+setInterval(updateView, 2500); 
 setInterval(releaseView, 15000);
