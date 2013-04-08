@@ -51,7 +51,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(20, 13);
+            this.label1.Size = new System.Drawing.Size(22, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Url";
             // 
@@ -60,7 +60,7 @@
             this.urlTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.urlTextBox.Location = new System.Drawing.Point(0, 13);
             this.urlTextBox.Name = "urlTextBox";
-            this.urlTextBox.Size = new System.Drawing.Size(610, 20);
+            this.urlTextBox.Size = new System.Drawing.Size(610, 22);
             this.urlTextBox.TabIndex = 1;
             this.urlTextBox.Text = "http://www.youtube.com/embed/3NABJVXOgiA?autoplay=1";
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
@@ -69,9 +69,9 @@
             // 
             this.navigateLinkLabel.AutoSize = true;
             this.navigateLinkLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.navigateLinkLabel.Location = new System.Drawing.Point(0, 33);
+            this.navigateLinkLabel.Location = new System.Drawing.Point(0, 35);
             this.navigateLinkLabel.Name = "navigateLinkLabel";
-            this.navigateLinkLabel.Size = new System.Drawing.Size(21, 13);
+            this.navigateLinkLabel.Size = new System.Drawing.Size(22, 13);
             this.navigateLinkLabel.TabIndex = 2;
             this.navigateLinkLabel.TabStop = true;
             this.navigateLinkLabel.Text = "Go";
@@ -94,7 +94,7 @@
             this.renderLinkLabel.Enabled = false;
             this.renderLinkLabel.Location = new System.Drawing.Point(12, 176);
             this.renderLinkLabel.Name = "renderLinkLabel";
-            this.renderLinkLabel.Size = new System.Drawing.Size(42, 13);
+            this.renderLinkLabel.Size = new System.Drawing.Size(44, 13);
             this.renderLinkLabel.TabIndex = 4;
             this.renderLinkLabel.TabStop = true;
             this.renderLinkLabel.Text = "Render";
@@ -107,7 +107,7 @@
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(0, 46);
+            this.button1.Location = new System.Drawing.Point(0, 48);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(610, 23);
             this.button1.TabIndex = 6;
@@ -123,7 +123,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(602, 295);
+            this.tabPage1.Size = new System.Drawing.Size(602, 293);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "View Window";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -145,10 +145,10 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 69);
+            this.tabControl1.Location = new System.Drawing.Point(0, 71);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(610, 321);
+            this.tabControl1.Size = new System.Drawing.Size(610, 319);
             this.tabControl1.TabIndex = 7;
             // 
             // checkBox1

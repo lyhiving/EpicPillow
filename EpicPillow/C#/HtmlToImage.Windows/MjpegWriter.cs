@@ -48,7 +48,11 @@ namespace rtaNetworking.Streaming
         {
 
             Write( 
-                    "HTTP/1.1 200 OK\r\n" +
+                    "HTTP/1.0 200 OK\r\n" +
+                    "Cache-Control: no-cache\r\n" +
+                    "Pragma: no-cache\r\n" + 
+                    "Expires: Thu, 01 Dec 1994 16:00:00 GMT\r\n" + 
+                    "Connection: close\r\n" + 
                     "Content-Type: multipart/x-mixed-replace; boundary=" +
                     this.Boundary +
                     "\r\n"
@@ -85,9 +89,13 @@ namespace rtaNetworking.Streaming
                 sb.AppendLine();
                 sb.AppendLine(this.Boundary);
             }
-            sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r"));
-            sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            if (boundary == false)
+            {
+                sb.AppendLine("Date: " + DateTime.Now.ToUniversalTime().ToString("r"));
+            }
             sb.AppendLine("Content-Type: image/jpeg"); 
+            sb.AppendLine("Content-Length: " + imageStream.Length.ToString());
+            
             sb.AppendLine();
             Write(sb.ToString());
             imageStream.WriteTo(new NetworkStream(this.Stream));
