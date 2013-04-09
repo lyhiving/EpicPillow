@@ -29,7 +29,7 @@ namespace rtaNetworking.Streaming
         private string _Boundary;
 
         public MjpegWriter(Socket stream)
-            : this(stream, "--boundary")
+            : this(stream, "--myboundary")
         {
 
         }
@@ -100,7 +100,7 @@ namespace rtaNetworking.Streaming
             Write(sb.ToString());
             imageStream.WriteTo(new NetworkStream(this.Stream));
             //Write(ImageToByte((Image)HtmlToImage.Windows.GlobalPillow.currentFrame.Clone())); 
-            Write("\r\n");
+            //Write("\r\n");
             
             //this.Stream.Flush();
 

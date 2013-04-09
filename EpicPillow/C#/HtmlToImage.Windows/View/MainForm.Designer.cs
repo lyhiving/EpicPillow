@@ -62,7 +62,7 @@
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(610, 22);
             this.urlTextBox.TabIndex = 1;
-            this.urlTextBox.Text = "http://www.youtube.com/embed/3NABJVXOgiA?autoplay=1";
+            this.urlTextBox.Text = "http://www.youtube.com/embed/ZD9fWUUeL00?autoplay=1";
             this.urlTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.urlTextBox_KeyDown);
             // 
             // navigateLinkLabel
