@@ -167,13 +167,14 @@ var memstatus = Ti.UI.createLabel({
 	right : 10 + u,
 	height : 'auto'
 });
-win.add(memstatus);
+
 win.add(status);
 var win2 = Titanium.UI.createWindow({
 	title : 'ViewWin',
 	backgroundColor : '#fff'
 
 });
+win2.add(memstatus);
 var tab2 = Titanium.UI.createTab({
 	icon : 'KS_nav_ui.png',
 	title : 'ViewTab',
@@ -192,10 +193,12 @@ var label2 = Titanium.UI.createLabel({
 var dimensionOffset = 50; 
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
-var vidsrc = 'http://192.168.0.7:1262';
-var playerHTML = '<img src=' + vidsrc + ' />';
+//var vidsrc = 'http://217.197.122.134/axis-cgi/mjpg/video.cgi';
+var vidsrc= 'http://192.168.0.7:1262'; 
+var playerHTML = '<img width="100%" src=' + vidsrc + ' />';
 var webBox = Titanium.UI.createWebView({
 	html: playerHTML,
+	//url: vidsrc,
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE
 });
@@ -240,7 +243,7 @@ function updateView()
 	{
 		
 		Titanium.API.error("start update");
-	 
+	 	checkreload(); 
 		if (mode == 1)
 		{
 			//webBox.repaint(); 
@@ -265,16 +268,36 @@ function updateView()
 		
 	}
 }
+var oldWidth = 800;
+var oldHeight = 600;
+function checkreload()
+{
+	var browseSize = webBox.size; 
+	var newWidth = browseSize.width;
+	var newHeight = browseSize.height;
+	if (newWidth != oldWidth || newHeight != oldHeight)
+	{
+		Ti.API.info("dimensions changed");
+		webBox.reload();
+		Ti.API.info("webbox reloaded");
+		oldWidth = newWidth;
+		oldHeight = newHeight;
+		Ti.API.info("olddimensions set"); 
+	}
+	else
+	{
+		Ti.API.info("dimensions the same");
+		Ti.API.info("no action taken");	
+	}
+	
+}
 function releaseView()
 {
 	try
 	{
-		webBox.stopLoading(true);
-<<<<<<< HEAD
-		webBox.reload();
-=======
-		webBox.reload(); 
->>>>>>> memory issue a tiny bit better
+		//Ti.API.info(webBox.loading.toString());
+		//webBox.reload(); 
+		//Ti.API.info("reloaded"); 
 	}
 	catch(e)
 	{
@@ -282,4 +305,4 @@ function releaseView()
 	}
 }
 setInterval(updateView, 2500); 
-setInterval(releaseView, 15000);
+setInterval(releaseView, 5000);

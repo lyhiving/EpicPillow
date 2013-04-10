@@ -167,13 +167,14 @@ var memstatus = Ti.UI.createLabel({
 	right : 10 + u,
 	height : 'auto'
 });
-win.add(memstatus);
+
 win.add(status);
 var win2 = Ti.UI.createWindow({
 	title : 'ViewWin',
 	backgroundColor : '#fff'
 
 });
+win2.add(memstatus);
 var tab2 = Ti.UI.createTab({
 	icon : 'KS_nav_ui.png',
 	title : 'ViewTab',
@@ -192,7 +193,8 @@ var label2 = Ti.UI.createLabel({
 var dimensionOffset = 50; 
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
-var vidsrc = 'http://192.168.0.7:1262';
+//var vidsrc = 'http://217.197.122.134/axis-cgi/mjpg/video.cgi';
+var vidsrc= 'http://192.168.0.7:1262'; 
 var playerHTML = '<img src=' + vidsrc + ' />';
 var webBox = Ti.UI.createWebView({
 	html: playerHTML,
@@ -269,8 +271,9 @@ function releaseView()
 {
 	try
 	{
-		webBox.stopLoading(true);
+		//Ti.API.info(webBox.loading.toString());
 		webBox.reload(); 
+		Ti.API.info("reloaded"); 
 	}
 	catch(e)
 	{
@@ -278,4 +281,4 @@ function releaseView()
 	}
 }
 setInterval(updateView, 2500); 
-setInterval(releaseView, 15000);
+setInterval(releaseView, 5000);

@@ -1,7 +1,7 @@
 {
 	"target": "simulator",
 	"deployType": "development",
-	"deviceFamily": "iphone",
+	"deviceFamily": "ipad",
 	"iosSdkPath": "/Users/jwpilly/Library/Application Support/Titanium/mobilesdk/osx/3.0.2.GA/iphone",
 	"appGuid": "02fa0c96-8700-40fc-a314-ed5093888a65",
 	"tiCoreHash": "fa476584d63923183b326150e75416b3",

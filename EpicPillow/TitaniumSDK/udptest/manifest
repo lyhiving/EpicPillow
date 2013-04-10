@@ -1,8 +1,8 @@
-#appname: udptest
-#publisher: pillybuilt
-#url: http://
-#image: appicon.png
-#appid: com.pillow.udp
-#desc: undefined
-#type: mobile
-#guid: 02fa0c96-8700-40fc-a314-ed5093888a65
+#appname:udptest
+#publisher:pillybuilt
+#url:http://
+#image:appicon.png
+#appid:com.pillow.udp
+#desc:not specified
+#type:ipad
+#guid:02fa0c96-8700-40fc-a314-ed5093888a65
