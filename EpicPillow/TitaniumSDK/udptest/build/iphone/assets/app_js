@@ -190,16 +190,19 @@ var label2 = Ti.UI.createLabel({
 	textAlign : 'center',
 	width : 'auto'
 });
-var dimensionOffset = 50; 
+var dimensionOffset = 50;
 var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
 //var vidsrc = 'http://217.197.122.134/axis-cgi/mjpg/video.cgi';
-var vidsrc= 'http://192.168.0.7:1262'; 
+var vidsrc = 'http://192.168.0.7:1262';
 var playerHTML = '<img src=' + vidsrc + ' />';
 var webBox = Ti.UI.createWebView({
-	html: playerHTML,
 	width: Ti.UI.SIZE,
-	height: Ti.UI.SIZE
+	height: Ti.UI.SIZE,
+	html : playerHTML
+	//url: vidsrc,
+	//width : 'auto',
+	//height : 'auto'
 });
 webBox.addEventListener('longpress', function(e) {
 	var xCoord = Math.round(e.x);
@@ -212,73 +215,85 @@ webBox.addEventListener('longpress', function(e) {
 	});
 });
 /*
-var webBox = Ti.UI.createWebView({
-	url: vidsrc
-});
-*/
+ var webBox = Ti.UI.createWebView({
+ url: vidsrc
+ });
+ */
 var scrollView = Ti.UI.createScrollView({
 	//contentWidth: 'auto',
 	//contentHeight: 'auto',
-	maxZoomScale: 1,
-	minZoomScale: 0.1,
-	contentWidth: Ti.UI.SIZE,
-	contentHeight: Ti.UI.SIZE,
-	showVerticalScrollIndicator: true,
-	showHorizontalScrollIndicator: true
+	maxZoomScale : 1,
+	minZoomScale : 0.1,
+	//contentWidth : Ti.UI.SIZE,
+	//contentHeight : Ti.UI.SIZE,
+	showVerticalScrollIndicator : true,
+	showHorizontalScrollIndicator : true
 });
 win2.add(label2);
 scrollView.add(webBox);
 webBox.show();
 var mode = 1;
 //scrollView.add(imageBox);
-win2.add(scrollView); 
+win2.add(scrollView);
 //win2.add(imageBox);
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);
 tabGroup.open();
-function updateView()
-{
-	try
-	{
-		
+function updateView() {
+	try {
+
 		Ti.API.error("start update");
-	 
-		if (mode == 1)
-		{
-			//webBox.repaint(); 
-		}
-		else if (mode == 2)
-		{
+		//checkreload();
+		if (mode == 1) {
+			//webBox.repaint();
+		} else if (mode == 2) {
 			//webBox2.repaint();
 		}
 		//webBox.html = null;
-		
+
 		//webBox.reload();
 		//webBox.release();
-		
+		webBox.width = Ti.UI.SIZE;
+		webBox.height = Ti.UI.SIZE; 
 		//webBox.repaint();
 		Ti.API.error(Ti.Platform.availableMemory);
 		memstatus.text = Ti.Platform.availableMemory.toString();
 		//Ti.API.error(webBox.loading);
 		//webBox.release();
-	}
-	catch(e)
-	{
-		
+	} catch(e) {
+
 	}
 }
-function releaseView()
-{
-	try
-	{
+
+var oldWidth = 800;
+var oldHeight = 600;
+function checkreload() {
+	var browseSize = webBox.size;
+	var newWidth = browseSize.width;
+	var newHeight = browseSize.height;
+	if (newWidth != oldWidth || newHeight != oldHeight) {
+		Ti.API.info("dimensions changed");
+		webBox.reload();
+		Ti.API.info("webbox reloaded");
+		oldWidth = newWidth;
+		oldHeight = newHeight;
+		Ti.API.info("olddimensions set");
+	} else {
+		Ti.API.info("dimensions the same");
+		Ti.API.info("no action taken");
+	}
+
+}
+
+function releaseView() {
+	try {
 		//Ti.API.info(webBox.loading.toString());
-		webBox.reload(); 
-		Ti.API.info("reloaded"); 
-	}
-	catch(e)
-	{
-		
+		//webBox.reload();
+		//Ti.API.info("reloaded");
+	} catch(e) {
+
 	}
 }
-setInterval(updateView, 2500); 
+
+setInterval(updateView, 5000);
 setInterval(releaseView, 5000);

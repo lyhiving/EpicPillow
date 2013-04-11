@@ -195,12 +195,14 @@ var pWidth = Ti.Platform.displayCaps.platformWidth - dimensionOffset;
 var pHeight = Ti.Platform.displayCaps.platformHeight - dimensionOffset;
 //var vidsrc = 'http://217.197.122.134/axis-cgi/mjpg/video.cgi';
 var vidsrc = 'http://192.168.0.7:1262';
-var playerHTML = '<img width=100% src=' + vidsrc + ' />';
+var playerHTML = '<img src=' + vidsrc + ' />';
 var webBox = Titanium.UI.createWebView({
-	html : playerHTML,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	html : playerHTML
 	//url: vidsrc,
-	width : Ti.UI.SIZE,
-	height : Ti.UI.SIZE
+	//width : 'auto',
+	//height : 'auto'
 });
 webBox.addEventListener('longpress', function(e) {
 	var xCoord = Math.round(e.x);
@@ -222,8 +224,8 @@ var scrollView = Titanium.UI.createScrollView({
 	//contentHeight: 'auto',
 	maxZoomScale : 1,
 	minZoomScale : 0.1,
-	contentWidth : Ti.UI.SIZE,
-	contentHeight : Ti.UI.SIZE,
+	//contentWidth : Ti.UI.SIZE,
+	//contentHeight : Ti.UI.SIZE,
 	showVerticalScrollIndicator : true,
 	showHorizontalScrollIndicator : true
 });
@@ -241,7 +243,7 @@ function updateView() {
 	try {
 
 		Titanium.API.error("start update");
-		checkreload();
+		//checkreload();
 		if (mode == 1) {
 			//webBox.repaint();
 		} else if (mode == 2) {
@@ -251,7 +253,8 @@ function updateView() {
 
 		//webBox.reload();
 		//webBox.release();
-
+		webBox.width = Ti.UI.SIZE;
+		webBox.height = Ti.UI.SIZE; 
 		//webBox.repaint();
 		Titanium.API.error(Titanium.Platform.availableMemory);
 		memstatus.text = Titanium.Platform.availableMemory.toString();
@@ -292,5 +295,5 @@ function releaseView() {
 	}
 }
 
-setInterval(updateView, 2500);
+setInterval(updateView, 5000);
 setInterval(releaseView, 5000);
