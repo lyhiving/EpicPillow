@@ -38,7 +38,7 @@ socket.start({
 	port : 1261
 });
 var sendTo = Ti.UI.createTextField({
-	height : 44 + u,
+	height : 20 + u,
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
@@ -49,7 +49,7 @@ var sendTo = Ti.UI.createTextField({
 });
 win.add(sendTo);
 var sendStuff = Ti.UI.createTextField({
-	height : 44 + u,
+	height : 20 + u,
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
@@ -67,7 +67,7 @@ var sendString = Ti.UI.createButton({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	height : 40 + u
+	height : 20 + u
 });
 sendString.addEventListener('click', function() {
 	Ti.App.Properties.setString('SavedSendTo', sendTo.value);
@@ -86,7 +86,7 @@ var sendBytes = Ti.UI.createButton({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	height : 40 + u
+	height : 20 + u
 });
 sendBytes.addEventListener('click', function() {
 	Ti.App.Properties.setString('SavedSendTo', sendTo.value);
@@ -105,7 +105,7 @@ var broadcastString = Ti.UI.createButton({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	height : 40 + u
+	height : 20 + u
 });
 broadcastString.addEventListener('click', function() {
 	socket.sendString({
@@ -146,35 +146,19 @@ var stop = Ti.UI.createButton({
 	top : 10 + u,
 	left : 10 + u,
 	right : 10 + u,
-	height : 40 + u
+	height : 20 + u
 });
 stop.addEventListener('click', function() {
 	socket.stop();
 });
 win.add(stop);
 
-var status = Ti.UI.createLabel({
-	text : 'Press Start Socket to Begin',
-	top : 10 + u,
-	left : 10 + u,
-	right : 10 + u,
-	height : 'auto'
-});
-var memstatus = Ti.UI.createLabel({
-	text : 'Available Memory',
-	top : 10 + u,
-	left : 10 + u,
-	right : 10 + u,
-	height : 'auto'
-});
-
-win.add(status);
 var win2 = Ti.UI.createWindow({
 	title : 'ViewWin',
 	backgroundColor : '#fff'
 
 });
-win2.add(memstatus);
+
 var tab2 = Ti.UI.createTab({
 	icon : 'KS_nav_ui.png',
 	title : 'ViewTab',
@@ -204,7 +188,7 @@ var webBox = Ti.UI.createWebView({
 	//width : 'auto',
 	//height : 'auto'
 });
-webBox.addEventListener('longpress', function(e) {
+webBox.addEventListener('click', function(e) {
 	var xCoord = Math.round(e.x);
 	var yCoord = Math.round(e.y);
 	var sendDat = 'lclick(' + xCoord + ',' + yCoord + ')';
@@ -231,11 +215,53 @@ var scrollView = Ti.UI.createScrollView({
 });
 win2.add(label2);
 scrollView.add(webBox);
+var vidsource = Ti.UI.createTextField({
+	height : 20 + u,
+	top : 10 + u,
+	left : 10 + u,
+	right : 10 + u,
+	//borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	//value: Ti.App.Properties.getString('SavedSendTo', '')
+	//value: "192.168.0.2"
+	value : "http://192.168.0.7:1262"
+});
+win.add(vidsource);
+var reloadsource = Ti.UI.createButton({
+	title : 'reloadsource',
+	top : 10 + u,
+	left : 10 + u,
+	right : 10 + u,
+	height : 20 + u
+});
+reloadsource.addEventListener('click', function() {
+	webBox.stopLoading(true); 
+	webBox.html = '<img src=' + vidsource.value + ' />';
+	webBox.reload(); 
+});
+win.add(reloadsource);
 webBox.show();
 var mode = 1;
 //scrollView.add(imageBox);
 win2.add(scrollView);
 //win2.add(imageBox);
+
+var status = Ti.UI.createLabel({
+	text : 'Press Start Socket to Begin',
+	top : 10 + u,
+	left : 10 + u,
+	right : 10 + u,
+	height : 'auto'
+});
+var memstatus = Ti.UI.createLabel({
+	text : 'Available Memory',
+	top : 10 + u,
+	left : 10 + u,
+	right : 10 + u,
+	height : 'auto'
+});
+
+win.add(status);
+win2.add(memstatus);
 tabGroup.addTab(tab1);
 tabGroup.addTab(tab2);
 tabGroup.open();
