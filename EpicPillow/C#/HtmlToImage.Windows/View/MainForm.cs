@@ -16,7 +16,7 @@
     using System.Threading;
 	public partial class MainForm : Form
 	{
-		public Size size = new Size(1920, 1080);
+		public Size size = new Size(1366,768);
         private HtmlToBitmapConverter pubBrowse = new HtmlToBitmapConverter();
         public MainForm()
 		{
