@@ -29,3 +29,4 @@ C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj
 C:\Users\pilly\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.csprojResolveAssemblyReference.cache
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.csprojResolveAssemblyReference.cache
 C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\HtmlToImage.Windows.csproj.GenerateResource.Cache
+C:\Users\pillybuilt\Documents\GitHub\EpicPillow\EpicPillow\C#\HtmlToImage.Windows\obj\x64\Debug\Interop.SHDocVw.dll

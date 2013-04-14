@@ -26,7 +26,7 @@ namespace rtaNetworking.Streaming
         private static byte[] CRLF = new byte[] { 13, 10 };
         private static byte[] EmptyLine = new byte[] { 13, 10, 13, 10};
 
-        private string _Boundary;
+        //private string _Boundary;
 
         public MjpegWriter(Socket stream)
             : this(stream, "--myboundary")

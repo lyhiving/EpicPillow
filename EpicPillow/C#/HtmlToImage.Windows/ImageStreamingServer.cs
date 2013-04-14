@@ -264,14 +264,6 @@ namespace rtaNetworking.Streaming
                 yield return dstImage;
 
             }
-
-            srcGraphics.Dispose();
-            dstGraphics.Dispose();
-
-            srcImage.Dispose();
-            dstImage.Dispose();
-            
-            yield break;
         }
 
         internal static IEnumerable<MemoryStream> Streams(this IEnumerable<Image> source)

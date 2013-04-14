@@ -109,7 +109,7 @@
                 }
                 catch (Exception ex)
                 {
-
+                    System.Diagnostics.Debug.WriteLine(ex.ToString()); 
                 }
             }
         }
@@ -121,7 +121,7 @@
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine(ex.ToString()); 
             }
             finally
             {
@@ -200,6 +200,7 @@
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.ToString()); 
             }
         }
         
@@ -291,7 +292,7 @@
                     }
                     catch (Exception ex)
                     {
-
+                        System.Diagnostics.Debug.WriteLine(ex.ToString()); 
                     }
                     newsock.Send(data, data.Length, sender);
                 //}
@@ -341,6 +342,18 @@
                 
                 //System.Diagnostics.Debug.Write(newPoint.ToString()); 
                 pubBrowse.DoMouseLeftClick(newPoint); 
+            }
+            else if (recv.StartsWith("back"))
+            {
+                pubBrowse.goBack(); 
+            }
+            else if (recv.StartsWith("forward"))
+            {
+                pubBrowse.goForward(); 
+            }
+            else if (recv.StartsWith("home"))
+            {
+                pubBrowse.goHome(); 
             }
         }
         

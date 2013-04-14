@@ -31,7 +31,6 @@
 		public Bitmap Render(string html, Size size)
 		{
 			pubbrowser = CreateBrowser(size);
-
 			pubbrowser.Navigate("about:blank");
 			pubbrowser.Document.Write(html);
 
@@ -39,21 +38,17 @@
 		}
 		public void startConverter()
 		{
-			pubbrowser.NewWindow += new CancelEventHandler(cancelWindow);
-			minPix = minSize.Width * minSize.Height;
+            pubbrowser.NewWindow += new System.ComponentModel.CancelEventHandler(cancelWindow);
+            pubbrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(doneLoading); 
+            minPix = minSize.Width * minSize.Height;
 		}
-		public void docClicked(object sender, HtmlElementEventArgs e)
+        public void doneLoading(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+        void cancelWindow(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-		}
-		private void doneLoading(object sender, WebBrowserDocumentCompletedEventArgs e)
-		{
-		}
-		string url = ""; 
-		private void LinkClicked(object sender, EventArgs e)
-		{
-		}
-		private void cancelWindow(object sender, CancelEventArgs e)
-		{
+            pubbrowser.Navigate(pubbrowser.StatusText); 
 			e.Cancel = true;
 		}
 		public Bitmap Render(Uri uri, Size size)
@@ -71,7 +66,6 @@
         
 		public void NavigateAndWaitForLoad(WebBrowser browser, Uri uri)
 		{
-
             threadbrowseSize(pubbrowser, defSize);
             threadbrowseBounds(pubbrowser, defSize.Width, defSize.Height); 
 			navURL = uri;
@@ -199,6 +193,7 @@
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.ToString()); 
                 screenie = new Bitmap(defSize.Width, defSize.Height);
                 NativeMethods.GetImage(GetDomDocument(), screenie, Color.White);
                 return screenie; 
@@ -218,6 +213,7 @@
                 }
                 catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine(ex.ToString()); 
                 }
             return GetBitmapFromControl(pubbrowser, pubbrowser.Size); 
         }
@@ -336,7 +332,7 @@
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine(ex.ToString()); 
             }
         }
         IntPtr browseHandle;
@@ -441,6 +437,18 @@
                 return Buff.ToString();
             }
             return null;
+        }
+        public void goBack()
+        {
+            pubbrowser.GoBack(); 
+        }
+        public void goForward()
+        {
+            pubbrowser.GoForward(); 
+        }
+        public void goHome()
+        {
+            pubbrowser.GoHome(); 
         }
         public static void KeyDown(Keys key)
         {

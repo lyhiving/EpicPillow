@@ -75,6 +75,7 @@ namespace HtmlToImage.Windows.View
                 }
                 catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine(ex.ToString()); 
                 }
             }
             client.Close();
